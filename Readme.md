@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Василий Шубин](https://up.htmlacademy.ru/react/1/user/334301).
-* Наставник: `Неизвестно`.
+* Наставник: [Кирилл Черкалов](https://htmlacademy.ru/profile/id535311).
 
 ---
 
