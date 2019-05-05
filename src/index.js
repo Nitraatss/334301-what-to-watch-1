@@ -6,7 +6,17 @@ import ReactDOM from "react-dom";
 import {App} from "./components/app/app.jsx";
 
 const init = () => {
-  ReactDOM.render(<App />, document.querySelector(`#root`));
+  const filmsTitles = [
+    `John Wick`,
+    `Killers Bodyguard`,
+    `Ocean's Eleven`,
+    `Tomorrow Never Dies`
+  ];
+
+  ReactDOM.render(
+      <App filmsTitles={filmsTitles} />,
+      document.querySelector(`#root`)
+  );
 };
 
 init();
