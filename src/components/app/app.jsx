@@ -1,9 +1,9 @@
 // Core
 import React from "react";
-import {array} from "prop-types";
+import {array, func} from "prop-types";
 
 export const App = (props) => {
-  const {filmsTitles} = props;
+  const {filmsTitles, onFilmTitleClick} = props;
 
   const smallMoviesCards = filmsTitles.map((title, index) => {
     return (
@@ -20,7 +20,11 @@ export const App = (props) => {
           />
         </div>
         <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">
+          <a
+            className="small-movie-card__link"
+            href="movie-page.html"
+            onClick={onFilmTitleClick}
+          >
             {title}
           </a>
         </h3>
@@ -281,5 +285,6 @@ export const App = (props) => {
 };
 
 App.propTypes = {
-  filmsTitles: array.isRequired
+  filmsTitles: array.isRequired,
+  onFilmTitleClick: func
 };
