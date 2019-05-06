@@ -3,12 +3,7 @@ import React from "react";
 import {array, func} from "prop-types";
 
 export const App = (props) => {
-  const {
-    filmsTitles,
-    onFilmTitleClick = () => {
-      return null;
-    }
-  } = props;
+  const {filmsTitles, onFilmTitleClick} = props;
 
   const smallMoviesCards = filmsTitles.map((title, index) => {
     return (

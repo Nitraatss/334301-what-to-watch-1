@@ -21,8 +21,6 @@ const props = {
 it(`App small movie card title link should react on click`, () => {
   const app = shallow(
       <App
-        mistakes={0}
-        minutes={0}
         onFilmTitleClick={props.clickHandler}
         filmsTitles={props.filmsTitles}
       />

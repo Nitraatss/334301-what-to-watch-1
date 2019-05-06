@@ -19,8 +19,6 @@ it(`App correctly renders after relaunch`, () => {
   const tree = renderer
     .create(
         <App
-          mistakes={0}
-          minutes={0}
           onFilmTitleClick={props.clickHandler}
           filmsTitles={props.filmsTitles}
         />
