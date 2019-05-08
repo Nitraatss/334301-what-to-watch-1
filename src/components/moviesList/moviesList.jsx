@@ -13,7 +13,7 @@ export class MoviesList extends PureComponent {
       activeCardIndex: null
     };
 
-    this.changeActiveCard = this.changeActiveCard.bind(this);
+    this.handelActiveCardChange = this.handelActiveCardChange.bind(this);
   }
 
   render() {
