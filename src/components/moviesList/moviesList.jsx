@@ -1,43 +1,28 @@
 // Core
-import React, {PureComponent} from "react";
-import {shape, arrayOf, string} from "prop-types";
+import React from "react";
+import {shape, arrayOf, string, func} from "prop-types";
 
 // Components
+import highOrderComponent from "../highOrderComponent/highOrderComponent.jsx";
 import SmallMovieCard from "../smallMovieCard/smallMovieCard.jsx";
 
-export class MoviesList extends PureComponent {
-  constructor(props) {
-    super(props);
+const MoviesList = (props) => {
+  const {films, handelActiveCardChange} = props;
 
-    this.state = {
-      activeCardIndex: null
-    };
-
-    this.handelActiveCardChange = this.handelActiveCardChange.bind(this);
-  }
-
-  render() {
-    const {films} = this.props;
-
-    return (
-      <div className="catalog__movies-list">
-        {films.map((film) => (
-          <SmallMovieCard
-            key={film.id}
-            id={film.id}
-            title={film.title}
-            preview={film.preview}
-            onButtonClick={this.handelActiveCardChange}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  handelActiveCardChange(activeCardIndex) {
-    this.setState({activeCardIndex});
-  }
-}
+  return (
+    <div className="catalog__movies-list">
+      {films.map((film) => (
+        <SmallMovieCard
+          key={film.id}
+          id={film.id}
+          title={film.title}
+          preview={film.preview}
+          onButtonClick={handelActiveCardChange}
+        />
+      ))}
+    </div>
+  );
+};
 
 MoviesList.propTypes = {
   films: arrayOf(
@@ -47,7 +32,8 @@ MoviesList.propTypes = {
         genre: arrayOf(string).isRequired,
         preview: string.isRequired
       })
-  ).isRequired
+  ).isRequired,
+  handelActiveCardChange: func.isRequired
 };
 
-export default MoviesList;
+export default highOrderComponent(MoviesList);

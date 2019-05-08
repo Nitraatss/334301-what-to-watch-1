@@ -15,7 +15,7 @@ const mockedFilm = {
 };
 
 const mocks = Object.assign(mockedFilm, {
-  onClickHandler: jest.fn(() => mockedFilm.id)
+  onClickHandler: jest.fn()
 });
 
 describe(`SmallMovieCard:`, () => {
@@ -46,6 +46,6 @@ describe(`SmallMovieCard:`, () => {
 
     const smallMovieCardTitleLink = smallMovieCard.find(`button`);
     smallMovieCardTitleLink.simulate(`click`, {preventDefault() {}});
-    expect(mocks.onClickHandler).toHaveReturnedWith(mocks.id);
+    expect(mocks.onClickHandler).toHaveBeenCalledWith(mocks.id);
   });
 });

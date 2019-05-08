@@ -5,16 +5,14 @@ import {string, func} from "prop-types";
 const SmallMovieCard = (props) => {
   const {title, preview, id, onButtonClick} = props;
 
-  const _onFilmButtonClick = () => {
-    onButtonClick(id);
-  };
-
   return (
     <article className="small-movie-card catalog__movies-card">
       <button
         className="small-movie-card__play-btn"
         type="button"
-        onClick={_onFilmButtonClick}
+        onClick={() => {
+          onButtonClick(id);
+        }}
       >
         Play
       </button>
