@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
@@ -44,9 +44,9 @@ const mocks = {
 };
 
 it(`MoviesList should change state on small card hover`, () => {
-  const moviesList = shallow(<MoviesList films={mocks.films} />);
+  const moviesList = mount(<MoviesList films={mocks.films} />);
 
   const smallMovieCard = moviesList.find(`.small-movie-card`).last();
   smallMovieCard.simulate(`mouseenter`);
-  expect(smallMovieCard.state(`activeCardIndex`)).to.equal(`5`);
+  expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
 });
