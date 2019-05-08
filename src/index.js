@@ -3,20 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 // Components
-import {App} from "./components/app/app.jsx";
+import App from "./components/app/app.jsx";
+
+// Mocks
+import films from "./mocks/films.js";
 
 const init = () => {
-  const filmsTitles = [
-    `John Wick`,
-    `Killers Bodyguard`,
-    `Ocean's Eleven`,
-    `Tomorrow Never Dies`
-  ];
-
-  ReactDOM.render(
-      <App filmsTitles={filmsTitles} />,
-      document.querySelector(`#root`)
-  );
+  ReactDOM.render(<App films={films} />, document.querySelector(`#root`));
 };
 
 init();

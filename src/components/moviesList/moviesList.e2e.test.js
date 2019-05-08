@@ -1,9 +1,12 @@
 // Core
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {shallow} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import App from "./app.jsx";
+import MoviesList from "./moviesList.jsx";
+
+Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
   films: [
@@ -40,8 +43,10 @@ const mocks = {
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
-  const tree = renderer.create(<App films={mocks.films} />).toJSON();
+it(`MoviesList should change state on small card hover`, () => {
+  const moviesList = shallow(<MoviesList films={mocks.films} />);
 
-  expect(tree).toMatchSnapshot();
+  const smallMovieCard = moviesList.find(`.small-movie-card`).last();
+  smallMovieCard.simulate(`mouseenter`);
+  expect(smallMovieCard.state(`activeCardIndex`)).to.equal(`5`);
 });

@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import App from "./app.jsx";
+import MoviesList from "./moviesList.jsx";
 
 const mocks = {
   films: [
@@ -40,8 +40,8 @@ const mocks = {
   ]
 };
 
-it(`App correctly renders after relaunch`, () => {
-  const tree = renderer.create(<App films={mocks.films} />).toJSON();
+it(`MoviesList correctly renders after relaunch`, () => {
+  const tree = renderer.create(<MoviesList films={mocks.films} />).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
