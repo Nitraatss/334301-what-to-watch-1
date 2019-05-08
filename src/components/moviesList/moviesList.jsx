@@ -27,14 +27,14 @@ export class MoviesList extends PureComponent {
             id={film.id}
             title={film.title}
             preview={film.preview}
-            onButtonClick={this.changeActiveCard}
+            onButtonClick={this.handelActiveCardChange}
           />
         ))}
       </div>
     );
   }
 
-  changeActiveCard(activeCardIndex) {
+  handelActiveCardChange(activeCardIndex) {
     this.setState({activeCardIndex});
   }
 }
