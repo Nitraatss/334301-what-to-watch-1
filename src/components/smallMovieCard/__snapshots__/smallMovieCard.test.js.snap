@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SmallMovieCard correctly renders after relaunch 1`] = `
+exports[`SmallMovieCard: Correctly renders after relaunch 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
 >

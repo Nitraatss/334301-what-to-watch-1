@@ -12,17 +12,19 @@ const mocks = {
   functionHandler: jest.fn()
 };
 
-it(`SmallMovieCard correctly renders after relaunch`, () => {
-  const tree = renderer
-    .create(
-        <SmallMovieCard
-          id={mocks.id}
-          title={mocks.title}
-          preview={mocks.preview}
-          _changeActiveCard={mocks.functionHandler}
-        />
-    )
-    .toJSON();
+describe(`SmallMovieCard:`, () => {
+  it(`Correctly renders after relaunch`, () => {
+    const tree = renderer
+      .create(
+          <SmallMovieCard
+            id={mocks.id}
+            title={mocks.title}
+            preview={mocks.preview}
+            onButtonClick={mocks.functionHandler}
+          />
+      )
+      .toJSON();
 
-  expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
+  });
 });

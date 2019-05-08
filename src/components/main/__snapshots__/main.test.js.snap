@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Main correctly renders after relaunch 1`] = `
+exports[`Main: Correctly renders after relaunch 1`] = `
 Array [
   <div
     className="visually-hidden"
@@ -375,165 +375,161 @@ Array [
       <div
         className="catalog__movies-list"
       >
-        <div
-          className="catalog__movies-list"
+        <article
+          className="small-movie-card catalog__movies-card"
         >
-          <article
-            className="small-movie-card catalog__movies-card"
+          <button
+            className="small-movie-card__play-btn"
+            onClick={[Function]}
+            type="button"
           >
-            <button
-              className="small-movie-card__play-btn"
-              onClick={[Function]}
-              type="button"
-            >
-              Play
-            </button>
-            <div
-              className="small-movie-card__image"
-            >
-              <img
-                alt="John Wick"
-                height="175"
-                src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
-            >
-              <a
-                className="small-movie-card__link"
-                href="movie-page.html"
-              >
-                John Wick
-              </a>
-            </h3>
-          </article>
-          <article
-            className="small-movie-card catalog__movies-card"
+            Play
+          </button>
+          <div
+            className="small-movie-card__image"
           >
-            <button
-              className="small-movie-card__play-btn"
-              onClick={[Function]}
-              type="button"
-            >
-              Play
-            </button>
-            <div
-              className="small-movie-card__image"
-            >
-              <img
-                alt="Killers Bodyguard"
-                height="175"
-                src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
-            >
-              <a
-                className="small-movie-card__link"
-                href="movie-page.html"
-              >
-                Killers Bodyguard
-              </a>
-            </h3>
-          </article>
-          <article
-            className="small-movie-card catalog__movies-card"
+            <img
+              alt="John Wick"
+              height="175"
+              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
           >
-            <button
-              className="small-movie-card__play-btn"
-              onClick={[Function]}
-              type="button"
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
             >
-              Play
-            </button>
-            <div
-              className="small-movie-card__image"
-            >
-              <img
-                alt="Star Wars"
-                height="175"
-                src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
-            >
-              <a
-                className="small-movie-card__link"
-                href="movie-page.html"
-              >
-                Star Wars
-              </a>
-            </h3>
-          </article>
-          <article
-            className="small-movie-card catalog__movies-card"
+              John Wick
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <button
+            className="small-movie-card__play-btn"
+            onClick={[Function]}
+            type="button"
           >
-            <button
-              className="small-movie-card__play-btn"
-              onClick={[Function]}
-              type="button"
-            >
-              Play
-            </button>
-            <div
-              className="small-movie-card__image"
-            >
-              <img
-                alt="The Grand Budapest Hotel"
-                height="175"
-                src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
-            >
-              <a
-                className="small-movie-card__link"
-                href="movie-page.html"
-              >
-                The Grand Budapest Hotel
-              </a>
-            </h3>
-          </article>
-          <article
-            className="small-movie-card catalog__movies-card"
+            Play
+          </button>
+          <div
+            className="small-movie-card__image"
           >
-            <button
-              className="small-movie-card__play-btn"
-              onClick={[Function]}
-              type="button"
+            <img
+              alt="Killers Bodyguard"
+              height="175"
+              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
             >
-              Play
-            </button>
-            <div
-              className="small-movie-card__image"
+              Killers Bodyguard
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <button
+            className="small-movie-card__play-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Play
+          </button>
+          <div
+            className="small-movie-card__image"
+          >
+            <img
+              alt="Star Wars"
+              height="175"
+              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
             >
-              <img
-                alt="The Cabin in the Woods"
-                height="175"
-                src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                width="280"
-              />
-            </div>
-            <h3
-              className="small-movie-card__title"
+              Star Wars
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <button
+            className="small-movie-card__play-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Play
+          </button>
+          <div
+            className="small-movie-card__image"
+          >
+            <img
+              alt="The Grand Budapest Hotel"
+              height="175"
+              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
             >
-              <a
-                className="small-movie-card__link"
-                href="movie-page.html"
-              >
-                The Cabin in the Woods
-              </a>
-            </h3>
-          </article>
-        </div>
+              The Grand Budapest Hotel
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+        >
+          <button
+            className="small-movie-card__play-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Play
+          </button>
+          <div
+            className="small-movie-card__image"
+          >
+            <img
+              alt="The Cabin in the Woods"
+              height="175"
+              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              The Cabin in the Woods
+            </a>
+          </h3>
+        </article>
       </div>
       <div
         className="catalog__more"

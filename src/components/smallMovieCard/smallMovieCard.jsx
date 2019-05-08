@@ -3,10 +3,10 @@ import React from "react";
 import {string, func} from "prop-types";
 
 const SmallMovieCard = (props) => {
-  const {title, preview, id, _changeActiveCard} = props;
+  const {title, preview, id, onButtonClick} = props;
 
   const _onFilmButtonClick = () => {
-    _changeActiveCard(id);
+    onButtonClick(id);
   };
 
   return (
@@ -34,7 +34,7 @@ SmallMovieCard.propTypes = {
   id: string.isRequired,
   title: string.isRequired,
   preview: string.isRequired,
-  _changeActiveCard: func.isRequired
+  onButtonClick: func.isRequired
 };
 
 export default SmallMovieCard;

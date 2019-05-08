@@ -40,8 +40,10 @@ const mocks = {
   ]
 };
 
-it(`MoviesList correctly renders after relaunch`, () => {
-  const tree = renderer.create(<MoviesList films={mocks.films} />).toJSON();
+describe(`MoviesList:`, () => {
+  it(`Correctly renders after relaunch`, () => {
+    const tree = renderer.create(<MoviesList films={mocks.films} />).toJSON();
 
-  expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
+  });
 });

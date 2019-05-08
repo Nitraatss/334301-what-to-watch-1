@@ -233,9 +233,7 @@ const Main = (props) => {
             </li>
           </ul>
 
-          <div className="catalog__movies-list">
-            <MoviesList films={films} />
-          </div>
+          <MoviesList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">

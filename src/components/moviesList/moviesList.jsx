@@ -13,11 +13,7 @@ export class MoviesList extends PureComponent {
       activeCardIndex: null
     };
 
-    this._changeActiveCard = this._changeActiveCard.bind(this);
-  }
-
-  _changeActiveCard(newActiveIndex) {
-    this.setState({activeCardIndex: newActiveIndex});
+    this.changeActiveCard = this.changeActiveCard.bind(this);
   }
 
   render() {
@@ -31,11 +27,15 @@ export class MoviesList extends PureComponent {
             id={film.id}
             title={film.title}
             preview={film.preview}
-            _changeActiveCard={this._changeActiveCard}
+            onButtonClick={this.changeActiveCard}
           />
         ))}
       </div>
     );
+  }
+
+  changeActiveCard(activeCardIndex) {
+    this.setState({activeCardIndex});
   }
 }
 

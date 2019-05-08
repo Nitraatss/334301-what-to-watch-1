@@ -1,4 +1,4 @@
-const films = [
+export default [
   {
     id: `1`,
     title: `John Wick`,
@@ -30,5 +30,3 @@ const films = [
     preview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`
   }
 ];
-
-export default films;

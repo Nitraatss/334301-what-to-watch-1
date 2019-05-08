@@ -8,24 +8,44 @@ import SmallMovieCard from "./smallMovieCard.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 
-const mocks = {
+const mockedFilm = {
   id: `1`,
   title: `John Wick`,
-  preview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  functionHandler: jest.fn()
+  preview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`
 };
 
-it(`SmallMovieCard button should run callback _changeActiveCard on click`, () => {
-  const smallMovieCard = shallow(
-      <SmallMovieCard
-        id={mocks.id}
-        title={mocks.title}
-        preview={mocks.preview}
-        _changeActiveCard={mocks.functionHandler}
-      />
-  );
+const mocks = Object.assign(mockedFilm, {
+  onClickHandler: jest.fn(() => mockedFilm.id)
+});
 
-  const smallMovieCardTitleLink = smallMovieCard.find(`button`);
-  smallMovieCardTitleLink.simulate(`click`, {preventDefault() {}});
-  expect(mocks.functionHandler).toHaveBeenCalledTimes(1);
+describe(`SmallMovieCard:`, () => {
+  it(`Button should run callback on click`, () => {
+    const smallMovieCard = shallow(
+        <SmallMovieCard
+          id={mocks.id}
+          title={mocks.title}
+          preview={mocks.preview}
+          onButtonClick={mocks.onClickHandler}
+        />
+    );
+
+    const smallMovieCardTitleLink = smallMovieCard.find(`button`);
+    smallMovieCardTitleLink.simulate(`click`, {preventDefault() {}});
+    expect(mocks.onClickHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it(`Button should return film index on click`, () => {
+    const smallMovieCard = shallow(
+        <SmallMovieCard
+          id={mocks.id}
+          title={mocks.title}
+          preview={mocks.preview}
+          onButtonClick={mocks.onClickHandler}
+        />
+    );
+
+    const smallMovieCardTitleLink = smallMovieCard.find(`button`);
+    smallMovieCardTitleLink.simulate(`click`, {preventDefault() {}});
+    expect(mocks.onClickHandler).toHaveReturnedWith(mocks.id);
+  });
 });

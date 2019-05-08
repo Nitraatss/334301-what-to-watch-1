@@ -43,10 +43,12 @@ const mocks = {
   ]
 };
 
-it(`MoviesList should change activeCardIndex state on small card index after click`, () => {
-  const moviesList = mount(<MoviesList films={mocks.films} />);
+describe(`MoviesList:`, () => {
+  it(`Should change activeCardIndex state on small-card film index after button click`, () => {
+    const moviesList = mount(<MoviesList films={mocks.films} />);
 
-  const smallMovieCardButton = moviesList.find(`button`).last();
-  smallMovieCardButton.simulate(`click`);
-  expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
+    const smallMovieCardButton = moviesList.find(`button`).last();
+    smallMovieCardButton.simulate(`click`);
+    expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
+  });
 });
