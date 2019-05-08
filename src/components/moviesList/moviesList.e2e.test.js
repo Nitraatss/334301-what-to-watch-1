@@ -43,10 +43,10 @@ const mocks = {
   ]
 };
 
-it(`MoviesList should change state on small card hover`, () => {
+it(`MoviesList should change activeCardIndex state on small card index after click`, () => {
   const moviesList = mount(<MoviesList films={mocks.films} />);
 
-  const smallMovieCard = moviesList.find(`.small-movie-card`).last();
-  smallMovieCard.simulate(`mouseenter`);
+  const smallMovieCardButton = moviesList.find(`button`).last();
+  smallMovieCardButton.simulate(`click`);
   expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
 });

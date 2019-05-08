@@ -18,6 +18,7 @@ export class MoviesList extends PureComponent {
 
   _changeActiveCard(newActiveIndex) {
     this.setState({activeCardIndex: newActiveIndex});
+    console.log(newActiveIndex);
   }
 
   render() {

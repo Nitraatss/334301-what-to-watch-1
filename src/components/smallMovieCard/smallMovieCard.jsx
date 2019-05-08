@@ -3,17 +3,14 @@ import React from "react";
 import {string, func} from "prop-types";
 
 const SmallMovieCard = (props) => {
-  const {title, preview, id, _onFilmButtonClick, _changeActiveCard} = props;
+  const {title, preview, id, _changeActiveCard} = props;
 
-  const _onCardEnter = () => {
+  const _onFilmButtonClick = () => {
     _changeActiveCard(id);
   };
 
   return (
-    <article
-      className="small-movie-card catalog__movies-card"
-      onMouseEnter={_onCardEnter}
-    >
+    <article className="small-movie-card catalog__movies-card">
       <button
         className="small-movie-card__play-btn"
         type="button"
@@ -33,15 +30,10 @@ const SmallMovieCard = (props) => {
   );
 };
 
-SmallMovieCard.defaultProps = {
-  _onFilmButtonClick: () => null
-};
-
 SmallMovieCard.propTypes = {
   id: string.isRequired,
   title: string.isRequired,
   preview: string.isRequired,
-  _onFilmButtonClick: func,
   _changeActiveCard: func.isRequired
 };
 

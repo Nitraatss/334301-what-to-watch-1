@@ -380,7 +380,6 @@ Array [
         >
           <article
             className="small-movie-card catalog__movies-card"
-            onMouseEnter={[Function]}
           >
             <button
               className="small-movie-card__play-btn"
@@ -412,7 +411,6 @@ Array [
           </article>
           <article
             className="small-movie-card catalog__movies-card"
-            onMouseEnter={[Function]}
           >
             <button
               className="small-movie-card__play-btn"
@@ -444,7 +442,6 @@ Array [
           </article>
           <article
             className="small-movie-card catalog__movies-card"
-            onMouseEnter={[Function]}
           >
             <button
               className="small-movie-card__play-btn"
@@ -476,7 +473,6 @@ Array [
           </article>
           <article
             className="small-movie-card catalog__movies-card"
-            onMouseEnter={[Function]}
           >
             <button
               className="small-movie-card__play-btn"
@@ -508,7 +504,6 @@ Array [
           </article>
           <article
             className="small-movie-card catalog__movies-card"
-            onMouseEnter={[Function]}
           >
             <button
               className="small-movie-card__play-btn"

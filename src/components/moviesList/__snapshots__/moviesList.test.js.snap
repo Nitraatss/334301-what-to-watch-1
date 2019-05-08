@@ -6,7 +6,6 @@ exports[`MoviesList correctly renders after relaunch 1`] = `
 >
   <article
     className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
   >
     <button
       className="small-movie-card__play-btn"
@@ -38,7 +37,6 @@ exports[`MoviesList correctly renders after relaunch 1`] = `
   </article>
   <article
     className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
   >
     <button
       className="small-movie-card__play-btn"
@@ -70,7 +68,6 @@ exports[`MoviesList correctly renders after relaunch 1`] = `
   </article>
   <article
     className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
   >
     <button
       className="small-movie-card__play-btn"
@@ -102,7 +99,6 @@ exports[`MoviesList correctly renders after relaunch 1`] = `
   </article>
   <article
     className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
   >
     <button
       className="small-movie-card__play-btn"
@@ -134,7 +130,6 @@ exports[`MoviesList correctly renders after relaunch 1`] = `
   </article>
   <article
     className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
   >
     <button
       className="small-movie-card__play-btn"

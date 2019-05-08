@@ -15,13 +15,12 @@ const mocks = {
   functionHandler: jest.fn()
 };
 
-it(`SmallMovieCard title link should react on click`, () => {
+it(`SmallMovieCard button should run callback _changeActiveCard on click`, () => {
   const smallMovieCard = shallow(
       <SmallMovieCard
         id={mocks.id}
         title={mocks.title}
         preview={mocks.preview}
-        _onFilmButtonClick={mocks.functionHandler}
         _changeActiveCard={mocks.functionHandler}
       />
   );
