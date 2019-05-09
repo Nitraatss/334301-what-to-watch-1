@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import App from "./app.jsx";
+import Main from "./main.jsx";
 
 const mocks = {
   films: [
@@ -40,9 +40,9 @@ const mocks = {
   ]
 };
 
-describe(`App:`, () => {
+describe(`Main:`, () => {
   it(`Correctly renders after relaunch`, () => {
-    const tree = renderer.create(<App films={mocks.films} />).toJSON();
+    const tree = renderer.create(<Main films={mocks.films} />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

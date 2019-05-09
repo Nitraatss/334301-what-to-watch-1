@@ -1,9 +1,12 @@
 // Core
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import App from "./app.jsx";
+import MoviesList from "./moviesList.jsx";
+
+Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
   films: [
@@ -40,10 +43,12 @@ const mocks = {
   ]
 };
 
-describe(`App:`, () => {
-  it(`Correctly renders after relaunch`, () => {
-    const tree = renderer.create(<App films={mocks.films} />).toJSON();
+describe(`MoviesList:`, () => {
+  it(`Should change activeCardIndex state on small-card film index after button click`, () => {
+    const moviesList = mount(<MoviesList films={mocks.films} />);
 
-    expect(tree).toMatchSnapshot();
+    const smallMovieCardButton = moviesList.find(`button`).last();
+    smallMovieCardButton.simulate(`click`);
+    expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
   });
 });
