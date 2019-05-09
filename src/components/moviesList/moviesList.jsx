@@ -3,7 +3,7 @@ import React from "react";
 import {shape, arrayOf, string, func} from "prop-types";
 
 // Components
-import highOrderComponent from "../highOrderComponent/highOrderComponent.jsx";
+import withActiveCard from "../hocs/highOrderComponent.jsx";
 import SmallMovieCard from "../smallMovieCard/smallMovieCard.jsx";
 
 const MoviesList = (props) => {
@@ -36,4 +36,4 @@ MoviesList.propTypes = {
   handelActiveCardChange: func.isRequired
 };
 
-export default highOrderComponent(MoviesList);
+export default withActiveCard(MoviesList);

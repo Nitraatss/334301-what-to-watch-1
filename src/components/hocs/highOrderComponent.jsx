@@ -1,8 +1,8 @@
 // Core
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 
-const highOrderComponent = (WrappedComponent) => {
-  return class HighOrderComponent extends Component {
+const withActiveCard = (WrappedComponent) => {
+  return class WithActiveCard extends PureComponent {
     constructor(props) {
       super(props);
 
@@ -28,4 +28,4 @@ const highOrderComponent = (WrappedComponent) => {
   };
 };
 
-export default highOrderComponent;
+export default withActiveCard;
