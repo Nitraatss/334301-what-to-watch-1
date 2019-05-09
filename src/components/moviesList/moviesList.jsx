@@ -3,7 +3,7 @@ import React from "react";
 import {shape, arrayOf, string, func} from "prop-types";
 
 // Components
-import withActiveCard from "../hocs/highOrderComponent.jsx";
+import withActiveCard from "../hocs/withActiveCard.jsx";
 import SmallMovieCard from "../smallMovieCard/smallMovieCard.jsx";
 
 const MoviesList = (props) => {
