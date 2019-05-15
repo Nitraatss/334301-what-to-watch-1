@@ -266,6 +266,7 @@ Main.propTypes = {
         id: string.isRequired,
         title: string.isRequired,
         genre: arrayOf(string).isRequired,
+        poster: string.isRequired,
         preview: string.isRequired
       })
   ).isRequired
