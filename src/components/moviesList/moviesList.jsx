@@ -16,8 +16,9 @@ const MoviesList = (props) => {
           key={film.id}
           id={film.id}
           title={film.title}
+          poster={film.poster}
           preview={film.preview}
-          onButtonClick={handelActiveCardChange}
+          onSmallCardEnter={handelActiveCardChange}
         />
       ))}
     </div>
@@ -30,6 +31,7 @@ MoviesList.propTypes = {
         id: string.isRequired,
         title: string.isRequired,
         genre: arrayOf(string).isRequired,
+        poster: string.isRequired,
         preview: string.isRequired
       })
   ).isRequired,
