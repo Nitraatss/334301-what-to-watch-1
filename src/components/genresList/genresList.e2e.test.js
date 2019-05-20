@@ -22,9 +22,8 @@ describe(`GenresList:`, () => {
         />
     );
 
-    singleGenre = moviesList.find(`a`).last();
-
-    singleGenre.simulate(`click`);
+    const singleGenre = genresList.find(`a`).last();
+    singleGenre.simulate(`click`, {preventDefault() {}});
     expect(mocks.functionHandler).toHaveBeenCalledTimes(1);
   });
 });

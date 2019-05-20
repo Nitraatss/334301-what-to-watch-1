@@ -21,6 +21,27 @@ class SmallMovieCard extends PureComponent {
     checkVideoLoadStatus(this._videoRef.current.video.current);
   }
 
+  render() {
+    const {title, poster, preview} = this.props;
+
+    return (
+      <article
+        className="small-movie-card catalog__movies-card"
+        onMouseEnter={this._handelMouseEnter}
+        onMouseLeave={this._handelMouseLeave}
+      >
+        <div className="small-movie-card__image">
+          <Videoplayer preview={preview} poster={poster} ref={this._videoRef} />
+        </div>
+        <h3 className="small-movie-card__title">
+          <a className="small-movie-card__link" href="movie-page.html">
+            {title}
+          </a>
+        </h3>
+      </article>
+    );
+  }
+
   _handelMouseEnter() {
     const {id, onSmallCardEnter, getVideoLoadStatus} = this.props;
 
@@ -41,27 +62,6 @@ class SmallMovieCard extends PureComponent {
       clearTimeout(this.timer);
       this._videoRef.current.video.current.load();
     }
-  }
-
-  render() {
-    const {title, poster, preview} = this.props;
-
-    return (
-      <article
-        className="small-movie-card catalog__movies-card"
-        onMouseEnter={this._handelMouseEnter}
-        onMouseLeave={this._handelMouseLeave}
-      >
-        <div className="small-movie-card__image">
-          <Videoplayer preview={preview} poster={poster} ref={this._videoRef} />
-        </div>
-        <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">
-            {title}
-          </a>
-        </h3>
-      </article>
-    );
   }
 }
 

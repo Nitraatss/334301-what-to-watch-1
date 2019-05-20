@@ -6,12 +6,12 @@ const initialState = {
 };
 
 const ActionCreator = {
-  changeGenre: (newGenre) => ({
+  changeGenre: (newGenre = `All genres`) => ({
     type: `CHANGE_GENRE`,
     payload: newGenre
   }),
 
-  changeFilms: (newGenre) => {
+  changeFilms: (newGenre = `All genres`) => {
     if (newGenre === `All genres`) {
       return {
         type: `SHOW_ALL`
@@ -27,24 +27,28 @@ const ActionCreator = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case `CHANGE_GENRE`:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         activeGenre: action.payload
-      });
+      };
 
     case `CHANGE_FILMS`:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         films: films.filter((film) => {
           return film.genre.some((genre) => {
             return genre === state.activeGenre;
           });
         })
-      });
+      };
 
     case `SHOW_ALL`:
-      return Object.assign({}, initialState);
+      return {
+        ...initialState
+      };
   }
 
   return state;
 };
 
-export {ActionCreator, reducer};
+export { ActionCreator, reducer };
