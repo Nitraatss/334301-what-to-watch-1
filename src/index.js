@@ -10,9 +10,6 @@ import App from "./components/app/app.jsx";
 // Reducer
 import {reducer} from "./reducer";
 
-// Mocks
-import films from "./mocks/films.js";
-
 const init = () => {
   const store = createStore(reducer);
 
