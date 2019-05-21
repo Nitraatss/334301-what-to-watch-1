@@ -1,4 +1,4 @@
-import {ActionCreator, reducer} from "./reducer";
+import {actionChangeGenre, actionChangeFilms, reducer} from "./reducer";
 
 const mocks = {
   films: [
@@ -42,27 +42,27 @@ const mocks = {
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing genre returns correct action`, () => {
-    expect(ActionCreator.changeGenre()).toEqual({
+    expect(actionChangeGenre()).toEqual({
       type: `CHANGE_GENRE`,
       payload: `All genres`
     });
   });
 
   it(`Action creator for changing genre returns payload with new genre`, () => {
-    expect(ActionCreator.changeGenre(`Some genre`)).toEqual({
+    expect(actionChangeGenre(`Some genre`)).toEqual({
       type: `CHANGE_GENRE`,
       payload: `Some genre`
     });
   });
 
   it(`Action creator for changing films returns action to change films if choosed some genre`, () => {
-    expect(ActionCreator.changeFilms(`Some genre`)).toEqual({
+    expect(actionChangeFilms(`Some genre`)).toEqual({
       type: `CHANGE_FILMS`
     });
   });
 
   it(`Action creator for changing films returns action to show all films if choosed 'All genres' genre`, () => {
-    expect(ActionCreator.changeFilms(`All genres`)).toEqual({
+    expect(actionChangeFilms(`All genres`)).toEqual({
       type: `SHOW_ALL`
     });
   });

@@ -4,7 +4,7 @@ import {arrayOf, shape, string, func} from "prop-types";
 import {connect} from "react-redux";
 
 // Reducer
-import {ActionCreator} from "../../reducer";
+import {actionChangeGenre, actionChangeFilms} from "../../reducer";
 
 // Components
 import Main from "../main/main.jsx";
@@ -39,8 +39,8 @@ const mapStateToProps = (state, ownProps) =>
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick: (newGenre) => {
-    dispatch(ActionCreator.changeGenre(newGenre));
-    dispatch(ActionCreator.changeFilms(newGenre));
+    dispatch(actionChangeGenre(newGenre));
+    dispatch(actionChangeFilms(newGenre));
   }
 });
 

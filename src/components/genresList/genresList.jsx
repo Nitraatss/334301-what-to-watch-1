@@ -2,21 +2,11 @@
 import React from "react";
 import {string, func} from "prop-types";
 
+// Mocks
+import genres from "../../mocks/genres.js";
+
 const GenresList = (props) => {
   const {activeGenre, onGenreClick} = props;
-
-  const genres = [
-    `All genres`,
-    `Comedies`,
-    `Crime`,
-    `Documentary`,
-    `Dramas`,
-    `Horror`,
-    `Kids & Family`,
-    `Romance`,
-    `Sci-Fi`,
-    `Thrillers`
-  ];
 
   return (
     <ul className="catalog__genres-list">
