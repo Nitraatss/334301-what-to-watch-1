@@ -15,7 +15,7 @@ describe(`GenresList:`, () => {
     const tree = renderer
       .create(
           <GenresList
-            activeGenre={mocks.genre}
+            activeItem={mocks.genre}
             onGenreClick={mocks.functionHandler}
           />
       )

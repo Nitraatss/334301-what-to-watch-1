@@ -3,7 +3,7 @@ import React, {PureComponent} from "react";
 import {string, func} from "prop-types";
 
 // Components
-import withVideo from "../hocs/withVideo.jsx";
+import withVideo from "../hocs/withVideo/withVideo.jsx";
 import Videoplayer from "../videoplayer/videoplayer.jsx";
 
 class SmallMovieCard extends PureComponent {

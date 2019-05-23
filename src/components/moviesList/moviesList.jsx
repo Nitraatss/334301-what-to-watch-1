@@ -3,11 +3,11 @@ import React from "react";
 import {shape, arrayOf, string, func} from "prop-types";
 
 // Components
-import withActiveCard from "../hocs/withActiveCard.jsx";
+import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
 import SmallMovieCard from "../smallMovieCard/smallMovieCard.jsx";
 
 const MoviesList = (props) => {
-  const {films, handelActiveCardChange} = props;
+  const {films, changeActiveItem: handelActiveCardChange} = props;
 
   return (
     <div className="catalog__movies-list">
@@ -35,7 +35,9 @@ MoviesList.propTypes = {
         preview: string.isRequired
       })
   ).isRequired,
-  handelActiveCardChange: func.isRequired
+  changeActiveItem: func.isRequired
 };
 
-export default withActiveCard(MoviesList);
+export {MoviesList};
+
+export default withActiveItem(MoviesList);

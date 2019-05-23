@@ -10,16 +10,16 @@ const actionChangeGenre = (newGenre = `All genres`) => ({
   payload: newGenre
 });
 
-const actionChangeFilms = (newGenre = `All genres`) => {
-  if (newGenre === `All genres`) {
-    return {
-      type: `SHOW_ALL`
-    };
-  } else {
-    return {
-      type: `CHANGE_FILMS`
-    };
-  }
+const actionChangeFilms = () => {
+  return {
+    type: `CHANGE_FILMS`
+  };
+};
+
+const actionShowAllFilms = () => {
+  return {
+    type: `SHOW_ALL`
+  };
 };
 
 const reducer = (state = initialState, action) => {
@@ -45,4 +45,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {actionChangeGenre, actionChangeFilms, reducer};
+export {actionChangeGenre, actionChangeFilms, actionShowAllFilms, reducer};

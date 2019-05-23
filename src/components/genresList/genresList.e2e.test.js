@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
@@ -10,14 +10,15 @@ Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
   genre: `All genres`,
+  anotherGenre: `Some genre`,
   functionHandler: jest.fn()
 };
 
 describe(`GenresList:`, () => {
   it(`Genre should run callback on mouse click`, () => {
-    const genresList = shallow(
+    const genresList = mount(
         <GenresList
-          activeGenre={mocks.genre}
+          activeItem={mocks.genre}
           onGenreClick={mocks.functionHandler}
         />
     );
@@ -25,5 +26,18 @@ describe(`GenresList:`, () => {
     const singleGenre = genresList.find(`a`).last();
     singleGenre.simulate(`click`, {preventDefault() {}});
     expect(mocks.functionHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it(`Should change activeItem state on clicked genre`, () => {
+    const genresList = mount(
+        <GenresList
+          activeItem={mocks.genre}
+          onGenreClick={mocks.functionHandler}
+        />
+    );
+
+    const singleGenre = genresList.find(`a`).last();
+    singleGenre.simulate(`click`, {preventDefault() {}});
+    expect(genresList.state(`activeItem`)).toEqual(`Thrillers`);
   });
 });
