@@ -45,15 +45,16 @@ const mocks = {
       poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     }
-  ]
+  ],
+  functionHandler: jest.fn()
 };
 
 describe(`MoviesList:`, () => {
-  it(`Should change activeCardIndex state on small-card film index after mouse enter card`, () => {
+  it(`Should change activeItem state on small-card film index after mouse enter card`, () => {
     const moviesList = mount(<MoviesList films={mocks.films} />);
 
     const smallMovieCard = moviesList.find(`.small-movie-card`).last();
     smallMovieCard.simulate(`mouseenter`);
-    expect(moviesList.state(`activeCardIndex`)).toEqual(`5`);
+    expect(moviesList.state(`activeItem`)).toEqual(`5`);
   });
 });
