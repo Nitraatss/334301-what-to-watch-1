@@ -45,7 +45,6 @@ const actionFormGenres = (loadedFilms) => {
 };
 
 const formFilms = (films) => {
-  console.log(films);
   return films.map((film) => {
     return {
       id: film.id,
@@ -75,9 +74,8 @@ const formGenres = (films) => {
 const Operation = {
   loadFilms: () => (dispatch, _getState, api) => {
     return api.get(`/films`).then((response) => {
-      const newFilms = formFilms(response.data);
-      dispatch(actionLoadFilms(newFilms));
-      dispatch(actionFormGenres(newFilms));
+      dispatch(actionLoadFilms(response.data));
+      dispatch(actionFormGenres(response.data));
     });
   }
 };
@@ -102,9 +100,11 @@ const reducer = (state = initialState, action) => {
       });
 
     case ActionType.LOAD_FILMS:
+      const formedFilms = formFilms(action.payload);
+
       return Object.assign({}, state, {
-        films: action.payload,
-        loadedFilms: action.payload
+        films: formedFilms,
+        loadedFilms: formedFilms
       });
 
     case ActionType.FORM_GENRES:
@@ -117,10 +117,13 @@ const reducer = (state = initialState, action) => {
 };
 
 export {
+  formFilms,
+  formGenres,
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms,
   actionLoadFilms,
+  actionFormGenres,
   ActionType,
   Operation,
   reducer

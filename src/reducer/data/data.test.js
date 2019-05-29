@@ -1,7 +1,15 @@
+import MockAdapter from "axios-mock-adapter";
+import {createAPI} from "../../api";
 import {
+  formFilms,
+  formGenres,
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms,
+  actionLoadFilms,
+  actionFormGenres,
+  ActionType,
+  Operation,
   reducer
 } from "./data.js";
 
@@ -9,41 +17,95 @@ const mocks = {
   films: [
     {
       id: 1,
-      title: `John Wick`,
+      name: `John Wick`,
+      genre: `Crime`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
+    },
+    {
+      id: 2,
+      name: `Killers Bodyguard`,
+      genre: `Comedies`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+    },
+    {
+      id: 3,
+      name: `Star Wars`,
+      genre: `Sci-Fi`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
+    },
+    {
+      id: 4,
+      name: `The Grand Budapest Hotel`,
+      genre: `Dramas`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
+    },
+    {
+      id: 5,
+      name: `The Cabin in the Woods`,
+      genre: `Thrillers`,
+      poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+      preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
+    }
+  ],
+  loadedFilms: [
+    {
+      id: 1,
+      name: `John Wick`,
       genre: `Crime`,
       preview_image: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview_video_link: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     },
     {
       id: 2,
-      title: `Killers Bodyguard`,
+      name: `Killers Bodyguard`,
       genre: `Comedies`,
       preview_image: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview_video_link: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
     },
     {
       id: 3,
-      title: `Star Wars`,
+      name: `Star Wars`,
       genre: `Sci-Fi`,
       preview_image: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview_video_link: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     },
     {
       id: 4,
-      title: `The Grand Budapest Hotel`,
+      name: `The Grand Budapest Hotel`,
       genre: `Dramas`,
       preview_image: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview_video_link: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`
     },
     {
       id: 5,
-      title: `The Cabin in the Woods`,
+      name: `The Cabin in the Woods`,
       genre: `Thrillers`,
       preview_image: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
       preview_video_link: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     }
   ]
 };
+
+describe(`Business logic is correct`, () => {
+  it(`Form films array of objects after loaded data`, () => {
+    expect(formFilms(mocks.loadedFilms)).toEqual(mocks.films);
+  });
+
+  it(`Form sorted genres array with All genres at first place after films loaded`, () => {
+    expect(formGenres(mocks.loadedFilms)).toEqual([
+      `All genres`,
+      `Comedies`,
+      `Crime`,
+      `Dramas`,
+      `Sci-Fi`,
+      `Thrillers`
+    ]);
+  });
+});
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing genre returns correct action`, () => {
@@ -71,13 +133,43 @@ describe(`Action creators work correctly`, () => {
       type: `SHOW_ALL`
     });
   });
+
+  it(`Action creator for loading films returns correct action`, () => {
+    expect(actionLoadFilms([])).toEqual({
+      type: ActionType.LOAD_FILMS,
+      payload: []
+    });
+  });
+
+  it(`Action creator for loading films returns payload with new films`, () => {
+    expect(actionLoadFilms(mocks.loadedFilms)).toEqual({
+      type: ActionType.LOAD_FILMS,
+      payload: mocks.loadedFilms
+    });
+  });
+
+  it(`Action creator for forming genres array returns correct action`, () => {
+    expect(actionFormGenres([])).toEqual({
+      type: ActionType.FORM_GENRES,
+      payload: []
+    });
+  });
+
+  it(`Action creator for forming genres array returns  payload with films`, () => {
+    expect(actionFormGenres(mocks.loadedFilms)).toEqual({
+      type: ActionType.FORM_GENRES,
+      payload: mocks.loadedFilms
+    });
+  });
 });
 
 describe(`Reducer works correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(reducer(undefined, {})).toEqual({
       activeGenre: `All genres`,
-      films: mocks.films
+      films: [],
+      loadedFilms: [],
+      genres: []
     });
   });
 
@@ -86,16 +178,20 @@ describe(`Reducer works correctly`, () => {
         reducer(
             {
               activeGenre: `All genres`,
-              films: mocks.films
+              films: [],
+              loadedFilms: [],
+              genres: []
             },
             {
-              type: `CHANGE_GENRE`,
+              type: ActionType.CHANGE_GENRE,
               payload: `Test Genre`
             }
         )
     ).toEqual({
       activeGenre: `Test Genre`,
-      films: mocks.films
+      films: [],
+      loadedFilms: [],
+      genres: []
     });
   });
 
@@ -104,18 +200,22 @@ describe(`Reducer works correctly`, () => {
         reducer(
             {
               activeGenre: `Sci-Fi`,
-              films: mocks.films
+              films: mocks.films,
+              loadedFilms: mocks.films,
+              genres: []
             },
             {
-              type: `CHANGE_FILMS`
+              type: ActionType.CHANGE_FILMS
             }
         )
     ).toEqual({
       activeGenre: `Sci-Fi`,
+      loadedFilms: mocks.films,
+      genres: [],
       films: [
         {
-          id: `3`,
-          title: `Star Wars`,
+          id: 3,
+          name: `Star Wars`,
           genre: `Sci-Fi`,
           poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
           preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
@@ -124,16 +224,18 @@ describe(`Reducer works correctly`, () => {
     });
   });
 
-  it(`Reducer should return to initial state if choosed 'All genres' genre`, () => {
+  it(`Reducer should all films if choosed 'All genres' genre`, () => {
     expect(
         reducer(
             {
-              activeGenre: `Crime`,
+              activeGenre: `Sci-Fi`,
+              loadedFilms: mocks.films,
+              genres: [],
               films: [
                 {
-                  id: `1`,
-                  title: `John Wick`,
-                  genre: `Crime`,
+                  id: 3,
+                  name: `Star Wars`,
+                  genre: `Sci-Fi`,
                   poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
                   preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
                 }
@@ -144,8 +246,23 @@ describe(`Reducer works correctly`, () => {
             }
         )
     ).toEqual({
-      activeGenre: `All genres`,
-      films: mocks.films
+      activeGenre: `Sci-Fi`,
+      films: mocks.films,
+      loadedFilms: mocks.films,
+      genres: []
+    });
+  });
+
+  it(`Should make a correct API call to /films`, function () {
+    const dispatch = jest.fn();
+    const api = createAPI(dispatch);
+    const apiMock = new MockAdapter(api);
+    const filmsLoader = Operation.loadFilms();
+
+    apiMock.onGet(`/films`).reply(200, [{fake: true}]);
+
+    return filmsLoader(dispatch, jest.fn(), api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
     });
   });
 });
