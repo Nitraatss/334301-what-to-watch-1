@@ -223,8 +223,8 @@ Main.propTypes = {
         id: number.isRequired,
         name: string.isRequired,
         genre: string.isRequired,
-        background_image: string.isRequired,
-        preview_video_link: string.isRequired
+        poster: string.isRequired,
+        preview: string.isRequired
       })
   ).isRequired
 };

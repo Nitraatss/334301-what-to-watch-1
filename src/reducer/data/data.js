@@ -44,13 +44,17 @@ const actionFormGenres = (loadedFilms) => {
   };
 };
 
-const Operation = {
-  loadFilms: () => (dispatch, _getState, api) => {
-    return api.get(`/films`).then((response) => {
-      dispatch(actionLoadFilms(response.data));
-      dispatch(actionFormGenres(response.data));
-    });
-  }
+const formFilms = (films) => {
+  console.log(films);
+  return films.map((film) => {
+    return {
+      id: film.id,
+      name: film.name,
+      genre: film.genre,
+      poster: film.preview_image,
+      preview: film.preview_video_link
+    };
+  });
 };
 
 const formGenres = (films) => {
@@ -66,6 +70,16 @@ const formGenres = (films) => {
   newGenres.unshift(`All genres`);
 
   return newGenres;
+};
+
+const Operation = {
+  loadFilms: () => (dispatch, _getState, api) => {
+    return api.get(`/films`).then((response) => {
+      const newFilms = formFilms(response.data);
+      dispatch(actionLoadFilms(newFilms));
+      dispatch(actionFormGenres(newFilms));
+    });
+  }
 };
 
 const reducer = (state = initialState, action) => {

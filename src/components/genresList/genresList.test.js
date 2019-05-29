@@ -6,7 +6,19 @@ import renderer from "react-test-renderer";
 import GenresList from "./genresList.jsx";
 
 const mocks = {
-  genre: `All genres`,
+  genres: [
+    `All genres`,
+    `Comedies`,
+    `Crime`,
+    `Documentary`,
+    `Dramas`,
+    `Horror`,
+    `Kids & Family`,
+    `Romance`,
+    `Sci-Fi`,
+    `Thrillers`
+  ],
+  activeGenre: `All genres`,
   functionHandler: jest.fn()
 };
 
@@ -15,7 +27,8 @@ describe(`GenresList:`, () => {
     const tree = renderer
       .create(
           <GenresList
-            activeItem={mocks.genre}
+            genres={mocks.genres}
+            activeItem={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}
           />
       )

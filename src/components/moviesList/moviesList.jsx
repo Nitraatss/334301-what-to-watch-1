@@ -16,8 +16,8 @@ const MoviesList = (props) => {
           key={`${film.id}${film.name}`}
           id={film.id}
           title={film.name}
-          poster={film.background_image}
-          preview={film.preview_video_link}
+          poster={film.poster}
+          preview={film.preview}
           onSmallCardEnter={handelActiveCardChange}
         />
       ))}
@@ -31,8 +31,8 @@ MoviesList.propTypes = {
         id: number.isRequired,
         name: string.isRequired,
         genre: string.isRequired,
-        background_image: string.isRequired,
-        preview_video_link: string.isRequired
+        poster: string.isRequired,
+        preview: string.isRequired
       })
   ).isRequired,
   changeActiveItem: func.isRequired

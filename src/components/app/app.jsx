@@ -40,8 +40,8 @@ App.propTypes = {
         id: number.isRequired,
         name: string.isRequired,
         genre: string.isRequired,
-        poster_image: string.isRequired,
-        preview_video_link: string.isRequired
+        poster: string.isRequired,
+        preview: string.isRequired
       })
   ).isRequired
 };
