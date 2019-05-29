@@ -9,7 +9,7 @@ import SmallMovieCard from "./smallMovieCard.jsx";
 Enzyme.configure({adapter: new Adapter()});
 
 const mockedFilm = {
-  id: `1`,
+  id: 1,
   title: `John Wick`,
   poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`

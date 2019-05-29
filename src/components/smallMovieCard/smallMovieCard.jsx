@@ -1,6 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
-import {string, func} from "prop-types";
+import {number, string, func} from "prop-types";
 
 // Components
 import withVideo from "../hocs/withVideo/withVideo.jsx";
@@ -66,7 +66,7 @@ class SmallMovieCard extends PureComponent {
 }
 
 SmallMovieCard.propTypes = {
-  id: string.isRequired,
+  id: number.isRequired,
   title: string.isRequired,
   poster: string.isRequired,
   preview: string.isRequired,

@@ -1,13 +1,13 @@
 // Core
 import React from "react";
-import {shape, arrayOf, string, func} from "prop-types";
+import {shape, array, arrayOf, string, func, number} from "prop-types";
 
 // Components
 import MoviesList from "../moviesList/moviesList.jsx";
 import GenresList from "../genresList/genresList.jsx";
 
 const Main = (props) => {
-  const {films, activeGenre, onGenreClick} = props;
+  const {films, genres, activeGenre, onGenreClick} = props;
 
   return (
     <>
@@ -181,7 +181,11 @@ const Main = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList activeItem={activeGenre} onGenreClick={onGenreClick} />
+          <GenresList
+            genres={genres}
+            activeItem={activeGenre}
+            onGenreClick={onGenreClick}
+          />
 
           <MoviesList films={films} />
 
@@ -213,13 +217,14 @@ const Main = (props) => {
 Main.propTypes = {
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
+  genres: array.isRequired,
   films: arrayOf(
       shape({
-        id: string.isRequired,
-        title: string.isRequired,
-        genre: arrayOf(string).isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        id: number.isRequired,
+        name: string.isRequired,
+        genre: string.isRequired,
+        background_image: string.isRequired,
+        preview_video_link: string.isRequired
       })
   ).isRequired
 };

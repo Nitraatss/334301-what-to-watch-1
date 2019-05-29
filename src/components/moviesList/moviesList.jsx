@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {shape, arrayOf, string, func} from "prop-types";
+import {shape, arrayOf, string, func, number} from "prop-types";
 
 // Components
 import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
@@ -13,11 +13,11 @@ const MoviesList = (props) => {
     <div className="catalog__movies-list">
       {films.map((film) => (
         <SmallMovieCard
-          key={film.id}
+          key={`${film.id}${film.name}`}
           id={film.id}
-          title={film.title}
-          poster={film.poster}
-          preview={film.preview}
+          title={film.name}
+          poster={film.background_image}
+          preview={film.preview_video_link}
           onSmallCardEnter={handelActiveCardChange}
         />
       ))}
@@ -28,11 +28,11 @@ const MoviesList = (props) => {
 MoviesList.propTypes = {
   films: arrayOf(
       shape({
-        id: string.isRequired,
-        title: string.isRequired,
-        genre: arrayOf(string).isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        id: number.isRequired,
+        name: string.isRequired,
+        genre: string.isRequired,
+        background_image: string.isRequired,
+        preview_video_link: string.isRequired
       })
   ).isRequired,
   changeActiveItem: func.isRequired
