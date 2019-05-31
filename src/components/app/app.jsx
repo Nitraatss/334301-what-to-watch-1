@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {arrayOf, array, shape, string, func, number} from "prop-types";
+import {arrayOf, shape, string, func, number} from "prop-types";
 import {connect} from "react-redux";
 
 // Reducer
@@ -8,12 +8,7 @@ import {
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms
-} from "../../reducer/data/data";
-import {
-  getFilms,
-  getGenres,
-  getActiveGenre
-} from "../../reducer/data/selectors";
+} from "../../reducer/filmsData/filmsData";
 
 // Components
 import Main from "../main/main.jsx";
@@ -34,7 +29,7 @@ const App = (props) => {
 App.propTypes = {
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
-  genres: array.isRequired,
+  genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
         id: number.isRequired,
@@ -48,9 +43,9 @@ App.propTypes = {
 
 const mapStateToProps = (state, ownProps) =>
   Object.assign({}, ownProps, {
-    activeGenre: getActiveGenre(state),
-    films: getFilms(state),
-    genres: getGenres(state)
+    activeGenre: state.filmsData.activeGenre,
+    films: state.filmsData.films,
+    genres: state.filmsData.genres
   });
 
 const mapDispatchToProps = (dispatch) => ({

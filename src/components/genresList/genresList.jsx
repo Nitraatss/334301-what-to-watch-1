@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {array, string, func} from "prop-types";
+import {arrayOf, string, func} from "prop-types";
 
 // Components
 import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
@@ -38,7 +38,7 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
-  genres: array.isRequired,
+  genres: arrayOf(string.isRequired),
   activeItem: string.isRequired,
   changeActiveItem: func.isRequired
 };

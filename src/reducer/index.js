@@ -1,10 +1,8 @@
 import {combineReducers} from "redux";
-import {reducer as data} from "./data/data";
-
-import NameSpace from "./name-spaces";
+import {reducer as filmsData} from "./filmsData/filmsData";
 
 const reducer = combineReducers({
-  [NameSpace.DATA]: data
+  filmsData
 });
 
 export default reducer;

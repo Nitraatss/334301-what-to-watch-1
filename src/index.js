@@ -14,7 +14,7 @@ import {createAPI} from "./api";
 
 // Reducer
 import reducer from "./reducer/index.js";
-import {Operation} from "./reducer/data/data";
+import {Operation} from "./reducer/filmsData/filmsData";
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));

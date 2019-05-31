@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {shape, array, arrayOf, string, func, number} from "prop-types";
+import {shape, arrayOf, string, func, number} from "prop-types";
 
 // Components
 import MoviesList from "../moviesList/moviesList.jsx";
@@ -217,7 +217,7 @@ const Main = (props) => {
 Main.propTypes = {
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
-  genres: array.isRequired,
+  genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
         id: number.isRequired,
