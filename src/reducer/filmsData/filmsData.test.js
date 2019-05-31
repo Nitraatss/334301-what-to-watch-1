@@ -51,6 +51,7 @@ const mocks = {
       preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     }
   ],
+  /* eslint-disable no-underscore-dangle */
   loadedFilms: [
     {
       id: 1,
@@ -88,6 +89,7 @@ const mocks = {
       preview_video_link: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
     }
   ]
+  /* eslint-enable */
 };
 
 describe(`Business logic is correct`, () => {
