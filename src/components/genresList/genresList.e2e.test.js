@@ -9,7 +9,19 @@ import GenresList from "./genresList.jsx";
 Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
-  genre: `All genres`,
+  genres: [
+    `All genres`,
+    `Comedies`,
+    `Crime`,
+    `Documentary`,
+    `Dramas`,
+    `Horror`,
+    `Kids & Family`,
+    `Romance`,
+    `Sci-Fi`,
+    `Thrillers`
+  ],
+  activeGenre: `All genres`,
   anotherGenre: `Some genre`,
   functionHandler: jest.fn()
 };
@@ -18,7 +30,8 @@ describe(`GenresList:`, () => {
   it(`Genre should run callback on mouse click`, () => {
     const genresList = mount(
         <GenresList
-          activeItem={mocks.genre}
+          genres={mocks.genres}
+          activeItem={mocks.activeGenre}
           onGenreClick={mocks.functionHandler}
         />
     );
@@ -31,7 +44,8 @@ describe(`GenresList:`, () => {
   it(`Should change activeItem state on clicked genre`, () => {
     const genresList = mount(
         <GenresList
-          activeItem={mocks.genre}
+          genres={mocks.genres}
+          activeItem={mocks.activeGenre}
           onGenreClick={mocks.functionHandler}
         />
     );

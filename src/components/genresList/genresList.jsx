@@ -1,15 +1,16 @@
 // Core
 import React from "react";
-import {string, func} from "prop-types";
+import {arrayOf, string, func} from "prop-types";
 
 // Components
 import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
 
-// Mocks
-import genres from "../../mocks/genres.js";
-
 const GenresList = (props) => {
-  const {activeItem: activeGenre, changeActiveItem: handelGenreClick} = props;
+  const {
+    activeItem: activeGenre,
+    changeActiveItem: handelGenreClick,
+    genres
+  } = props;
 
   return (
     <ul className="catalog__genres-list">
@@ -37,6 +38,7 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
+  genres: arrayOf(string.isRequired),
   activeItem: string.isRequired,
   changeActiveItem: func.isRequired
 };

@@ -6,7 +6,7 @@ import renderer from "react-test-renderer";
 import SmallMovieCard from "./smallMovieCard.jsx";
 
 const mocks = {
-  id: `1`,
+  id: 1,
   title: `John Wick`,
   poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
