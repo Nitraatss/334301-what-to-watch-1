@@ -1,13 +1,51 @@
 // Core
 import React from "react";
-import {shape, arrayOf, string, func, number} from "prop-types";
+import {shape, arrayOf, string, func, number, bool} from "prop-types";
 
 // Components
 import MoviesList from "../moviesList/moviesList.jsx";
 import GenresList from "../genresList/genresList.jsx";
 
 const Main = (props) => {
-  const {films, genres, activeGenre, onGenreClick} = props;
+  const {
+    films,
+    genres,
+    activeGenre,
+    onGenreClick,
+    authorized,
+    changeScreen,
+    userAvatar,
+    userName
+  } = props;
+
+  const _handelSignInClick = (evt) => {
+    evt.preventDefault();
+    changeScreen(`login`);
+  };
+
+  const _formUserBlock = () => {
+    if (!authorized) {
+      return (
+        <div className="user-block">
+          <a
+            href="sign-in.html"
+            className="user-block__link"
+            onClick={_handelSignInClick}
+          >
+            Sign in
+          </a>
+        </div>
+      );
+    } else {
+      return (
+        <div className="user-block">
+          <div className="user-block__avatar">
+            <img src={userAvatar} alt={userName} width="63" height="63" />
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
@@ -122,16 +160,7 @@ const Main = (props) => {
             </a>
           </div>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img
-                src="img/avatar.jpg"
-                alt="User avatar"
-                width="63"
-                height="63"
-              />
-            </div>
-          </div>
+          {_formUserBlock()}
         </header>
 
         <div className="movie-card__wrap">
@@ -215,8 +244,10 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
+  authorized: bool.isRequired,
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
+  changeScreen: func.isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
@@ -226,7 +257,9 @@ Main.propTypes = {
         poster: string.isRequired,
         preview: string.isRequired
       })
-  ).isRequired
+  ).isRequired,
+  userAvatar: string,
+  userName: string
 };
 
 export default Main;

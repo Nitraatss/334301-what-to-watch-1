@@ -64,6 +64,10 @@ describe(`Main:`, () => {
     const tree = renderer
       .create(
           <Main
+            authorized={false}
+            changeScreen={mocks.functionHandler}
+            userAvatar={`ava`}
+            userName={`name`}
             films={mocks.films}
             activeGenre={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}

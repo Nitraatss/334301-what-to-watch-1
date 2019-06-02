@@ -56,6 +56,12 @@ const mocks = {
     `Thrillers`
   ],
   activeGenre: `All genres`,
+  currentUser: {
+    userId: 1,
+    userEmail: `ema@ema.ru`,
+    userName: `name`,
+    userAvatar: `ava`
+  },
   functionHandler: jest.fn()
 };
 
@@ -64,8 +70,10 @@ describe(`App:`, () => {
     const tree = renderer
       .create(
           <App
+            authorized={true}
             films={mocks.films}
             genres={mocks.genres}
+            currentUser={mocks.currentUser}
             activeGenre={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}
           />

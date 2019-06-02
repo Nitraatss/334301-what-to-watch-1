@@ -4,7 +4,7 @@
   "private": true,
   "description": "Личный проект «Что посмотреть» от HTML Academy",
   "scripts": {
-    "eslint": "eslint src/**/*.js src/**/*.jsx",
+    "eslint": "./node_modules/.bin/eslint src/**/*.js src/**/*.jsx",
     "test": "npm run eslint && jest",
     "build": "webpack --mode development",
     "start": "webpack-dev-server"
