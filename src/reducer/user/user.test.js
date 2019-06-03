@@ -3,6 +3,7 @@ import {createAPI} from "../../api";
 import {
   actionChangeAuthorizationRequestStatus,
   actionChangeAuthorizationProcessStatus,
+  actionChangeAuthorizationStatus,
   actionSetUserInfo,
   ActionType,
   Operation,
@@ -22,13 +23,27 @@ const mocks = {
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing authorization status return correct action`, () => {
+    expect(actionChangeAuthorizationStatus(false)).toEqual({
+      type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+      payload: false
+    });
+  });
+
+  it(`Action creator for changing authorization status return correct payload`, () => {
+    expect(actionChangeAuthorizationStatus(true)).toEqual({
+      type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+      payload: true
+    });
+  });
+
+  it(`Action creator for changing authorization request status return correct action`, () => {
     expect(actionChangeAuthorizationRequestStatus(false)).toEqual({
       type: ActionType.CHANGE_AUTHORIZATION_REQUEST_STATUS,
       payload: false
     });
   });
 
-  it(`Action creator for changing authorization status return correct payload`, () => {
+  it(`Action creator for changing authorization request status return correct payload`, () => {
     expect(actionChangeAuthorizationRequestStatus(true)).toEqual({
       type: ActionType.CHANGE_AUTHORIZATION_REQUEST_STATUS,
       payload: true
@@ -69,6 +84,39 @@ describe(`Reducer works correctly`, () => {
     expect(reducer(undefined, {})).toEqual({
       isAuthorizationRequired: false,
       authorizationFailed: false,
+      authorized: false,
+      currentUser: {
+        userId: 1,
+        userEmail: ``,
+        userName: ``,
+        userAvatar: ``
+      }
+    });
+  });
+
+  it(`Reducer should change authorized to given value`, () => {
+    expect(
+        reducer(
+            {
+              isAuthorizationRequired: false,
+              authorizationFailed: false,
+              authorized: false,
+              currentUser: {
+                userId: 1,
+                userEmail: ``,
+                userName: ``,
+                userAvatar: ``
+              }
+            },
+            {
+              type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+              payload: true
+            }
+        )
+    ).toEqual({
+      isAuthorizationRequired: false,
+      authorizationFailed: false,
+      authorized: true,
       currentUser: {
         userId: 1,
         userEmail: ``,
@@ -84,6 +132,7 @@ describe(`Reducer works correctly`, () => {
             {
               isAuthorizationRequired: false,
               authorizationFailed: false,
+              authorized: false,
               currentUser: {
                 userId: 1,
                 userEmail: ``,
@@ -99,6 +148,7 @@ describe(`Reducer works correctly`, () => {
     ).toEqual({
       isAuthorizationRequired: true,
       authorizationFailed: false,
+      authorized: false,
       currentUser: {
         userId: 1,
         userEmail: ``,
@@ -114,6 +164,7 @@ describe(`Reducer works correctly`, () => {
             {
               isAuthorizationRequired: false,
               authorizationFailed: false,
+              authorized: false,
               currentUser: {
                 userId: 1,
                 userEmail: ``,
@@ -129,6 +180,7 @@ describe(`Reducer works correctly`, () => {
     ).toEqual({
       isAuthorizationRequired: false,
       authorizationFailed: true,
+      authorized: false,
       currentUser: {
         userId: 1,
         userEmail: ``,
@@ -147,7 +199,7 @@ describe(`Reducer works correctly`, () => {
     apiMock.onPost(`/login`).reply(200, [{fake: true}]);
 
     return filmsLoader(dispatch, jest.fn(), api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledTimes(3);
     });
   });
 });
