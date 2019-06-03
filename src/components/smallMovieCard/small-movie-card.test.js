@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import SmallMovieCard from "./smallMovieCard.jsx";
+import SmallMovieCard from "./small-movie-card.jsx";
 
 const mocks = {
   id: 1,

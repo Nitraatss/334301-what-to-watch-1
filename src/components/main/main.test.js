@@ -64,10 +64,14 @@ describe(`Main:`, () => {
     const tree = renderer
       .create(
           <Main
+            authorized={false}
+            userAvatar={`ava`}
+            userName={`name`}
             films={mocks.films}
             activeGenre={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}
             genres={mocks.genres}
+            showLogIn={mocks.functionHandler}
           />
       )
       .toJSON();

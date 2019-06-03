@@ -4,7 +4,7 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import SmallMovieCard from "./smallMovieCard.jsx";
+import SmallMovieCard from "./small-movie-card.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 

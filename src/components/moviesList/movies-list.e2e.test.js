@@ -4,7 +4,7 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import MoviesList from "./moviesList.jsx";
+import MoviesList from "./movies-list.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 

@@ -3,7 +3,7 @@ import React from "react";
 import {arrayOf, string, func} from "prop-types";
 
 // Components
-import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
+import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
 const GenresList = (props) => {
   const {

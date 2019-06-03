@@ -4,7 +4,7 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import GenresList from "./genresList.jsx";
+import GenresList from "./genres-list.jsx";
 
 Enzyme.configure({adapter: new Adapter()});
 

@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import MoviesList from "./moviesList.jsx";
+import MoviesList from "./movies-list.jsx";
 
 const mocks = {
   films: [

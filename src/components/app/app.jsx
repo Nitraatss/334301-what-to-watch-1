@@ -1,6 +1,6 @@
 // Core
-import React from "react";
-import {arrayOf, shape, string, func, number} from "prop-types";
+import React, {PureComponent} from "react";
+import {arrayOf, shape, string, func, number, bool} from "prop-types";
 import {connect} from "react-redux";
 
 // Reducer
@@ -8,27 +8,56 @@ import {
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms
-} from "../../reducer/filmsData/filmsData";
+} from "../../reducer/filmsData/films-data";
+import {actionChangeAuthorizationRequestStatus} from "../../reducer/user/user";
 
 // Components
 import Main from "../main/main.jsx";
+import SignIn from "../signIn/sign-in.jsx";
 
-const App = (props) => {
-  const {films, activeGenre, onGenreClick, genres} = props;
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <Main
-      films={films}
-      genres={genres}
-      activeGenre={activeGenre}
-      onGenreClick={onGenreClick}
-    />
-  );
-};
+  render() {
+    const {
+      authorized,
+      authorizationRequired,
+      films,
+      genres,
+      activeGenre,
+      onGenreClick,
+      currentUser,
+      showLogIn
+    } = this.props;
+
+    const data = {
+      authorized,
+      authorizationRequired,
+      films,
+      genres,
+      activeGenre,
+      onGenreClick,
+      showLogIn,
+      userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
+      userName: currentUser.userName
+    };
+
+    if (!authorizationRequired) {
+      return <Main {...data} />;
+    } else {
+      return <SignIn />;
+    }
+  }
+}
 
 App.propTypes = {
+  authorized: bool.isRequired,
+  authorizationRequired: bool.isRequired,
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
+  showLogIn: func.isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
@@ -38,15 +67,23 @@ App.propTypes = {
         poster: string.isRequired,
         preview: string.isRequired
       })
-  ).isRequired
+  ).isRequired,
+  currentUser: shape({
+    userId: number.isRequired,
+    userEmail: string.isRequired,
+    userName: string.isRequired,
+    userAvatar: string.isRequired
+  })
 };
 
-const mapStateToProps = (state, ownProps) =>
-  Object.assign({}, ownProps, {
-    activeGenre: state.filmsData.activeGenre,
-    films: state.filmsData.films,
-    genres: state.filmsData.genres
-  });
+const mapStateToProps = (state) => ({
+  activeGenre: state.filmsData.activeGenre,
+  films: state.filmsData.films,
+  genres: state.filmsData.genres,
+  authorized: state.user.authorized,
+  authorizationRequired: state.user.isAuthorizationRequired,
+  currentUser: state.user.currentUser
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick: (newGenre) => {
@@ -57,6 +94,10 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(actionChangeFilms());
     }
+  },
+
+  showLogIn: () => {
+    dispatch(actionChangeAuthorizationRequestStatus(true));
   }
 });
 
