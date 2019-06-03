@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api";
 import {
-  actionChangeAuthorizationStatus,
+  actionChangeAuthorizationRequestStatus,
   actionChangeAuthorizationProcessStatus,
   actionSetUserInfo,
   ActionType,
@@ -22,15 +22,15 @@ const mocks = {
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing authorization status return correct action`, () => {
-    expect(actionChangeAuthorizationStatus(false)).toEqual({
-      type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+    expect(actionChangeAuthorizationRequestStatus(false)).toEqual({
+      type: ActionType.CHANGE_AUTHORIZATION_REQUEST_STATUS,
       payload: false
     });
   });
 
   it(`Action creator for changing authorization status return correct payload`, () => {
-    expect(actionChangeAuthorizationStatus(true)).toEqual({
-      type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+    expect(actionChangeAuthorizationRequestStatus(true)).toEqual({
+      type: ActionType.CHANGE_AUTHORIZATION_REQUEST_STATUS,
       payload: true
     });
   });
@@ -92,7 +92,7 @@ describe(`Reducer works correctly`, () => {
               }
             },
             {
-              type: ActionType.CHANGE_AUTHORIZATION_STATUS,
+              type: ActionType.CHANGE_AUTHORIZATION_REQUEST_STATUS,
               payload: true
             }
         )

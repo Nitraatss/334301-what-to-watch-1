@@ -9,7 +9,7 @@ import {
   actionChangeFilms,
   actionShowAllFilms
 } from "../../reducer/filmsData/films-data";
-import {actionChangeAuthorizationStatus} from "../../reducer/user/user";
+import {actionChangeAuthorizationRequestStatus} from "../../reducer/user/user";
 
 // Components
 import Main from "../main/main.jsx";
@@ -23,6 +23,7 @@ class App extends PureComponent {
   render() {
     const {
       authorized,
+      authorizationRequired,
       films,
       genres,
       activeGenre,
@@ -33,6 +34,7 @@ class App extends PureComponent {
 
     const data = {
       authorized,
+      authorizationRequired,
       films,
       genres,
       activeGenre,
@@ -42,7 +44,7 @@ class App extends PureComponent {
       userName: currentUser.userName
     };
 
-    if (authorized) {
+    if (!authorizationRequired) {
       return <Main {...data} />;
     } else {
       return <SignIn />;
@@ -52,6 +54,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   authorized: bool.isRequired,
+  authorizationRequired: bool.isRequired,
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
   showLogIn: func.isRequired,
@@ -77,7 +80,8 @@ const mapStateToProps = (state) => ({
   activeGenre: state.filmsData.activeGenre,
   films: state.filmsData.films,
   genres: state.filmsData.genres,
-  authorized: state.user.isAuthorizationRequired,
+  authorized: state.user.authorized,
+  authorizationRequired: state.user.isAuthorizationRequired,
   currentUser: state.user.currentUser
 });
 
@@ -92,8 +96,8 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
 
-  showLogIn: (status) => {
-    dispatch(actionChangeAuthorizationStatus(status));
+  showLogIn: () => {
+    dispatch(actionChangeAuthorizationRequestStatus(true));
   }
 });
 

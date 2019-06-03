@@ -24,55 +24,6 @@ class SignIn extends PureComponent {
     this._setMessage = this._setMessage.bind(this);
   }
 
-  _handelFormSubmit(evt) {
-    evt.preventDefault();
-    const {
-      changeAuthorizationStatus,
-      validateMail,
-      validatePassword
-    } = this.props;
-
-    const mailIsValid = validateMail(this._emailRef.current.value);
-    const passwordIsValid = validatePassword(this._passwordRef.current.value);
-
-    if (passwordIsValid && mailIsValid) {
-      const userInfo = {
-        email: this._emailRef.current.value,
-        password: this._passwordRef.current.value
-      };
-
-      changeAuthorizationStatus(userInfo);
-    }
-  }
-
-  _setMessage() {
-    const {emailError, passwordError, authorizationFailed} = this.props;
-
-    if (emailError || passwordError || authorizationFailed) {
-      let message;
-
-      if (emailError && passwordError) {
-        message = `Please correctly fill both fields`;
-      } else if (emailError) {
-        message = `Please enter a valid email address`;
-      } else if (passwordError) {
-        message = `Please enter a password`;
-      }
-
-      if (authorizationFailed) {
-        message = `We can’t recognize this email and password combination. Please try again.`;
-      }
-
-      return (
-        <div className="sign-in__message">
-          <p>{message}</p>
-        </div>
-      );
-    }
-
-    return null;
-  }
-
   render() {
     const {emailError, passwordError} = this.props;
 
@@ -256,6 +207,55 @@ class SignIn extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handelFormSubmit(evt) {
+    evt.preventDefault();
+    const {
+      changeAuthorizationStatus,
+      validateMail,
+      validatePassword
+    } = this.props;
+
+    const mailIsValid = validateMail(this._emailRef.current.value);
+    const passwordIsValid = validatePassword(this._passwordRef.current.value);
+
+    if (passwordIsValid && mailIsValid) {
+      const userInfo = {
+        email: this._emailRef.current.value,
+        password: this._passwordRef.current.value
+      };
+
+      changeAuthorizationStatus(userInfo);
+    }
+  }
+
+  _setMessage() {
+    const {emailError, passwordError, authorizationFailed} = this.props;
+
+    if (emailError || passwordError || authorizationFailed) {
+      let message;
+
+      if (emailError && passwordError) {
+        message = `Please correctly fill both fields`;
+      } else if (emailError) {
+        message = `Please enter a valid email address`;
+      } else if (passwordError) {
+        message = `Please enter a password`;
+      }
+
+      if (authorizationFailed) {
+        message = `We can’t recognize this email and password combination. Please try again.`;
+      }
+
+      return (
+        <div className="sign-in__message">
+          <p>{message}</p>
+        </div>
+      );
+    }
+
+    return null;
   }
 }
 

@@ -243,7 +243,7 @@ class Main extends PureComponent {
     evt.preventDefault();
     const {showLogIn} = this.props;
 
-    showLogIn(false);
+    showLogIn();
   }
 }
 

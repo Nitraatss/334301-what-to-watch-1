@@ -70,7 +70,8 @@ describe(`App:`, () => {
     const tree = renderer
       .create(
           <App
-            authorized={true}
+            authorized={false}
+            authorizationRequired={false}
             films={mocks.films}
             genres={mocks.genres}
             currentUser={mocks.currentUser}
