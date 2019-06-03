@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import GenresList from "./genresList.jsx";
+import GenresList from "./genres-list.jsx";
 
 const mocks = {
   genres: [

@@ -13,8 +13,8 @@ import App from "./components/app/app.jsx";
 import {createAPI} from "./api";
 
 // Reducer
-import reducer from "./reducer/index.js";
-import {Operation} from "./reducer/filmsData/filmsData";
+import reducer from "./reducer/index";
+import {Operation} from "./reducer/filmsData/films-data";
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));

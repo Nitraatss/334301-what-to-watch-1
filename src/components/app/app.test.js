@@ -76,6 +76,7 @@ describe(`App:`, () => {
             currentUser={mocks.currentUser}
             activeGenre={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}
+            showLogIn={mocks.functionHandler}
           />
       )
       .toJSON();

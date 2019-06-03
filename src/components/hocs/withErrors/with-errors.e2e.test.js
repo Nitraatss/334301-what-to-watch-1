@@ -4,7 +4,7 @@ import {configure, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 // Component
-import withErrors from "./withErrors.jsx";
+import withErrors from "./with-errors.jsx";
 
 configure({adapter: new Adapter()});
 

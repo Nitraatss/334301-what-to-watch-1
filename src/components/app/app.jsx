@@ -8,77 +8,45 @@ import {
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms
-} from "../../reducer/filmsData/filmsData";
+} from "../../reducer/filmsData/films-data";
+import {actionChangeAuthorizationStatus} from "../../reducer/user/user";
 
 // Components
 import Main from "../main/main.jsx";
-import SignIn from "../signIn/signIn.jsx";
+import SignIn from "../signIn/sign-in.jsx";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      choosedScreen: `main`
-    };
-
-    this._renderScreen = this._renderScreen.bind(this);
-    this.changeScreen = this.changeScreen.bind(this);
   }
 
-  changeScreen(newScreen) {
-    this.setState({
-      choosedScreen: newScreen
-    });
-  }
-
-  _renderScreen() {
+  render() {
     const {
       authorized,
       films,
       genres,
       activeGenre,
       onGenreClick,
-      currentUser
+      currentUser,
+      showLogIn
     } = this.props;
-    const {choosedScreen} = this.state;
 
-    switch (choosedScreen) {
-      case `main`:
-        return (
-          <Main
-            authorized={authorized}
-            films={films}
-            genres={genres}
-            activeGenre={activeGenre}
-            onGenreClick={onGenreClick}
-            changeScreen={this.changeScreen}
-            userAvatar={currentUser.userAvatar}
-            userName={currentUser.userName}
-          />
-        );
+    const data = {
+      authorized,
+      films,
+      genres,
+      activeGenre,
+      onGenreClick,
+      showLogIn,
+      userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
+      userName: currentUser.userName
+    };
 
-      case `login`:
-        return <SignIn changeScreen={this.changeScreen} />;
-
-      default:
-        return (
-          <Main
-            authorized={authorized}
-            films={films}
-            genres={genres}
-            activeGenre={activeGenre}
-            onGenreClick={onGenreClick}
-            changeScreen={this.changeScreen}
-            userAvatar={currentUser.userAvatar}
-            userName={currentUser.userName}
-          />
-        );
+    if (authorized) {
+      return <Main {...data} />;
+    } else {
+      return <SignIn />;
     }
-  }
-
-  render() {
-    return this._renderScreen();
   }
 }
 
@@ -86,6 +54,7 @@ App.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
   onGenreClick: func.isRequired,
+  showLogIn: func.isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
@@ -104,14 +73,13 @@ App.propTypes = {
   })
 };
 
-const mapStateToProps = (state, ownProps) =>
-  Object.assign({}, ownProps, {
-    activeGenre: state.filmsData.activeGenre,
-    films: state.filmsData.films,
-    genres: state.filmsData.genres,
-    authorized: state.user.isAuthorizationRequired,
-    currentUser: state.user.currentUser
-  });
+const mapStateToProps = (state) => ({
+  activeGenre: state.filmsData.activeGenre,
+  films: state.filmsData.films,
+  genres: state.filmsData.genres,
+  authorized: state.user.isAuthorizationRequired,
+  currentUser: state.user.currentUser
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick: (newGenre) => {
@@ -122,6 +90,10 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(actionChangeFilms());
     }
+  },
+
+  showLogIn: (status) => {
+    dispatch(actionChangeAuthorizationStatus(status));
   }
 });
 

@@ -11,7 +11,7 @@ import {
   ActionType,
   Operation,
   reducer
-} from "./filmsData.js";
+} from "./films-data";
 
 const mocks = {
   films: [

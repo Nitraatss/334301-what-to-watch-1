@@ -47,13 +47,11 @@ const Operation = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_AUTHORIZATION_STATUS:
-      console.log(action.payload);
       return Object.assign({}, state, {
         isAuthorizationRequired: action.payload
       });
 
     case ActionType.CHANGE_AUTHORIZATION_PROCESS_STATUS:
-      console.log(action.payload);
       return Object.assign({}, state, {
         authorizationFailed: action.payload
       });

@@ -3,8 +3,8 @@ import React from "react";
 import {shape, arrayOf, string, func, number} from "prop-types";
 
 // Components
-import withActiveItem from "../hocs/withActiveItem/withActiveItem.jsx";
-import SmallMovieCard from "../smallMovieCard/smallMovieCard.jsx";
+import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
+import SmallMovieCard from "../smallMovieCard/small-movie-card.jsx";
 
 const MoviesList = (props) => {
   const {films, changeActiveItem: handelActiveCardChange} = props;

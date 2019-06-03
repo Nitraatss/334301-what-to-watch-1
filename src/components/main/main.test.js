@@ -65,13 +65,13 @@ describe(`Main:`, () => {
       .create(
           <Main
             authorized={false}
-            changeScreen={mocks.functionHandler}
             userAvatar={`ava`}
             userName={`name`}
             films={mocks.films}
             activeGenre={mocks.activeGenre}
             onGenreClick={mocks.functionHandler}
             genres={mocks.genres}
+            showLogIn={mocks.functionHandler}
           />
       )
       .toJSON();

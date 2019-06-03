@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 // Reducer
 import {Operation} from "../../reducer/user/user";
 
-import withErrors from "../hocs/withErrors/withErrors.jsx";
+import withErrors from "../hocs/withErrors/with-errors.jsx";
 
 class SignIn extends PureComponent {
   constructor(props) {
@@ -29,8 +29,7 @@ class SignIn extends PureComponent {
     const {
       changeAuthorizationStatus,
       validateMail,
-      validatePassword,
-      changeScreen
+      validatePassword
     } = this.props;
 
     const mailIsValid = validateMail(this._emailRef.current.value);
@@ -43,7 +42,6 @@ class SignIn extends PureComponent {
       };
 
       changeAuthorizationStatus(userInfo);
-      changeScreen(`main`);
     }
   }
 
@@ -267,14 +265,12 @@ SignIn.propTypes = {
   validatePassword: func.isRequired,
   emailError: bool.isRequired,
   passwordError: bool.isRequired,
-  authorizationFailed: bool.isRequired,
-  changeScreen: func.isRequired
+  authorizationFailed: bool.isRequired
 };
 
-const mapStateToProps = (state, ownProps) =>
-  Object.assign({}, ownProps, {
-    authorizationFailed: state.user.authorizationFailed
-  });
+const mapStateToProps = (state) => ({
+  authorizationFailed: state.user.authorizationFailed
+});
 
 const mapDispatchToProps = (dispatch) => ({
   changeAuthorizationStatus: (user) => {
