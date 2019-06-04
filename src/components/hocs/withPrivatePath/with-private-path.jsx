@@ -15,7 +15,7 @@ const withPrivatePath = (WrappedComponent) => {
       if (authorized) {
         return <WrappedComponent {...this.props} />;
       } else {
-        return <Redirect to="/" />;
+        return <Redirect to="/login" />;
       }
     }
   }
