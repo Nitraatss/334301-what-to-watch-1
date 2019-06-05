@@ -1,8 +1,10 @@
 // Core
 import React, {PureComponent} from "react";
-import {func, bool} from "prop-types";
+import {shape, func, bool} from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
+import {compose} from "redux";
 
 // Reducer
 import {Operation} from "../../reducer/user/user";
@@ -23,6 +25,12 @@ class SignIn extends PureComponent {
 
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
     this._setMessage = this._setMessage.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.authorized) {
+      this.props.history.push(`/`);
+    }
   }
 
   render() {
@@ -266,11 +274,16 @@ SignIn.propTypes = {
   validatePassword: func.isRequired,
   emailError: bool.isRequired,
   passwordError: bool.isRequired,
-  authorizationFailed: bool.isRequired
+  authorizationFailed: bool.isRequired,
+  authorized: bool.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({
-  authorizationFailed: state.user.authorizationFailed
+  authorizationFailed: state.user.authorizationFailed,
+  authorized: state.user.authorized
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -281,7 +294,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 export {SignIn};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withErrors(SignIn));
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withErrors,
+    withRouter
+)(SignIn);

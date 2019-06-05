@@ -1,10 +1,13 @@
 // Core
 import React from "react";
+import {bool, string} from "prop-types";
 
 // Components
 import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 
-const Favorites = () => {
+const Favorites = (props) => {
+  const {userAvatar, userName} = props;
+
   return (
     <>
       <div className="visually-hidden">
@@ -112,12 +115,7 @@ const Favorites = () => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <img
-                src="img/avatar.jpg"
-                alt="User avatar"
-                width="63"
-                height="63"
-              />
+              <img src={userAvatar} alt={userName} width="63" height="63" />
             </div>
           </div>
         </header>
@@ -315,6 +313,12 @@ const Favorites = () => {
       </div>
     </>
   );
+};
+
+Favorites.propTypes = {
+  authorized: bool.isRequired,
+  userAvatar: string.isRequired,
+  userName: string.isRequired
 };
 
 export default withPrivatePath(Favorites);

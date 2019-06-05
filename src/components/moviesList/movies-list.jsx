@@ -7,7 +7,12 @@ import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 import SmallMovieCard from "../smallMovieCard/small-movie-card.jsx";
 
 const MoviesList = (props) => {
-  const {films, changeActiveItem: handelActiveCardChange} = props;
+  const {
+    films,
+    changeActiveItem: handelActiveCardChange,
+    changeGenre,
+    setActiveFilm
+  } = props;
 
   return (
     <div className="catalog__movies-list">
@@ -17,8 +22,11 @@ const MoviesList = (props) => {
           id={film.id}
           title={film.name}
           poster={film.poster}
+          genre={film.genre}
           preview={film.preview}
           onSmallCardEnter={handelActiveCardChange}
+          changeGenre={changeGenre}
+          setActiveFilm={setActiveFilm}
         />
       ))}
     </div>

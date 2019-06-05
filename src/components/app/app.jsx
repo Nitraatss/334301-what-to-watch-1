@@ -8,42 +8,69 @@ import {Switch, Route} from "react-router-dom";
 import {
   actionChangeGenre,
   actionChangeFilms,
-  actionShowAllFilms
+  actionShowAllFilms,
+  actionFormVisibleFilms,
+  actionClearVisibleFilms,
+  actionChangeActiveFilm
 } from "../../reducer/filmsData/films-data";
 
 // Components
 import Main from "../main/main.jsx";
 import SignIn from "../signIn/sign-in.jsx";
 import Favorites from "../favorites/favorites.jsx";
+import MoviePage from "../moviePage/movie-page.jsx";
 
 const App = (props) => {
   const {
     authorized,
     films,
+    visibleFilms,
     genres,
     activeGenre,
-    onGenreClick,
-    currentUser
+    changeGenre,
+    onShowMoreClick,
+    currentUser,
+    activeFilm,
+    setActiveFilm
   } = props;
 
-  const data = {
+  const mainProps = {
     authorized,
     films,
+    visibleFilms,
     genres,
     activeGenre,
-    onGenreClick,
+    changeGenre,
+    onShowMoreClick,
+    activeFilm,
+    setActiveFilm,
     userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
     userName: currentUser.userName
   };
 
+  const favoritesProps = {
+    authorized,
+    userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
+    userName: currentUser.userName
+  };
+
+  const filmProps = {
+    film: activeFilm,
+    activeGenre,
+    setActiveFilm,
+    changeGenre,
+    visibleFilms
+  };
+
   return (
     <Switch>
-      <Route path="/" exact render={() => <Main {...data} />} />
+      <Route path="/" exact render={() => <Main {...mainProps} />} />
       <Route path="/login" render={() => <SignIn />} />
       <Route
         path="/favorites"
-        render={() => <Favorites authorized={authorized} />}
+        render={() => <Favorites {...favoritesProps} />}
       />
+      <Route path="/film/:id" render={() => <MoviePage {...filmProps} />} />
     </Switch>
   );
 };
@@ -51,9 +78,17 @@ const App = (props) => {
 App.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
-  onGenreClick: func.isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
+      shape({
+        id: number.isRequired,
+        name: string.isRequired,
+        genre: string.isRequired,
+        poster: string.isRequired,
+        preview: string.isRequired
+      })
+  ).isRequired,
+  visibleFilms: arrayOf(
       shape({
         id: number.isRequired,
         name: string.isRequired,
@@ -67,19 +102,24 @@ App.propTypes = {
     userEmail: string.isRequired,
     userName: string.isRequired,
     userAvatar: string.isRequired
-  })
+  }),
+  changeGenre: func.isRequired,
+  onShowMoreClick: func.isRequired,
+  setActiveFilm: func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   activeGenre: state.filmsData.activeGenre,
   films: state.filmsData.films,
+  activeFilm: state.filmsData.activeFilm,
+  visibleFilms: state.filmsData.visibleFilms,
   genres: state.filmsData.genres,
   authorized: state.user.authorized,
   currentUser: state.user.currentUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGenreClick: (newGenre) => {
+  changeGenre: (newGenre = `All genres`) => {
     dispatch(actionChangeGenre(newGenre));
 
     if (newGenre === `All genres`) {
@@ -87,6 +127,17 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(actionChangeFilms());
     }
+
+    dispatch(actionClearVisibleFilms());
+    dispatch(actionFormVisibleFilms());
+  },
+
+  onShowMoreClick: () => {
+    dispatch(actionFormVisibleFilms());
+  },
+
+  setActiveFilm: (filmId = null) => {
+    dispatch(actionChangeActiveFilm(filmId));
   }
 });
 

@@ -11,7 +11,7 @@ export const createAPI = () => {
   const onSuccess = (response) => response;
   const onFail = (err) => {
     if (err.status === 403) {
-      history.push(`/login`);
+      history.pushState(null, null, `/login`);
     }
 
     throw err;

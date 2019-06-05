@@ -2,6 +2,8 @@
 import React, {PureComponent} from "react";
 import {shape, arrayOf, string, func, number, bool} from "prop-types";
 import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
+import {compose} from "redux";
 
 // Components
 import MoviesList from "../moviesList/movies-list.jsx";
@@ -12,10 +14,19 @@ class Main extends PureComponent {
     super(props);
 
     this._formUserBlock = this._formUserBlock.bind(this);
+    this._handelAvatarClick = this._handelAvatarClick.bind(this);
+    this._displayShowMore = this._displayShowMore.bind(this);
+    this._handelShowMoreClick = this._handelShowMoreClick.bind(this);
   }
 
   render() {
-    const {films, genres, activeGenre, onGenreClick} = this.props;
+    const {
+      visibleFilms,
+      genres,
+      activeGenre,
+      changeGenre,
+      setActiveFilm
+    } = this.props;
 
     return (
       <>
@@ -183,16 +194,16 @@ class Main extends PureComponent {
             <GenresList
               genres={genres}
               activeItem={activeGenre}
-              onGenreClick={onGenreClick}
+              onGenreClick={changeGenre}
             />
 
-            <MoviesList films={films} />
+            <MoviesList
+              films={visibleFilms}
+              changeGenre={changeGenre}
+              setActiveFilm={setActiveFilm}
+            />
 
-            <div className="catalog__more">
-              <button className="catalog__button" type="button">
-                Show more
-              </button>
-            </div>
+            {this._displayShowMore()}
           </section>
 
           <footer className="page-footer">
@@ -213,6 +224,35 @@ class Main extends PureComponent {
     );
   }
 
+  _handelAvatarClick() {
+    this.props.history.push(`/favorites`);
+  }
+
+  _displayShowMore() {
+    const {films, visibleFilms} = this.props;
+    if (films.length > visibleFilms.length) {
+      return (
+        <div className="catalog__more">
+          <button
+            className="catalog__button"
+            type="button"
+            onClick={this._handelShowMoreClick}
+          >
+            Show more
+          </button>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  _handelShowMoreClick() {
+    const {onShowMoreClick} = this.props;
+
+    onShowMoreClick();
+  }
+
   _formUserBlock() {
     const {authorized, userAvatar, userName} = this.props;
 
@@ -227,7 +267,7 @@ class Main extends PureComponent {
     } else {
       return (
         <div className="user-block">
-          <div className="user-block__avatar">
+          <div className="user-block__avatar" onClick={this._handelAvatarClick}>
             <img src={userAvatar} alt={userName} width="63" height="63" />
           </div>
         </div>
@@ -239,7 +279,9 @@ class Main extends PureComponent {
 Main.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
-  onGenreClick: func.isRequired,
+  changeGenre: func.isRequired,
+  onShowMoreClick: func.isRequired,
+  setActiveFilm: func.isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
@@ -250,8 +292,20 @@ Main.propTypes = {
         preview: string.isRequired
       })
   ).isRequired,
+  visibleFilms: arrayOf(
+      shape({
+        id: number.isRequired,
+        name: string.isRequired,
+        genre: string.isRequired,
+        poster: string.isRequired,
+        preview: string.isRequired
+      })
+  ).isRequired,
   userAvatar: string,
-  userName: string
+  userName: string,
+  history: shape({
+    push: func.isRequired
+  }).isRequired
 };
 
-export default Main;
+export default compose(withRouter)(Main);

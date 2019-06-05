@@ -1,6 +1,9 @@
 // Core
 import React, {PureComponent} from "react";
-import {number, string, func} from "prop-types";
+import {number, string, func, shape} from "prop-types";
+import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
+import {compose} from "redux";
 
 // Components
 import Videoplayer from "../videoplayer/videoplayer.jsx";
@@ -12,10 +15,15 @@ class SmallMovieCard extends PureComponent {
 
     this._handelMouseEnter = this._handelMouseEnter.bind(this);
     this._handelMouseLeave = this._handelMouseLeave.bind(this);
+    this._handelLinkClick = this._handelLinkClick.bind(this);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
 
   render() {
-    const {title, poster, preview} = this.props;
+    const {title, poster, preview, id} = this.props;
 
     return (
       <article
@@ -27,7 +35,12 @@ class SmallMovieCard extends PureComponent {
           <Videoplayer preview={preview} poster={poster} ref={this._videoRef} />
         </div>
         <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">
+          <a
+            className="small-movie-card__link"
+            /* to={`/film/${id}`} */
+            onClick={this._handelLinkClick}
+            params={{id}}
+          >
             {title}
           </a>
         </h3>
@@ -35,8 +48,15 @@ class SmallMovieCard extends PureComponent {
     );
   }
 
+  _handelLinkClick() {
+    const {changeGenre, setActiveFilm, history, genre, id} = this.props;
+    changeGenre(genre);
+    setActiveFilm(id);
+    this.props.history.push(`/film/${id}`, {id});
+  }
+
   _handelMouseEnter() {
-    const {id, onSmallCardEnter} = this.props;
+    const {id, onSmallCardEnter, history} = this.props;
 
     this.timer = setTimeout(
         function () {
@@ -61,7 +81,12 @@ SmallMovieCard.propTypes = {
   title: string.isRequired,
   poster: string.isRequired,
   preview: string.isRequired,
-  onSmallCardEnter: func.isRequired
+  onSmallCardEnter: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired
 };
 
-export default SmallMovieCard;
+export {SmallMovieCard};
+
+export default compose(withRouter)(SmallMovieCard);

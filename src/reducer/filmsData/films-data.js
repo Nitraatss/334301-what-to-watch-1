@@ -1,16 +1,24 @@
+const MAXIMUM_GENRES_NUMBER = 9;
+const MAXIMUN_FILMS_PER_PACK = 20;
+
 const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   CHANGE_FILMS: `CHANGE_FILMS`,
   SHOW_ALL: `SHOW_ALL`,
   LOAD_FILMS: `LOAD_FILMS`,
-  FORM_GENRES: `FORM_GENRES`
+  FORM_GENRES: `FORM_GENRES`,
+  FORM_VISIBLE_FILMS: `FORM_VISIBLE_FILMS`,
+  CLEAR_VISIBLE_FILMS: `CLEAR_VISIBLE_FILMS`,
+  CHANGE_ACTIVE_FILM: `CHANGE_ACTIVE_FILM`
 };
 
 const initialState = {
   activeGenre: `All genres`,
   films: [],
   loadedFilms: [],
-  genres: []
+  visibleFilms: [],
+  genres: [],
+  activeFilm: {}
 };
 
 const actionChangeGenre = (newGenre = `All genres`) => ({
@@ -44,14 +52,74 @@ const actionFormGenres = (loadedFilms) => {
   };
 };
 
+const actionFormVisibleFilms = () => {
+  return {
+    type: ActionType.FORM_VISIBLE_FILMS
+  };
+};
+
+const actionClearVisibleFilms = () => {
+  return {
+    type: ActionType.CLEAR_VISIBLE_FILMS
+  };
+};
+
+const actionChangeActiveFilm = (newFilmId = null) => {
+  return {
+    type: ActionType.CHANGE_ACTIVE_FILM,
+    payload: newFilmId
+  };
+};
+
+const updateVisibleFilms = (allFilms, currentVisibleFilms) => {
+  let visibleFilms = currentVisibleFilms.slice();
+
+  if (visibleFilms.length < allFilms.length) {
+    if (!visibleFilms.length) {
+      if (allFilms.length > MAXIMUN_FILMS_PER_PACK) {
+        visibleFilms = allFilms.slice(0, MAXIMUN_FILMS_PER_PACK);
+      } else {
+        visibleFilms = allFilms.slice(0, allFilms.length);
+      }
+    } else {
+      if (visibleFilms.length + MAXIMUN_FILMS_PER_PACK >= allFilms.length) {
+        visibleFilms = visibleFilms.concat(
+            allFilms.slice(visibleFilms.length, allFilms.length)
+        );
+      } else {
+        visibleFilms = visibleFilms.concat(
+            allFilms.slice(
+                visibleFilms.length,
+                visibleFilms.length + MAXIMUN_FILMS_PER_PACK
+            )
+        );
+      }
+    }
+  }
+
+  return visibleFilms;
+};
+
 const formFilms = (films) => {
   return films.map((film) => {
     return {
-      id: film.id,
-      name: film.name,
+      backgroundColor: film.background_color,
+      backgroundImage: film.background_image,
+      description: film.description,
+      director: film.director,
       genre: film.genre,
+      id: film.id,
+      isFavorite: film.is_favorite,
+      name: film.name,
       poster: film.preview_image,
-      preview: film.preview_video_link
+      posterImage: film.poster_image,
+      preview: film.preview_video_link,
+      rating: film.rating,
+      released: film.released,
+      runTime: film.run_time,
+      scoresCount: film.scores_count,
+      starring: film.starring,
+      videoLink: film.video_link
     };
   });
 };
@@ -59,8 +127,11 @@ const formFilms = (films) => {
 const formGenres = (films) => {
   const newGenres = [];
 
-  films.forEach((film) => {
-    if (!newGenres.some((genre) => genre === film.genre)) {
+  films.forEach((film, counter) => {
+    if (
+      !newGenres.some((genre) => genre === film.genre) &&
+      newGenres.length <= MAXIMUM_GENRES_NUMBER
+    ) {
       newGenres.push(film.genre);
     }
   });
@@ -76,6 +147,8 @@ const Operation = {
     return api.get(`/films`).then((response) => {
       dispatch(actionLoadFilms(response.data));
       dispatch(actionFormGenres(response.data));
+      dispatch(actionFormVisibleFilms());
+      dispatch(actionChangeActiveFilm());
     });
   }
 };
@@ -111,6 +184,32 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         genres: formGenres(action.payload)
       });
+
+    case ActionType.FORM_VISIBLE_FILMS:
+      const newVisibleFilms = updateVisibleFilms(
+          state.films,
+          state.visibleFilms
+      );
+
+      return Object.assign({}, state, {
+        visibleFilms: newVisibleFilms
+      });
+
+    case ActionType.CLEAR_VISIBLE_FILMS:
+      return Object.assign({}, state, {
+        visibleFilms: []
+      });
+
+    case ActionType.CHANGE_ACTIVE_FILM:
+      return Object.assign({}, state, {
+        activeFilm: !action.payload
+          ? state.loadedFilms[1]
+          : state.loadedFilms[
+              state.loadedFilms.findIndex((film) => {
+                return film.id === parseInt(action.payload);
+              })
+          ]
+      });
   }
 
   return state;
@@ -124,6 +223,9 @@ export {
   actionShowAllFilms,
   actionLoadFilms,
   actionFormGenres,
+  actionFormVisibleFilms,
+  actionClearVisibleFilms,
+  actionChangeActiveFilm,
   ActionType,
   Operation,
   reducer
