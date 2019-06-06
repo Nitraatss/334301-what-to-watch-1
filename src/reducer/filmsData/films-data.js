@@ -71,24 +71,25 @@ const actionChangeActiveFilm = (newFilmId = null) => {
   };
 };
 
-const updateVisibleFilms = (allFilms, currentVisibleFilms) => {
+const updateVisibleFilms = (loadedFilms, currentVisibleFilms, activeFilmId) => {
   let visibleFilms = currentVisibleFilms.slice();
+  let filmsPack = loadedFilms.filter((film) => film.id !== activeFilmId);
 
-  if (visibleFilms.length < allFilms.length) {
+  if (visibleFilms.length < filmsPack.length) {
     if (!visibleFilms.length) {
-      if (allFilms.length > MAXIMUN_FILMS_PER_PACK) {
-        visibleFilms = allFilms.slice(0, MAXIMUN_FILMS_PER_PACK);
+      if (filmsPack.length > MAXIMUN_FILMS_PER_PACK) {
+        visibleFilms = filmsPack.slice(0, MAXIMUN_FILMS_PER_PACK);
       } else {
-        visibleFilms = allFilms.slice(0, allFilms.length);
+        visibleFilms = filmsPack.slice(0, filmsPack.length);
       }
     } else {
-      if (visibleFilms.length + MAXIMUN_FILMS_PER_PACK >= allFilms.length) {
+      if (visibleFilms.length + MAXIMUN_FILMS_PER_PACK >= filmsPack.length) {
         visibleFilms = visibleFilms.concat(
-            allFilms.slice(visibleFilms.length, allFilms.length)
+            filmsPack.slice(visibleFilms.length, filmsPack.length)
         );
       } else {
         visibleFilms = visibleFilms.concat(
-            allFilms.slice(
+            filmsPack.slice(
                 visibleFilms.length,
                 visibleFilms.length + MAXIMUN_FILMS_PER_PACK
             )
@@ -124,8 +125,11 @@ const formFilms = (films) => {
   });
 };
 
-const formGenres = (films) => {
+const formGenres = (loadedFilms, activeFilmId) => {
   const newGenres = [];
+  const films = loadedFilms.filter((film) => {
+    return film.id !== activeFilmId;
+  });
 
   films.forEach((film, counter) => {
     if (
@@ -146,9 +150,9 @@ const Operation = {
   loadFilms: () => (dispatch, _getState, api) => {
     return api.get(`/films`).then((response) => {
       dispatch(actionLoadFilms(response.data));
+      dispatch(actionChangeActiveFilm());
       dispatch(actionFormGenres(response.data));
       dispatch(actionFormVisibleFilms());
-      dispatch(actionChangeActiveFilm());
     });
   }
 };
@@ -182,13 +186,14 @@ const reducer = (state = initialState, action) => {
 
     case ActionType.FORM_GENRES:
       return Object.assign({}, state, {
-        genres: formGenres(action.payload)
+        genres: formGenres(action.payload, state.activeFilm.id)
       });
 
     case ActionType.FORM_VISIBLE_FILMS:
       const newVisibleFilms = updateVisibleFilms(
           state.films,
-          state.visibleFilms
+          state.visibleFilms,
+          state.activeFilm.id
       );
 
       return Object.assign({}, state, {

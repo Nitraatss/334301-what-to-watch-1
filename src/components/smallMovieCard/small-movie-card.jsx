@@ -1,7 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
 import {number, string, func, shape} from "prop-types";
-import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 
@@ -37,7 +36,6 @@ class SmallMovieCard extends PureComponent {
         <h3 className="small-movie-card__title">
           <a
             className="small-movie-card__link"
-            /* to={`/film/${id}`} */
             onClick={this._handelLinkClick}
             params={{id}}
           >
@@ -56,7 +54,7 @@ class SmallMovieCard extends PureComponent {
   }
 
   _handelMouseEnter() {
-    const {id, onSmallCardEnter, history} = this.props;
+    const {id} = this.props;
 
     this.timer = setTimeout(
         function () {
@@ -64,8 +62,6 @@ class SmallMovieCard extends PureComponent {
         }.bind(this),
         1000
     );
-
-    onSmallCardEnter(id);
   }
 
   _handelMouseLeave() {
@@ -81,7 +77,6 @@ SmallMovieCard.propTypes = {
   title: string.isRequired,
   poster: string.isRequired,
   preview: string.isRequired,
-  onSmallCardEnter: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired

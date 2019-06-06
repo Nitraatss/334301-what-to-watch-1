@@ -6,6 +6,7 @@ import {withRouter} from "react-router";
 import {compose} from "redux";
 
 // Components
+import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
 import GenresList from "../genresList/genres-list.jsx";
 
@@ -13,8 +14,6 @@ class Main extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._formUserBlock = this._formUserBlock.bind(this);
-    this._handelAvatarClick = this._handelAvatarClick.bind(this);
     this._displayShowMore = this._displayShowMore.bind(this);
     this._handelShowMoreClick = this._handelShowMoreClick.bind(this);
   }
@@ -25,7 +24,8 @@ class Main extends PureComponent {
       genres,
       activeGenre,
       changeGenre,
-      setActiveFilm
+      setActiveFilm,
+      activeFilm
     } = this.props;
 
     return (
@@ -141,25 +141,27 @@ class Main extends PureComponent {
               </a>
             </div>
 
-            {this._formUserBlock()}
+            <UserBlock />
           </header>
 
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
                 <img
-                  src="img/the-grand-budapest-hotel-poster.jpg"
-                  alt="The Grand Budapest Hotel poster"
+                  src={activeFilm.posterImage}
+                  alt={activeFilm.name}
                   width="218"
                   height="327"
                 />
               </div>
 
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+                <h2 className="movie-card__title">{activeFilm.name}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">Drama</span>
-                  <span className="movie-card__year">2014</span>
+                  <span className="movie-card__genre">{activeFilm.genre}</span>
+                  <span className="movie-card__year">
+                    {activeFilm.released}
+                  </span>
                 </p>
 
                 <div className="movie-card__buttons">
@@ -224,13 +226,9 @@ class Main extends PureComponent {
     );
   }
 
-  _handelAvatarClick() {
-    this.props.history.push(`/favorites`);
-  }
-
   _displayShowMore() {
     const {films, visibleFilms} = this.props;
-    if (films.length > visibleFilms.length) {
+    if (films.length - 1 > visibleFilms.length) {
       return (
         <div className="catalog__more">
           <button
@@ -252,32 +250,9 @@ class Main extends PureComponent {
 
     onShowMoreClick();
   }
-
-  _formUserBlock() {
-    const {authorized, userAvatar, userName} = this.props;
-
-    if (!authorized) {
-      return (
-        <div className="user-block">
-          <Link to="/login" className="user-block__link">
-            Sign in
-          </Link>
-        </div>
-      );
-    } else {
-      return (
-        <div className="user-block">
-          <div className="user-block__avatar" onClick={this._handelAvatarClick}>
-            <img src={userAvatar} alt={userName} width="63" height="63" />
-          </div>
-        </div>
-      );
-    }
-  }
 }
 
 Main.propTypes = {
-  authorized: bool.isRequired,
   activeGenre: string.isRequired,
   changeGenre: func.isRequired,
   onShowMoreClick: func.isRequired,
@@ -301,8 +276,6 @@ Main.propTypes = {
         preview: string.isRequired
       })
   ).isRequired,
-  userAvatar: string,
-  userName: string,
   history: shape({
     push: func.isRequired
   }).isRequired

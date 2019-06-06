@@ -3,6 +3,8 @@ import React from "react";
 import {arrayOf, shape, string, func, number, bool} from "prop-types";
 import {connect} from "react-redux";
 import {Switch, Route} from "react-router-dom";
+import {withRouter} from "react-router";
+import {compose} from "redux";
 
 // Reducer
 import {
@@ -34,8 +36,13 @@ const App = (props) => {
     setActiveFilm
   } = props;
 
+  const homeRedirect = () => {
+    setActiveFilm();
+    changeGenre();
+    props.history.push(`/`);
+  };
+
   const mainProps = {
-    authorized,
     films,
     visibleFilms,
     genres,
@@ -43,23 +50,17 @@ const App = (props) => {
     changeGenre,
     onShowMoreClick,
     activeFilm,
-    setActiveFilm,
-    userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
-    userName: currentUser.userName
+    setActiveFilm
   };
 
-  const favoritesProps = {
-    authorized,
-    userAvatar: `https://es31-server.appspot.com/` + currentUser.userAvatar,
-    userName: currentUser.userName
-  };
+  const favoritesProps = {authorized, homeRedirect};
 
   const filmProps = {
+    visibleFilms,
     film: activeFilm,
-    activeGenre,
     setActiveFilm,
     changeGenre,
-    visibleFilms
+    homeRedirect
   };
 
   return (
@@ -138,12 +139,18 @@ const mapDispatchToProps = (dispatch) => ({
 
   setActiveFilm: (filmId = null) => {
     dispatch(actionChangeActiveFilm(filmId));
+
+    dispatch(actionClearVisibleFilms());
+    dispatch(actionFormVisibleFilms());
   }
 });
 
 export {App};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withRouter
 )(App);

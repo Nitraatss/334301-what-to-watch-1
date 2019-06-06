@@ -2,16 +2,52 @@
 import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {withRouter} from "react-router";
-import {Link} from "react-router-dom";
+
+// Components
+import UserBlock from "../userBlock/user-block.jsx";
+import MoviesList from "../moviesList/movies-list.jsx";
+
+const MAXIMUM_RECOMMENDED_FILMS_NUMBER = 4;
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
+
+    this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
+    this._formRecommendedBlock = this._formRecommendedBlock.bind(this);
+  }
+
+  _handelHomeLinkClick() {
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
+  }
+
+  _formRecommendedBlock(recommendedFilms) {
+    const {setActiveFilm, changeGenre} = this.props;
+    if (recommendedFilms.length) {
+      return (
+        <section className="catalog catalog--like-this">
+          <h2 className="catalog__title">More like this</h2>
+
+          <MoviesList
+            films={recommendedFilms}
+            changeGenre={changeGenre}
+            setActiveFilm={setActiveFilm}
+          />
+        </section>
+      );
+    }
+
+    return null;
   }
 
   render() {
-    const {film, activeGenre} = this.props;
-    console.log(activeGenre);
+    const {film, visibleFilms} = this.props;
+    const recommendedFilms =
+      visibleFilms.length > MAXIMUM_RECOMMENDED_FILMS_NUMBER
+        ? visibleFilms.slice(0, MAXIMUM_RECOMMENDED_FILMS_NUMBER)
+        : visibleFilms;
 
     return (
       <>
@@ -117,31 +153,22 @@ class MoviePage extends PureComponent {
 
             <header className="page-header movie-card__head">
               <div className="logo">
-                <Link to="/" className="logo__link">
+                <a className="logo__link" onClick={this._handelHomeLinkClick}>
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
-                </Link>
+                </a>
               </div>
 
-              <div className="user-block">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width="63"
-                    height="63"
-                  />
-                </div>
-              </div>
+              <UserBlock />
             </header>
 
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
                 <h2 className="movie-card__title">{film.name}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">Drama</span>
-                  <span className="movie-card__year">2014</span>
+                  <span className="movie-card__genre">{film.genre}</span>
+                  <span className="movie-card__year">{film.release}</span>
                 </p>
 
                 <div className="movie-card__buttons">
@@ -230,91 +257,14 @@ class MoviePage extends PureComponent {
         </section>
 
         <div className="page-content">
-          <section className="catalog catalog--like-this">
-            <h2 className="catalog__title">More like this</h2>
-
-            <div className="catalog__movies-list">
-              <article className="small-movie-card catalog__movies-card">
-                <button className="small-movie-card__play-btn" type="button">
-                  Play
-                </button>
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                    alt="Fantastic Beasts: The Crimes of Grindelwald"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Fantastic Beasts: The Crimes of Grindelwald
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <button className="small-movie-card__play-btn" type="button">
-                  Play
-                </button>
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/bohemian-rhapsody.jpg"
-                    alt="Bohemian Rhapsody"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Bohemian Rhapsody
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <button className="small-movie-card__play-btn" type="button">
-                  Play
-                </button>
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/macbeth.jpg"
-                    alt="Macbeth"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Macbeth
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <button className="small-movie-card__play-btn" type="button">
-                  Play
-                </button>
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/aviator.jpg"
-                    alt="Aviator"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Aviator
-                  </a>
-                </h3>
-              </article>
-            </div>
-          </section>
+          {this._formRecommendedBlock(recommendedFilms)}
 
           <footer className="page-footer">
             <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
+              <a
+                onClick={this._handelHomeLinkClick}
+                className="logo__link logo__link--light"
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
