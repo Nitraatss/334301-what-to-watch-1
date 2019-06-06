@@ -9,6 +9,7 @@ import {compose} from "redux";
 import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
 import GenresList from "../genresList/genres-list.jsx";
+import withPlayer from "../hocs/withPlayer/with-player.jsx";
 
 class Main extends PureComponent {
   constructor(props) {
@@ -16,6 +17,13 @@ class Main extends PureComponent {
 
     this._displayShowMore = this._displayShowMore.bind(this);
     this._handelShowMoreClick = this._handelShowMoreClick.bind(this);
+    this._handlePlayClick = this._handlePlayClick.bind(this);
+  }
+
+  _handlePlayClick() {
+    const {togglePlayer} = this.props;
+
+    togglePlayer();
   }
 
   render() {
@@ -168,6 +176,7 @@ class Main extends PureComponent {
                   <button
                     className="btn btn--play movie-card__button"
                     type="button"
+                    onClick={this._handlePlayClick}
                   >
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s" />
@@ -281,4 +290,7 @@ Main.propTypes = {
   }).isRequired
 };
 
-export default compose(withRouter)(Main);
+export default compose(
+    withPlayer,
+    withRouter
+)(Main);
