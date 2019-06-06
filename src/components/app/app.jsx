@@ -57,7 +57,7 @@ const App = (props) => {
 
   const filmProps = {
     visibleFilms,
-    film: activeFilm,
+    activeFilm,
     setActiveFilm,
     changeGenre,
     homeRedirect
