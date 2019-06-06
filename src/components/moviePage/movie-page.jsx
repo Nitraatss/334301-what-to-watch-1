@@ -2,10 +2,14 @@
 import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {withRouter} from "react-router";
+import {Route, Link} from "react-router-dom";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
+import Overview from "../overview/overview.jsx";
+import Details from "../details/details.jsx";
+import Reviews from "../reviews/reviews.jsx";
 
 const MAXIMUM_RECOMMENDED_FILMS_NUMBER = 4;
 
@@ -43,11 +47,13 @@ class MoviePage extends PureComponent {
   }
 
   render() {
-    const {film, visibleFilms} = this.props;
+    const {film, visibleFilms, match} = this.props;
     const recommendedFilms =
       visibleFilms.length > MAXIMUM_RECOMMENDED_FILMS_NUMBER
         ? visibleFilms.slice(0, MAXIMUM_RECOMMENDED_FILMS_NUMBER)
         : visibleFilms;
+
+    console.log(film);
 
     return (
       <>
@@ -212,45 +218,53 @@ class MoviePage extends PureComponent {
               <div className="movie-card__desc">
                 <nav className="movie-nav movie-card__nav">
                   <ul className="movie-nav__list">
-                    <li className="movie-nav__item movie-nav__item--active">
-                      <a href="#" className="movie-nav__link">
+                    <li className="movie-nav__item">
+                      <Link
+                        to={`${match.url}/overview`}
+                        className="movie-nav__link"
+                      >
                         Overview
-                      </a>
+                      </Link>
                     </li>
                     <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">
+                      <Link
+                        to={`${match.url}/details`}
+                        className="movie-nav__link"
+                      >
                         Details
-                      </a>
+                      </Link>
                     </li>
                     <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">
+                      <Link
+                        to={`${match.url}/reviews`}
+                        className="movie-nav__link"
+                      >
                         Reviews
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </nav>
 
-                <div className="movie-rating">
-                  <div className="movie-rating__score">{film.rating}</div>
-                  <p className="movie-rating__meta">
-                    <span className="movie-rating__level">Very good</span>
-                    <span className="movie-rating__count">
-                      {film.scoresCount} ratings
-                    </span>
-                  </p>
-                </div>
+                <Route
+                  path={match.url}
+                  exact
+                  render={() => <Overview film={film} />}
+                />
 
-                <div className="movie-card__text">
-                  <p>{film.description}</p>
+                <Route
+                  path={match.url + `/overview`}
+                  render={() => <Overview film={film} />}
+                />
 
-                  <p className="movie-card__director">
-                    <strong>{film.director}</strong>
-                  </p>
+                <Route
+                  path={match.url + `/details`}
+                  render={() => <Details film={film} />}
+                />
 
-                  <p className="movie-card__starring">
-                    <strong>{film.starring.join(`, `)}</strong>
-                  </p>
-                </div>
+                <Route
+                  path={match.url + `/Reviews`}
+                  render={() => <Reviews />}
+                />
               </div>
             </div>
           </div>

@@ -50,7 +50,7 @@ class SmallMovieCard extends PureComponent {
     const {changeGenre, setActiveFilm, history, genre, id} = this.props;
     changeGenre(genre);
     setActiveFilm(id);
-    this.props.history.push(`/film/${id}`, {id});
+    this.props.history.push(`/film/${id}`);
   }
 
   _handelMouseEnter() {
