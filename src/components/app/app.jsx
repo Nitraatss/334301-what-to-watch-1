@@ -13,7 +13,8 @@ import {
   actionShowAllFilms,
   actionFormVisibleFilms,
   actionClearVisibleFilms,
-  actionChangeActiveFilm
+  actionChangeActiveFilm,
+  Operation
 } from "../../reducer/filmsData/films-data";
 
 // Components
@@ -33,7 +34,8 @@ const App = (props) => {
     onShowMoreClick,
     currentUser,
     activeFilm,
-    setActiveFilm
+    setActiveFilm,
+    addFilmToFavorite
   } = props;
 
   const homeRedirect = () => {
@@ -43,6 +45,7 @@ const App = (props) => {
   };
 
   const mainProps = {
+    authorized,
     films,
     visibleFilms,
     genres,
@@ -50,17 +53,20 @@ const App = (props) => {
     changeGenre,
     onShowMoreClick,
     activeFilm,
-    setActiveFilm
+    setActiveFilm,
+    addFilmToFavorite
   };
 
   const favoritesProps = {authorized, homeRedirect};
 
   const filmProps = {
+    authorized,
     visibleFilms,
     activeFilm,
     setActiveFilm,
     changeGenre,
-    homeRedirect
+    homeRedirect,
+    addFilmToFavorite
   };
 
   return (
@@ -141,7 +147,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actionChangeActiveFilm(filmId));
 
     dispatch(actionClearVisibleFilms());
-    dispatch(actionFormVisibleFilms());
+    dispatch(actionFormVisibleFilms(filmId));
+  },
+
+  addFilmToFavorite: (filmId, filmStatus) => {
+    dispatch(Operation.addFilmToFavourite(filmId, filmStatus));
   }
 });
 

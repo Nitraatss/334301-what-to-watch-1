@@ -6,7 +6,6 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import {compose} from "recompose";
 import {BrowserRouter} from "react-router-dom";
-import history from "./history";
 
 // Components
 import App from "./components/app/app.jsx";
@@ -33,6 +32,7 @@ const init = () => {
   /* eslint-enable */
 
   store.dispatch(Operation.loadFilms());
+  store.dispatch(Operation.loadPromo());
 
   ReactDOM.render(
       <Provider store={store}>

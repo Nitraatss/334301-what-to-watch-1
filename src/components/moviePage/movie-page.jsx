@@ -22,6 +22,7 @@ class MoviePage extends PureComponent {
     this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
     this._formRecommendedBlock = this._formRecommendedBlock.bind(this);
     this._handlePlayClick = this._handlePlayClick.bind(this);
+    this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
   }
 
   _handlePlayClick() {
@@ -34,6 +35,16 @@ class MoviePage extends PureComponent {
     const {homeRedirect} = this.props;
 
     homeRedirect();
+  }
+
+  _handelFavoriteClick() {
+    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+
+    if (authorized) {
+      addFilmToFavorite(activeFilm.id, activeFilm.favorite ? 0 : 1);
+    } else {
+      history.push(`/login`);
+    }
   }
 
   _formRecommendedBlock(recommendedFilms) {
@@ -201,6 +212,7 @@ class MoviePage extends PureComponent {
                   <button
                     className="btn btn--list movie-card__button"
                     type="button"
+                    onClick={this._handelFavoriteClick}
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add" />

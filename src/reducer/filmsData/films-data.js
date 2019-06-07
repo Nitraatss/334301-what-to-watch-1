@@ -9,7 +9,8 @@ const ActionType = {
   FORM_GENRES: `FORM_GENRES`,
   FORM_VISIBLE_FILMS: `FORM_VISIBLE_FILMS`,
   CLEAR_VISIBLE_FILMS: `CLEAR_VISIBLE_FILMS`,
-  CHANGE_ACTIVE_FILM: `CHANGE_ACTIVE_FILM`
+  CHANGE_ACTIVE_FILM: `CHANGE_ACTIVE_FILM`,
+  LOAD_PROMO_FILM: `LOAD_PROMO_FILM`
 };
 
 const initialState = {
@@ -45,6 +46,13 @@ const actionLoadFilms = (loadedFilms) => {
   };
 };
 
+const actionLoadPromoFilm = (promoFilm) => {
+  return {
+    type: ActionType.LOAD_PROMO_FILM,
+    payload: promoFilm
+  };
+};
+
 const actionFormGenres = (loadedFilms) => {
   return {
     type: ActionType.FORM_GENRES,
@@ -52,9 +60,10 @@ const actionFormGenres = (loadedFilms) => {
   };
 };
 
-const actionFormVisibleFilms = () => {
+const actionFormVisibleFilms = (filmId = null) => {
   return {
-    type: ActionType.FORM_VISIBLE_FILMS
+    type: ActionType.FORM_VISIBLE_FILMS,
+    payload: filmId
   };
 };
 
@@ -64,16 +73,16 @@ const actionClearVisibleFilms = () => {
   };
 };
 
-const actionChangeActiveFilm = (newFilmId = null) => {
+const actionChangeActiveFilm = (filmId) => {
   return {
     type: ActionType.CHANGE_ACTIVE_FILM,
-    payload: newFilmId
+    payload: filmId
   };
 };
 
-const updateVisibleFilms = (loadedFilms, currentVisibleFilms, activeFilmId) => {
+const updateVisibleFilms = (films, currentVisibleFilms, filmId) => {
   let visibleFilms = currentVisibleFilms.slice();
-  let filmsPack = loadedFilms.filter((film) => film.id !== activeFilmId);
+  let filmsPack = films.filter((film) => film.id !== filmId);
 
   if (visibleFilms.length < filmsPack.length) {
     if (!visibleFilms.length) {
@@ -125,13 +134,10 @@ const formFilms = (films) => {
   });
 };
 
-const formGenres = (loadedFilms, activeFilmId) => {
+const formGenres = (loadedFilms) => {
   const newGenres = [];
-  const films = loadedFilms.filter((film) => {
-    return film.id !== activeFilmId;
-  });
 
-  films.forEach((film, counter) => {
+  loadedFilms.forEach((film, counter) => {
     if (
       !newGenres.some((genre) => genre === film.genre) &&
       newGenres.length <= MAXIMUM_GENRES_NUMBER
@@ -148,12 +154,44 @@ const formGenres = (loadedFilms, activeFilmId) => {
 
 const Operation = {
   loadFilms: () => (dispatch, _getState, api) => {
-    return api.get(`/films`).then((response) => {
-      dispatch(actionLoadFilms(response.data));
-      dispatch(actionChangeActiveFilm());
-      dispatch(actionFormGenres(response.data));
-      dispatch(actionFormVisibleFilms());
-    });
+    return api
+      .get(`/films`)
+      .then((response) => {
+        dispatch(actionLoadFilms(response.data));
+        dispatch(actionFormGenres(response.data));
+        dispatch(actionFormVisibleFilms());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  loadPromo: () => (dispatch, _getState, api) => {
+    return api
+      .get(`/films/promo`)
+      .then((response) => {
+        dispatch(actionLoadPromoFilm([response.data]));
+        dispatch(actionChangeActiveFilm());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  // /favorite/: film_id/: status
+
+  addFilmToFavourite: (filmId, status) => (dispatch, _getState, api) => {
+    return api
+      .post(`/favorite/${filmId}/${status}`, {
+        film_id: filmId,
+        status
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
@@ -186,14 +224,14 @@ const reducer = (state = initialState, action) => {
 
     case ActionType.FORM_GENRES:
       return Object.assign({}, state, {
-        genres: formGenres(action.payload, state.activeFilm.id)
+        genres: formGenres(action.payload)
       });
 
     case ActionType.FORM_VISIBLE_FILMS:
       const newVisibleFilms = updateVisibleFilms(
           state.films,
           state.visibleFilms,
-          state.activeFilm.id
+          action.payload
       );
 
       return Object.assign({}, state, {
@@ -205,10 +243,16 @@ const reducer = (state = initialState, action) => {
         visibleFilms: []
       });
 
+    case ActionType.LOAD_PROMO_FILM:
+      const formedPromo = formFilms(action.payload)[0];
+      return Object.assign({}, state, {
+        promoFilm: formedPromo
+      });
+
     case ActionType.CHANGE_ACTIVE_FILM:
       return Object.assign({}, state, {
         activeFilm: !action.payload
-          ? state.loadedFilms[1]
+          ? state.promoFilm
           : state.loadedFilms[
               state.loadedFilms.findIndex((film) => {
                 return film.id === parseInt(action.payload);
