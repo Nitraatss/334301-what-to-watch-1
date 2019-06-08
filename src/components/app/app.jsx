@@ -22,6 +22,7 @@ import Main from "../main/main.jsx";
 import SignIn from "../signIn/sign-in.jsx";
 import Favorites from "../favorites/favorites.jsx";
 import MoviePage from "../moviePage/movie-page.jsx";
+import ReviewPage from "../reviewPage/review-page.jsx";
 
 const App = (props) => {
   const {
@@ -57,7 +58,12 @@ const App = (props) => {
     addFilmToFavorite
   };
 
-  const favoritesProps = {authorized, homeRedirect};
+  const favoritesProps = {
+    authorized,
+    homeRedirect,
+    changeGenre,
+    setActiveFilm
+  };
 
   const filmProps = {
     authorized,
@@ -77,6 +83,7 @@ const App = (props) => {
         path="/favorites"
         render={() => <Favorites {...favoritesProps} />}
       />
+      <Route path="/film/:id/review" render={() => <ReviewPage />} />
       <Route path="/film/:id" render={() => <MoviePage {...filmProps} />} />
     </Switch>
   );

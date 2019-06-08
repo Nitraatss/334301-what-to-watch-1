@@ -2,7 +2,7 @@
 import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {withRouter} from "react-router";
-import {Route} from "react-router-dom";
+import {Route, Link} from "react-router-dom";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
@@ -23,6 +23,7 @@ class MoviePage extends PureComponent {
     this._formRecommendedBlock = this._formRecommendedBlock.bind(this);
     this._handlePlayClick = this._handlePlayClick.bind(this);
     this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
+    // this._handelReviewClick = this._handelReviewClick.bind(this);
   }
 
   _handlePlayClick() {
@@ -37,11 +38,16 @@ class MoviePage extends PureComponent {
     homeRedirect();
   }
 
+  // _handelReviewClick() {
+  //   const {match, history} = this.props;
+  //   history.push(`${match.url}/review`);
+  // }
+
   _handelFavoriteClick() {
     const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
 
     if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.favorite ? 0 : 1);
+      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
     } else {
       history.push(`/login`);
     }
@@ -219,9 +225,12 @@ class MoviePage extends PureComponent {
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn movie-card__button">
+                  <Link
+                    to={`${match.url}/review`}
+                    className="btn movie-card__button"
+                  >
                     Add review
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -255,7 +264,8 @@ class MoviePage extends PureComponent {
                   render={() => <Details activeFilm={activeFilm} />}
                 />
                 <Route
-                  path={match.url + `/Reviews`}
+                  path={`${match.url}/reviews`}
+                  exact
                   render={() => <Reviews activeFilmId={activeFilm.id} />}
                 />
               </div>

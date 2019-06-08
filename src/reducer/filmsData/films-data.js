@@ -10,7 +10,9 @@ const ActionType = {
   FORM_VISIBLE_FILMS: `FORM_VISIBLE_FILMS`,
   CLEAR_VISIBLE_FILMS: `CLEAR_VISIBLE_FILMS`,
   CHANGE_ACTIVE_FILM: `CHANGE_ACTIVE_FILM`,
-  LOAD_PROMO_FILM: `LOAD_PROMO_FILM`
+  LOAD_PROMO_FILM: `LOAD_PROMO_FILM`,
+  ADD_FILM_TO_FAVORITE: `ADD_FILM_TO_FAVORITE`,
+  LOAD_FAVORITE_FILMS: `LOAD_FAVORITE_FILMS`
 };
 
 const initialState = {
@@ -19,7 +21,8 @@ const initialState = {
   loadedFilms: [],
   visibleFilms: [],
   genres: [],
-  activeFilm: {}
+  activeFilm: {},
+  favoriteFilms: []
 };
 
 const actionChangeGenre = (newGenre = `All genres`) => ({
@@ -53,6 +56,13 @@ const actionLoadPromoFilm = (promoFilm) => {
   };
 };
 
+const actionLoadFavoriteFilms = (loadedFilms) => {
+  return {
+    type: ActionType.LOAD_FAVORITE_FILMS,
+    payload: loadedFilms
+  };
+};
+
 const actionFormGenres = (loadedFilms) => {
   return {
     type: ActionType.FORM_GENRES,
@@ -77,6 +87,12 @@ const actionChangeActiveFilm = (filmId) => {
   return {
     type: ActionType.CHANGE_ACTIVE_FILM,
     payload: filmId
+  };
+};
+
+const actionAddFilmToFavorite = () => {
+  return {
+    type: ActionType.ADD_FILM_TO_FAVORITE
   };
 };
 
@@ -166,6 +182,17 @@ const Operation = {
       });
   },
 
+  loadFavoriteFilms: () => (dispatch, _getState, api) => {
+    return api
+      .get(`/favorite`)
+      .then((response) => {
+        dispatch(actionLoadFavoriteFilms(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
   loadPromo: () => (dispatch, _getState, api) => {
     return api
       .get(`/films/promo`)
@@ -178,16 +205,14 @@ const Operation = {
       });
   },
 
-  // /favorite/: film_id/: status
-
   addFilmToFavourite: (filmId, status) => (dispatch, _getState, api) => {
     return api
-      .post(`/favorite/${filmId}/${status}`, {
+      .post(`/favorite/${filmId}/${status ? 0 : 1}`, {
         film_id: filmId,
         status
       })
       .then((response) => {
-        console.log(response);
+        dispatch(actionAddFilmToFavorite());
       })
       .catch((error) => {
         console.log(error);
@@ -214,12 +239,15 @@ const reducer = (state = initialState, action) => {
         films: state.loadedFilms
       });
 
-    case ActionType.LOAD_FILMS:
-      const formedFilms = formFilms(action.payload);
-
+    case ActionType.LOAD_FAVORITE_FILMS:
       return Object.assign({}, state, {
-        films: formedFilms,
-        loadedFilms: formedFilms
+        favoriteFilms: formFilms(action.payload)
+      });
+
+    case ActionType.LOAD_FILMS:
+      return Object.assign({}, state, {
+        films: formFilms(action.payload),
+        loadedFilms: formFilms(action.payload)
       });
 
     case ActionType.FORM_GENRES:
@@ -258,6 +286,14 @@ const reducer = (state = initialState, action) => {
                 return film.id === parseInt(action.payload);
               })
           ]
+      });
+
+    case ActionType.ADD_FILM_TO_FAVORITE:
+      const updatedActiveFilm = Object.assign({}, state.activeFilm);
+      updatedActiveFilm.isFavorite = !updatedActiveFilm.isFavorite;
+
+      return Object.assign({}, state, {
+        activeFilm: updatedActiveFilm
       });
   }
 

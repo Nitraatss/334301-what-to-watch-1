@@ -31,7 +31,7 @@ class Main extends PureComponent {
     const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
 
     if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.favorite ? 0 : 1);
+      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
     } else {
       history.push(`/login`);
     }
