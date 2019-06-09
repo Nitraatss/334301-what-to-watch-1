@@ -13,9 +13,29 @@ class ReviewPage extends PureComponent {
     super(props);
 
     this.message = React.createRef();
+    this.state = {
+      postButtonStatus: true
+    };
 
     this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
     this._handelMovieTitleClick = this._handelMovieTitleClick.bind(this);
+    this._handelMessageInput = this._handelMessageInput.bind(this);
+    this._handelFormSubmit = this._handelFormSubmit.bind(this);
+  }
+  _handelFormSubmit(evt) {
+    evt.preventDefault();
+    console.log(1);
+  }
+  _handelMessageInput(evt) {
+    if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
+      this.setState({
+        postButtonStatus: false
+      });
+    } else {
+      this.setState({
+        postButtonStatus: true
+      });
+    }
   }
 
   _handelHomeLinkClick(evt) {
@@ -41,6 +61,8 @@ class ReviewPage extends PureComponent {
       changeActiveItem,
       activeItem
     } = this.props;
+
+    const {postButtonStatus} = this.state;
 
     return (
       <>
@@ -197,10 +219,15 @@ class ReviewPage extends PureComponent {
                   name="review-text"
                   id="review-text"
                   placeholder="Review text"
-                  ref={this.message}
+                  onInput={this._handelMessageInput}
                 />
                 <div className="add-review__submit">
-                  <button className="add-review__btn" type="submit">
+                  <button
+                    className="add-review__btn"
+                    type="submit"
+                    onClick={this._handelFormSubmit}
+                    disabled={postButtonStatus}
+                  >
                     Post
                   </button>
                 </div>
