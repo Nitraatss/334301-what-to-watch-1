@@ -23,7 +23,6 @@ class MoviePage extends PureComponent {
     this._formRecommendedBlock = this._formRecommendedBlock.bind(this);
     this._handlePlayClick = this._handlePlayClick.bind(this);
     this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
-    // this._handelReviewClick = this._handelReviewClick.bind(this);
   }
 
   _handlePlayClick() {
@@ -32,16 +31,12 @@ class MoviePage extends PureComponent {
     togglePlayer();
   }
 
-  _handelHomeLinkClick() {
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
     const {homeRedirect} = this.props;
 
     homeRedirect();
   }
-
-  // _handelReviewClick() {
-  //   const {match, history} = this.props;
-  //   history.push(`${match.url}/review`);
-  // }
 
   _handelFavoriteClick() {
     const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
@@ -186,7 +181,11 @@ class MoviePage extends PureComponent {
 
             <header className="page-header movie-card__head">
               <div className="logo">
-                <a className="logo__link" onClick={this._handelHomeLinkClick}>
+                <a
+                  href="#"
+                  className="logo__link"
+                  onClick={this._handelHomeLinkClick}
+                >
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
@@ -279,6 +278,7 @@ class MoviePage extends PureComponent {
           <footer className="page-footer">
             <div className="logo">
               <a
+                href="#"
                 onClick={this._handelHomeLinkClick}
                 className="logo__link logo__link--light"
               >

@@ -23,7 +23,6 @@ const actionClearReviews = () => {
 const Operation = {
   loadReviews: (filmId) => (dispatch, _getState, api) => {
     return api.get(`/comments/${filmId}`).then((response) => {
-      console.log(response.data);
       dispatch(actionLoadReviews(response.data));
     });
   }

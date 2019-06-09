@@ -25,10 +25,19 @@ class SignIn extends PureComponent {
 
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
     this._setMessage = this._setMessage.bind(this);
+    this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
   }
 
   componentDidUpdate() {
-    const {authorized, history} = this.props;
+    const {authorized, history, match} = this.props;
+
     if (authorized) {
       history.goBack();
     }
@@ -142,11 +151,15 @@ class SignIn extends PureComponent {
         <div className="user-page">
           <header className="page-header user-page__head">
             <div className="logo">
-              <Link to="/" className="logo__link">
+              <a
+                href="#"
+                className="logo__link"
+                onClick={this._handelHomeLinkClick}
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </Link>
+              </a>
             </div>
 
             <h1 className="page-title user-page__title">Sign in</h1>
@@ -203,11 +216,15 @@ class SignIn extends PureComponent {
 
           <footer className="page-footer">
             <div className="logo">
-              <Link to="/" className="logo__link logo__link--light">
+              <a
+                href="#"
+                onClick={this._handelHomeLinkClick}
+                className="logo__link logo__link--light"
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </Link>
+              </a>
             </div>
 
             <div className="copyright">
