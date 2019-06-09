@@ -1,5 +1,6 @@
-import React, {PureComponent} from "react";
+// Core
 import {func, string} from "prop-types";
+import React, {PureComponent} from "react";
 
 const STARS_NUMBER = 5;
 
@@ -9,6 +10,18 @@ class Rating extends PureComponent {
 
     this._formStars = this._formStars.bind(this);
     this._handelStarChange = this._handelStarChange.bind(this);
+  }
+
+  render() {
+    const {activeStar} = this.props;
+
+    return (
+      <>
+        <div className="rating">
+          <div className="rating__stars">{this._formStars(activeStar)}</div>
+        </div>
+      </>
+    );
   }
 
   _handelStarChange(evt) {
@@ -52,18 +65,6 @@ class Rating extends PureComponent {
     }
 
     return stars;
-  }
-
-  render() {
-    const {activeStar} = this.props;
-
-    return (
-      <>
-        <div className="rating">
-          <div className="rating__stars">{this._formStars(activeStar)}</div>
-        </div>
-      </>
-    );
   }
 }
 

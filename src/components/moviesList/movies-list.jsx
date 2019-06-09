@@ -1,10 +1,12 @@
 // Core
-import React from "react";
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
+import React from "react";
 
 // Components
-import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 import SmallMovieCard from "../smallMovieCard/small-movie-card.jsx";
+
+// HOCs
+import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
 const MoviesList = (props) => {
   const {films, changeGenre, setActiveFilm} = props;

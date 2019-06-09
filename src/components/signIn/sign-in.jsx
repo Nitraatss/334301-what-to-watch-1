@@ -1,13 +1,14 @@
 // Core
-import React, {PureComponent} from "react";
 import {shape, func, bool} from "prop-types";
+import React, {PureComponent} from "react";
+import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
-import {compose} from "redux";
 
 // Reducer
 import {Operation} from "../../reducer/user/user";
 
+// HOCs
 import withErrors from "../hocs/withErrors/with-errors.jsx";
 
 class SignIn extends PureComponent {
@@ -25,13 +26,6 @@ class SignIn extends PureComponent {
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
     this._setMessage = this._setMessage.bind(this);
     this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
-  }
-
-  _handelHomeLinkClick(evt) {
-    evt.preventDefault();
-    const {homeRedirect} = this.props;
-
-    homeRedirect();
   }
 
   componentDidUpdate() {
@@ -233,6 +227,13 @@ class SignIn extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
   }
 
   _handelFormSubmit(evt) {

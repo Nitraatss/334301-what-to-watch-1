@@ -1,5 +1,8 @@
-import React, {PureComponent} from "react";
+// Core
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
+
+// HOCs
 import withFilmDuration from "../hocs/withFilmDuration/with-film-duration.jsx";
 
 class Player extends PureComponent {
@@ -13,57 +16,6 @@ class Player extends PureComponent {
     this._handelPlayClick = this._handelPlayClick.bind(this);
     this._changeFilmProgress = this._changeFilmProgress.bind(this);
     this._handelFullScreenClick = this._handelFullScreenClick.bind(this);
-  }
-
-  _handelFullScreenClick() {
-    if (this.video.current.requestFullscreen) {
-      this.video.current.requestFullscreen();
-    } else if (this.video.current.mozRequestFullScreen) {
-      this.video.current.mozRequestFullScreen();
-    } else if (this.video.current.webkitRequestFullscreen) {
-      this.video.current.webkitRequestFullscreen();
-    } else if (this.video.current.msRequestFullscreen) {
-      this.video.current.msRequestFullscreen();
-    }
-  }
-
-  _handleExitClick() {
-    const {togglePlayer} = this.props;
-
-    togglePlayer();
-  }
-
-  _handelPlayClick() {
-    if (this.video.current.paused) {
-      this.video.current.play();
-    } else {
-      this.video.current.pause();
-    }
-  }
-
-  _calculateFilmDuration(video) {
-    const {updateFilmDuration} = this.props;
-    let time = video.duration;
-    const hours = Math.floor(time / 3600);
-    time = time - hours * 3600;
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time - minutes * 60);
-    updateFilmDuration(hours, minutes, seconds);
-  }
-
-  _changeFilmProgress(video, progressBar, toggler) {
-    const {updateFilmDuration} = this.props;
-    const videoProgress = (video.currentTime / video.duration) * 100;
-
-    progressBar.value = videoProgress;
-    toggler.style.left = `${videoProgress}%`;
-
-    let timeLeft = video.duration - video.currentTime;
-    const hours = Math.floor(timeLeft / 3600);
-    timeLeft = timeLeft - hours * 3600;
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = Math.floor(timeLeft - minutes * 60);
-    updateFilmDuration(hours, minutes, seconds);
   }
 
   componentDidMount() {
@@ -248,6 +200,57 @@ class Player extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handelFullScreenClick() {
+    if (this.video.current.requestFullscreen) {
+      this.video.current.requestFullscreen();
+    } else if (this.video.current.mozRequestFullScreen) {
+      this.video.current.mozRequestFullScreen();
+    } else if (this.video.current.webkitRequestFullscreen) {
+      this.video.current.webkitRequestFullscreen();
+    } else if (this.video.current.msRequestFullscreen) {
+      this.video.current.msRequestFullscreen();
+    }
+  }
+
+  _handleExitClick() {
+    const {togglePlayer} = this.props;
+
+    togglePlayer();
+  }
+
+  _handelPlayClick() {
+    if (this.video.current.paused) {
+      this.video.current.play();
+    } else {
+      this.video.current.pause();
+    }
+  }
+
+  _calculateFilmDuration(video) {
+    const {updateFilmDuration} = this.props;
+    let time = video.duration;
+    const hours = Math.floor(time / 3600);
+    time = time - hours * 3600;
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time - minutes * 60);
+    updateFilmDuration(hours, minutes, seconds);
+  }
+
+  _changeFilmProgress(video, progressBar, toggler) {
+    const {updateFilmDuration} = this.props;
+    const videoProgress = (video.currentTime / video.duration) * 100;
+
+    progressBar.value = videoProgress;
+    toggler.style.left = `${videoProgress}%`;
+
+    let timeLeft = video.duration - video.currentTime;
+    const hours = Math.floor(timeLeft / 3600);
+    timeLeft = timeLeft - hours * 3600;
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = Math.floor(timeLeft - minutes * 60);
+    updateFilmDuration(hours, minutes, seconds);
   }
 }
 

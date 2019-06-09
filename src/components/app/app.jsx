@@ -1,10 +1,10 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
-import {connect} from "react-redux";
-import {Switch, Route} from "react-router-dom";
-import {withRouter} from "react-router";
+import React, {PureComponent} from "react";
 import {compose} from "redux";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
+import {Switch, Route} from "react-router-dom";
 
 // Reducer
 import {

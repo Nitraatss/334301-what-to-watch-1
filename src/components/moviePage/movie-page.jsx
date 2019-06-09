@@ -1,6 +1,6 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {withRouter} from "react-router";
 import {Route, Link} from "react-router-dom";
@@ -12,6 +12,8 @@ import Overview from "../overview/overview.jsx";
 import Details from "../details/details.jsx";
 import Reviews from "../reviews/reviews.jsx";
 import MovieNavigation from "../movieNavigation/movie-navifation.jsx";
+
+// HOCs
 import withPlayer from "../hocs/withPlayer/with-player.jsx";
 
 const MAXIMUM_RECOMMENDED_FILMS_NUMBER = 4;
@@ -24,48 +26,6 @@ class MoviePage extends PureComponent {
     this._formRecommendedBlock = this._formRecommendedBlock.bind(this);
     this._handlePlayClick = this._handlePlayClick.bind(this);
     this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
-  }
-
-  _handlePlayClick() {
-    const {togglePlayer} = this.props;
-
-    togglePlayer();
-  }
-
-  _handelHomeLinkClick(evt) {
-    evt.preventDefault();
-    const {homeRedirect} = this.props;
-
-    homeRedirect();
-  }
-
-  _handelFavoriteClick() {
-    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
-
-    if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
-    } else {
-      history.push(`/login`);
-    }
-  }
-
-  _formRecommendedBlock(recommendedFilms) {
-    const {setActiveFilm, changeGenre} = this.props;
-    if (recommendedFilms.length) {
-      return (
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <MoviesList
-            films={recommendedFilms}
-            changeGenre={changeGenre}
-            setActiveFilm={setActiveFilm}
-          />
-        </section>
-      );
-    }
-
-    return null;
   }
 
   render() {
@@ -296,6 +256,48 @@ class MoviePage extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handlePlayClick() {
+    const {togglePlayer} = this.props;
+
+    togglePlayer();
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
+  }
+
+  _handelFavoriteClick() {
+    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+
+    if (authorized) {
+      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
+    } else {
+      history.push(`/login`);
+    }
+  }
+
+  _formRecommendedBlock(recommendedFilms) {
+    const {setActiveFilm, changeGenre} = this.props;
+    if (recommendedFilms.length) {
+      return (
+        <section className="catalog catalog--like-this">
+          <h2 className="catalog__title">More like this</h2>
+
+          <MoviesList
+            films={recommendedFilms}
+            changeGenre={changeGenre}
+            setActiveFilm={setActiveFilm}
+          />
+        </section>
+      );
+    }
+
+    return null;
   }
 }
 

@@ -1,9 +1,10 @@
 // Core
-import React, {PureComponent} from "react";
-import {withRouter} from "react-router";
-import {compose} from "redux";
 import {func, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
+import {compose} from "redux";
+import {withRouter} from "react-router";
 
+// HOCs
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
 class MovieNavigation extends PureComponent {
@@ -11,12 +12,6 @@ class MovieNavigation extends PureComponent {
     super(props);
 
     this._handelLinkClick = this._handelLinkClick.bind(this);
-  }
-
-  _handelLinkClick(tab) {
-    const {match, history, changeActiveItem} = this.props;
-    changeActiveItem(tab);
-    history.push(`${match.url}/${tab}`);
   }
 
   render() {
@@ -75,6 +70,12 @@ class MovieNavigation extends PureComponent {
         </ul>
       </nav>
     );
+  }
+
+  _handelLinkClick(tab) {
+    const {match, history, changeActiveItem} = this.props;
+    changeActiveItem(tab);
+    history.push(`${match.url}/${tab}`);
   }
 }
 

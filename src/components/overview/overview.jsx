@@ -1,32 +1,12 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
 
 class Overview extends PureComponent {
   constructor(props) {
     super(props);
 
     this._formTextRating = this._formTextRating.bind(this);
-  }
-
-  _formTextRating(numberRating) {
-    if (numberRating >= 0 && numberRating < 3) {
-      return `bad`;
-    }
-
-    if (numberRating >= 3 && numberRating <= 5) {
-      return `normal`;
-    }
-
-    if (numberRating >= 5 && numberRating < 8) {
-      return `good`;
-    }
-
-    if (numberRating >= 8 && numberRating < 10) {
-      return `very good`;
-    }
-
-    return `awesome`;
   }
 
   render() {
@@ -59,6 +39,26 @@ class Overview extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _formTextRating(numberRating) {
+    if (numberRating >= 0 && numberRating < 3) {
+      return `bad`;
+    }
+
+    if (numberRating >= 3 && numberRating <= 5) {
+      return `normal`;
+    }
+
+    if (numberRating >= 5 && numberRating < 8) {
+      return `good`;
+    }
+
+    if (numberRating >= 8 && numberRating < 10) {
+      return `very good`;
+    }
+
+    return `awesome`;
   }
 }
 

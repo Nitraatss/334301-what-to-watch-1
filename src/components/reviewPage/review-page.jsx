@@ -3,11 +3,15 @@ import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+
+// Reducer
 import {actionPostReview, Operation} from "../../reducer/reviews/reviews";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
 import Rating from "../rating/rating.jsx";
+
+// HOCs
 import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 import withDisabledElements from "../hocs/withDisabledElements/with-disabled-elements.jsx";
@@ -50,53 +54,6 @@ class ReviewPage extends PureComponent {
     } else {
       changeTextareaState(false);
     }
-  }
-
-  _handelFormSubmit(evt) {
-    evt.preventDefault();
-
-    const {
-      postReview,
-      activeFilm,
-      activeItem: starsNumber,
-      changeSubmitButtonState,
-      changeTextareaState
-    } = this.props;
-
-    const rating = starsNumber
-      ? starsNumber * RATING_MULTIPLER
-      : RATING_MULTIPLER;
-    const comment = this.message.current.value;
-
-    changeSubmitButtonState(true);
-    changeTextareaState(true);
-
-    postReview(activeFilm.id, {rating, comment});
-  }
-
-  _handelMessageInput(evt) {
-    const {changeSubmitButtonState} = this.props;
-
-    if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
-      changeSubmitButtonState(false);
-    } else {
-      changeSubmitButtonState(true);
-    }
-  }
-
-  _handelHomeLinkClick(evt) {
-    evt.preventDefault();
-
-    const {homeRedirect} = this.props;
-
-    homeRedirect();
-  }
-
-  _handelMovieTitleClick(evt) {
-    evt.preventDefault();
-    const {history, match} = this.props;
-
-    history.push(`/film/${match.params.id}`);
   }
 
   render() {
@@ -283,6 +240,53 @@ class ReviewPage extends PureComponent {
         </section>
       </>
     );
+  }
+
+  _handelFormSubmit(evt) {
+    evt.preventDefault();
+
+    const {
+      postReview,
+      activeFilm,
+      activeItem: starsNumber,
+      changeSubmitButtonState,
+      changeTextareaState
+    } = this.props;
+
+    const rating = starsNumber
+      ? starsNumber * RATING_MULTIPLER
+      : RATING_MULTIPLER;
+    const comment = this.message.current.value;
+
+    changeSubmitButtonState(true);
+    changeTextareaState(true);
+
+    postReview(activeFilm.id, {rating, comment});
+  }
+
+  _handelMessageInput(evt) {
+    const {changeSubmitButtonState} = this.props;
+
+    if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
+      changeSubmitButtonState(false);
+    } else {
+      changeSubmitButtonState(true);
+    }
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
+  }
+
+  _handelMovieTitleClick(evt) {
+    evt.preventDefault();
+    const {history, match} = this.props;
+
+    history.push(`/film/${match.params.id}`);
   }
 }
 

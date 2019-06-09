@@ -1,8 +1,8 @@
 // Core
-import React from "react";
 import {arrayOf, string, func} from "prop-types";
+import React from "react";
 
-// Components
+// HOCs
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
 const GenresList = (props) => {

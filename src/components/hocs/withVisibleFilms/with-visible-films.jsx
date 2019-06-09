@@ -1,6 +1,6 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
 
 const MaximumFilmsPerPack = 20;
 
@@ -13,38 +13,6 @@ const withVisibleFilms = (WrappedComponent) => {
         filmsPack: 1,
         visibleFilms: []
       };
-
-      this._displayFilms = this._displayFilms.bind(this);
-    }
-
-    _displayFilms() {
-      const {films} = this.props;
-      let {filmsPack, visibleFilms} = this.state;
-
-      if (films.length > MaximumFilmsPerPack) {
-        if (filmsPack > 1) {
-          if (films.length - visibleFilms.length > MaximumFilmsPerPack) {
-            visibleFilms = visibleFilms.concat(
-                films.slice(
-                    (filmsPack - 1) * MaximumFilmsPerPack,
-                    filmsPack * MaximumFilmsPerPack
-                )
-            );
-            this.setState({filmsPack: filmsPack + 1});
-          } else {
-            visibleFilms = visibleFilms.concat(
-                films.slice((filmsPack - 1) * MaximumFilmsPerPack, films.length)
-            );
-          }
-        } else {
-          visibleFilms = films.slice(0, MaximumFilmsPerPack);
-          this.setState({filmsPack: filmsPack + 1});
-        }
-      } else {
-        visibleFilms = films.slice();
-      }
-
-      this.setState({visibleFilms});
     }
 
     render() {

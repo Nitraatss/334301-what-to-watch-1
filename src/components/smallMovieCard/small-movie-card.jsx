@@ -1,8 +1,8 @@
 // Core
-import React, {PureComponent} from "react";
 import {number, string, func, shape} from "prop-types";
-import {withRouter} from "react-router";
+import React, {PureComponent} from "react";
 import {compose} from "redux";
+import {withRouter} from "react-router";
 
 // Components
 import Videoplayer from "../videoplayer/videoplayer.jsx";

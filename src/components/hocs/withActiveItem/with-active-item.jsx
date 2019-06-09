@@ -1,6 +1,6 @@
 // Core
-import React, {PureComponent} from "react";
 import {string, func} from "prop-types";
+import React, {PureComponent} from "react";
 
 const withActiveItem = (WrappedComponent) => {
   class WithActiveItem extends PureComponent {

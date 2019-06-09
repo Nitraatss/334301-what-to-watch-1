@@ -1,10 +1,10 @@
 // Core
 import {bool, func, number, string, shape} from "prop-types";
 import React, {PureComponent} from "react";
-import {Link} from "react-router-dom";
+import {compose} from "redux";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {compose} from "redux";
+import {Link} from "react-router-dom";
 
 class UserBlock extends PureComponent {
   constructor(props) {

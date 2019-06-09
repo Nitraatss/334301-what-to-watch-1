@@ -1,13 +1,15 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
-import {withRouter} from "react-router";
+import React, {PureComponent} from "react";
 import {compose} from "redux";
+import {withRouter} from "react-router";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
 import GenresList from "../genresList/genres-list.jsx";
+
+// HOCs
 import withPlayer from "../hocs/withPlayer/with-player.jsx";
 
 class Main extends PureComponent {
@@ -18,22 +20,6 @@ class Main extends PureComponent {
     this._handelShowMoreClick = this._handelShowMoreClick.bind(this);
     this._handlePlayClick = this._handlePlayClick.bind(this);
     this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
-  }
-
-  _handlePlayClick() {
-    const {togglePlayer} = this.props;
-
-    togglePlayer();
-  }
-
-  _handelFavoriteClick() {
-    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
-
-    if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
-    } else {
-      history.push(`/login`);
-    }
   }
 
   render() {
@@ -269,6 +255,22 @@ class Main extends PureComponent {
     const {onShowMoreClick} = this.props;
 
     onShowMoreClick();
+  }
+
+  _handlePlayClick() {
+    const {togglePlayer} = this.props;
+
+    togglePlayer();
+  }
+
+  _handelFavoriteClick() {
+    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+
+    if (authorized) {
+      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
+    } else {
+      history.push(`/login`);
+    }
   }
 }
 

@@ -1,15 +1,18 @@
 // Core
-import React, {PureComponent} from "react";
-import {connect} from "react-redux";
-import {compose} from "redux";
 import {arrayOf, bool, func, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
+import {compose} from "redux";
+import {connect} from "react-redux";
 
+// Reducer
 import {Operation} from "../../reducer/filmsData/films-data";
 
 // Components
-import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
+
+// HOCs
+import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 
 class Favorites extends PureComponent {
   constructor(props) {
@@ -22,14 +25,6 @@ class Favorites extends PureComponent {
     const {getFavoriteFilms} = this.props;
 
     getFavoriteFilms();
-  }
-
-  _handelHomeLinkClick(evt) {
-    evt.preventDefault();
-
-    const {homeRedirect} = this.props;
-
-    homeRedirect();
   }
 
   render() {
@@ -176,6 +171,14 @@ class Favorites extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
   }
 }
 

@@ -1,23 +1,12 @@
 // Core
-import React, {PureComponent} from "react";
 import {arrayOf, bool, number, shape, string} from "prop-types";
+import React, {PureComponent} from "react";
 
 class Details extends PureComponent {
   constructor(props) {
     super(props);
 
     this._formTime = this._formTime.bind(this);
-  }
-
-  _formTime(totalMinutes) {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes - hours * 60;
-
-    if (hours && minutes) {
-      return `${hours}h ${minutes}m`;
-    }
-
-    return `${minutes}m`;
   }
 
   render() {
@@ -64,6 +53,17 @@ class Details extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _formTime(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes - hours * 60;
+
+    if (hours && minutes) {
+      return `${hours}h ${minutes}m`;
+    }
+
+    return `${minutes}m`;
   }
 }
 

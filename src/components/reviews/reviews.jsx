@@ -1,9 +1,10 @@
 // Core
 import {arrayOf, func, number, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
-import {connect} from "react-redux";
 import {compose} from "redux";
+import {connect} from "react-redux";
 
+// Reducer
 import {Operation, actionClearReviews} from "../../reducer/reviews/reviews";
 
 class Reviews extends PureComponent {
@@ -23,15 +24,6 @@ class Reviews extends PureComponent {
     const {clearReviews} = this.props;
 
     clearReviews();
-  }
-
-  _formDate(dateStamp) {
-    const date = new Date(dateStamp);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-
-    return `${month} ${day}, ${year}.`;
   }
 
   render() {
@@ -93,6 +85,15 @@ class Reviews extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _formDate(dateStamp) {
+    const date = new Date(dateStamp);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    return `${month} ${day}, ${year}.`;
   }
 }
 
