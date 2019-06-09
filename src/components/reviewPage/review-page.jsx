@@ -9,6 +9,7 @@ import UserBlock from "../userBlock/user-block.jsx";
 import Rating from "../rating/rating.jsx";
 import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
+import withDisabledElements from "../hocs/withDisabledElements/with-disabled-elements.jsx";
 
 const RATING_MULTIPLER = 2;
 
@@ -29,51 +30,57 @@ class ReviewPage extends PureComponent {
   }
 
   componentDidMount() {
-    const {prepareToPost} = this.props;
+    const {prepareToPost, changeTextareaState} = this.props;
 
+    changeTextareaState(false);
     prepareToPost();
   }
 
   componentDidUpdate() {
-    const {reviewPostedStatus: reviewWasAdded, history, match} = this.props;
+    const {
+      reviewPostedStatus: reviewWasAdded,
+      history,
+      match,
+      changeSubmitButtonState,
+      changeTextareaState
+    } = this.props;
 
     if (reviewWasAdded) {
       history.push(`/film/${match.params.id}`);
     } else {
-      this.setState({
-        submitButtonDisabled: false,
-        textareaDisabled: false
-      });
+      changeTextareaState(false);
     }
   }
 
   _handelFormSubmit(evt) {
     evt.preventDefault();
 
-    const {postReview, activeFilm, activeItem: starsNumber} = this.props;
+    const {
+      postReview,
+      activeFilm,
+      activeItem: starsNumber,
+      changeSubmitButtonState,
+      changeTextareaState
+    } = this.props;
 
     const rating = starsNumber
       ? starsNumber * RATING_MULTIPLER
       : RATING_MULTIPLER;
     const comment = this.message.current.value;
 
-    this.setState({
-      submitButtonDisabled: true,
-      textareaDisabled: true
-    });
+    changeSubmitButtonState(true);
+    changeTextareaState(true);
 
     postReview(activeFilm.id, {rating, comment});
   }
 
   _handelMessageInput(evt) {
+    const {changeSubmitButtonState, changeTextareaState} = this.props;
+
     if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
-      this.setState({
-        submitButtonDisabled: false
-      });
+      changeSubmitButtonState(false);
     } else {
-      this.setState({
-        submitButtonDisabled: true
-      });
+      changeSubmitButtonState(true);
     }
   }
 
@@ -95,13 +102,11 @@ class ReviewPage extends PureComponent {
   render() {
     const {
       activeFilm,
-      history,
-      match,
       changeActiveItem,
+      submitButtonDisabled,
+      textareaDisabled,
       activeItem: starsNumber
     } = this.props;
-
-    const {submitButtonDisabled, textareaDisabled} = this.state;
 
     return (
       <>
@@ -304,5 +309,6 @@ export default compose(
     ),
     withPrivatePath,
     withActiveItem,
+    withDisabledElements,
     withRouter
 )(ReviewPage);

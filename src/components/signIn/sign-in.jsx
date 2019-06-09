@@ -2,7 +2,6 @@
 import React, {PureComponent} from "react";
 import {shape, func, bool} from "prop-types";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 
@@ -36,7 +35,7 @@ class SignIn extends PureComponent {
   }
 
   componentDidUpdate() {
-    const {authorized, history, match} = this.props;
+    const {authorized, history} = this.props;
 
     if (authorized) {
       history.goBack();

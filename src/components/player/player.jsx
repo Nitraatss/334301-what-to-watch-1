@@ -1,19 +1,13 @@
 import React, {PureComponent} from "react";
 
+import withFilmDuration from "../hocs/withFilmDuration/with-film-duration.jsx";
+
 class Player extends PureComponent {
   constructor(props) {
     super(props);
     this.video = React.createRef();
     this.progressBar = React.createRef();
     this.toggler = React.createRef();
-
-    this.state = {
-      filmDuration: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-      }
-    };
 
     this._handleExitClick = this._handleExitClick.bind(this);
     this._handelPlayClick = this._handelPlayClick.bind(this);
@@ -47,38 +41,42 @@ class Player extends PureComponent {
     }
   }
 
-  _calculateFilmDuration() {
-    let time = this.video.current.duration;
+  _calculateFilmDuration(video) {
+    const {updateFilmDuration} = this.props;
+    let time = video.duration;
     const hours = Math.floor(time / 3600);
     time = time - hours * 3600;
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time - minutes * 60);
-
-    this.setState({
-      filmDuration: {hours, minutes, seconds}
-    });
+    updateFilmDuration(hours, minutes, seconds);
   }
 
-  _changeFilmProgress() {
-    const videoProgress =
-      (this.video.current.currentTime / this.video.current.duration) * 100;
+  _changeFilmProgress(video, progressBar, toggler) {
+    const {updateFilmDuration} = this.props;
+    const videoProgress = (video.currentTime / video.duration) * 100;
 
-    this.progressBar.current.value = videoProgress;
-    this.toggler.current.style.left = `${videoProgress}%`;
+    progressBar.value = videoProgress;
+    toggler.style.left = `${videoProgress}%`;
 
-    let timeLeft = this.video.current.duration - this.video.current.currentTime;
+    let timeLeft = video.duration - video.currentTime;
     const hours = Math.floor(timeLeft / 3600);
     timeLeft = timeLeft - hours * 3600;
     const minutes = Math.floor(timeLeft / 60);
     const seconds = Math.floor(timeLeft - minutes * 60);
-    this.setState({
-      filmDuration: {hours, minutes, seconds}
-    });
+    updateFilmDuration(hours, minutes, seconds);
   }
 
   componentDidMount() {
-    this.video.current.addEventListener(`canplay`, this._calculateFilmDuration);
-    this.video.current.addEventListener(`timeupdate`, this._changeFilmProgress);
+    this.video.current.addEventListener(`canplay`, () => {
+      this._calculateFilmDuration(this.video.current);
+    });
+    this.video.current.addEventListener(`timeupdate`, () => {
+      this._changeFilmProgress(
+          this.video.current,
+          this.progressBar.current,
+          this.toggler.current
+      );
+    });
   }
 
   componentWillUnmount() {
@@ -93,8 +91,7 @@ class Player extends PureComponent {
   }
 
   render() {
-    const {activeFilm} = this.props;
-    const {filmDuration} = this.state;
+    const {activeFilm, filmDuration} = this.props;
 
     return (
       <>
@@ -254,4 +251,4 @@ class Player extends PureComponent {
   }
 }
 
-export default Player;
+export default withFilmDuration(Player);

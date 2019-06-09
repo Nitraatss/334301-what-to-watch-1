@@ -1,7 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
-import {shape, arrayOf, string, func, number, bool} from "prop-types";
-import {Link} from "react-router-dom";
+import {shape, arrayOf, string, func, number} from "prop-types";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 

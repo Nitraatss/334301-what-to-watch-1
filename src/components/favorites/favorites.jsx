@@ -1,7 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
-import {withRouter} from "react-router";
 import {compose} from "redux";
 
 import {Operation} from "../../reducer/filmsData/films-data";

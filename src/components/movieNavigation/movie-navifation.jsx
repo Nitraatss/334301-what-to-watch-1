@@ -1,7 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
 import {withRouter} from "react-router";
-import {Link} from "react-router-dom";
 import {compose} from "redux";
 
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
@@ -30,7 +29,9 @@ class MovieNavigation extends PureComponent {
             }`}
           >
             <a
-              onClick={() => {
+              href="#"
+              onClick={(evt) => {
+                evt.preventDefault();
                 this._handelLinkClick(`overview`);
               }}
               className="movie-nav__link"
@@ -44,7 +45,9 @@ class MovieNavigation extends PureComponent {
             }`}
           >
             <a
-              onClick={() => {
+              href="#"
+              onClick={(evt) => {
+                evt.preventDefault();
                 this._handelLinkClick(`details`);
               }}
               className="movie-nav__link"
@@ -58,7 +61,9 @@ class MovieNavigation extends PureComponent {
             }`}
           >
             <a
+              href="#"
               onClick={(evt) => {
+                evt.preventDefault();
                 this._handelLinkClick(`reviews`);
               }}
               className="movie-nav__link"

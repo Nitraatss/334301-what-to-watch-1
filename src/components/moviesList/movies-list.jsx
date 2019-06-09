@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {shape, arrayOf, string, func, number} from "prop-types";
+import {shape, arrayOf, string, number} from "prop-types";
 
 // Components
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
