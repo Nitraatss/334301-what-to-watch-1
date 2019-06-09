@@ -32,9 +32,11 @@ class App extends PureComponent {
   }
 
   homeRedirect() {
+    const {setActiveFilm, changeGenre, history} = this.props;
+
     setActiveFilm();
     changeGenre();
-    props.history.push(`/`);
+    history.push(`/`);
   }
 
   render() {

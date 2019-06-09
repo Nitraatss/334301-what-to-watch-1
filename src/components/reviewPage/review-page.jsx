@@ -1,6 +1,8 @@
 import React, {PureComponent} from "react";
 import {compose} from "redux";
+import {connect} from "react-redux";
 import {withRouter} from "react-router";
+import {actionPostReview, Operation} from "../../reducer/reviews/reviews";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
@@ -8,13 +10,16 @@ import Rating from "../rating/rating.jsx";
 import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
+const RATING_MULTIPLER = 2;
+
 class ReviewPage extends PureComponent {
   constructor(props) {
     super(props);
 
     this.message = React.createRef();
     this.state = {
-      postButtonStatus: true
+      submitButtonDisabled: true,
+      textareaDisabled: false
     };
 
     this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
@@ -22,18 +27,52 @@ class ReviewPage extends PureComponent {
     this._handelMessageInput = this._handelMessageInput.bind(this);
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
   }
+
+  componentDidMount() {
+    const {prepareToPost} = this.props;
+
+    prepareToPost();
+  }
+
+  componentDidUpdate() {
+    const {reviewPostedStatus: reviewWasAdded, history, match} = this.props;
+
+    if (reviewWasAdded) {
+      history.push(`/film/${match.params.id}`);
+    } else {
+      this.setState({
+        submitButtonDisabled: false,
+        textareaDisabled: false
+      });
+    }
+  }
+
   _handelFormSubmit(evt) {
     evt.preventDefault();
-    console.log(1);
+
+    const {postReview, activeFilm, activeItem: starsNumber} = this.props;
+
+    const rating = starsNumber
+      ? starsNumber * RATING_MULTIPLER
+      : RATING_MULTIPLER;
+    const comment = this.message.current.value;
+
+    this.setState({
+      submitButtonDisabled: true,
+      textareaDisabled: true
+    });
+
+    postReview(activeFilm.id, {rating, comment});
   }
+
   _handelMessageInput(evt) {
     if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
       this.setState({
-        postButtonStatus: false
+        submitButtonDisabled: false
       });
     } else {
       this.setState({
-        postButtonStatus: true
+        submitButtonDisabled: true
       });
     }
   }
@@ -59,10 +98,10 @@ class ReviewPage extends PureComponent {
       history,
       match,
       changeActiveItem,
-      activeItem
+      activeItem: starsNumber
     } = this.props;
 
-    const {postButtonStatus} = this.state;
+    const {submitButtonDisabled, textareaDisabled} = this.state;
 
     return (
       <>
@@ -211,7 +250,7 @@ class ReviewPage extends PureComponent {
 
           <div className="add-review">
             <form action="#" className="add-review__form">
-              <Rating activeStar={activeItem} onStarClick={changeActiveItem} />
+              <Rating activeStar={starsNumber} onStarClick={changeActiveItem} />
 
               <div className="add-review__text">
                 <textarea
@@ -219,14 +258,16 @@ class ReviewPage extends PureComponent {
                   name="review-text"
                   id="review-text"
                   placeholder="Review text"
+                  ref={this.message}
                   onInput={this._handelMessageInput}
+                  disabled={textareaDisabled}
                 />
                 <div className="add-review__submit">
                   <button
                     className="add-review__btn"
                     type="submit"
                     onClick={this._handelFormSubmit}
-                    disabled={postButtonStatus}
+                    disabled={submitButtonDisabled}
                   >
                     Post
                   </button>
@@ -240,9 +281,27 @@ class ReviewPage extends PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  reviewPostedStatus: state.reviews.reviewPostedStatus
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  postReview: (filmId, reviewInfo) => {
+    dispatch(Operation.postReview(filmId, reviewInfo));
+  },
+
+  prepareToPost: () => {
+    dispatch(actionPostReview(false));
+  }
+});
+
 export {ReviewPage};
 
 export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
     withPrivatePath,
     withActiveItem,
     withRouter

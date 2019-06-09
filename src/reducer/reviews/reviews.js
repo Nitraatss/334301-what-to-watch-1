@@ -44,7 +44,6 @@ const Operation = {
       })
       .catch((error) => {
         dispatch(actionPostReview(false));
-        console.log(error);
       });
   }
 };
@@ -70,4 +69,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {actionClearReviews, Operation, reducer};
+export {actionPostReview, actionClearReviews, Operation, reducer};
