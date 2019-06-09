@@ -1,4 +1,5 @@
 import React, {PureComponent} from "react";
+import {func, string} from "prop-types";
 
 const STARS_NUMBER = 5;
 
@@ -65,5 +66,10 @@ class Rating extends PureComponent {
     );
   }
 }
+
+Rating.propTypes = {
+  activeStar: string,
+  onStarClick: func.isRequired
+};
 
 export default Rating;

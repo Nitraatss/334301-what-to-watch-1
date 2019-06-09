@@ -2,6 +2,7 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 
 import {Operation} from "../../reducer/filmsData/films-data";
 
@@ -21,10 +22,6 @@ class Favorites extends PureComponent {
     const {getFavoriteFilms} = this.props;
 
     getFavoriteFilms();
-  }
-
-  componentDidUpdate() {
-    const {favoriteFilms} = this.props;
   }
 
   _handelHomeLinkClick(evt) {
@@ -181,6 +178,34 @@ class Favorites extends PureComponent {
     );
   }
 }
+
+Favorites.propTypes = {
+  changeGenre: func.isRequired,
+  homeRedirect: func.isRequired,
+  getFavoriteFilms: func.isRequired,
+  setActiveFilm: func.isRequired,
+  favoriteFilms: arrayOf(
+      shape({
+        backgroundColor: string,
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
+      })
+  ).isRequired
+};
 
 const mapStateToProps = (state) => ({
   favoriteFilms: state.filmsData.favoriteFilms

@@ -1,5 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import {compose} from "redux";
 import {withRouter} from "react-router";
 import {Route, Link} from "react-router-dom";
@@ -297,6 +298,61 @@ class MoviePage extends PureComponent {
     );
   }
 }
+
+MoviePage.propTypes = {
+  authorized: bool.isRequired,
+  togglePlayer: func.isRequired,
+  homeRedirect: func.isRequired,
+  addFilmToFavorite: func.isRequired,
+  setActiveFilm: func.isRequired,
+  changeGenre: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }),
+  match: shape({
+    url: string.isRequired
+  }),
+  activeFilm: shape({
+    backgroundColor: string,
+    backgroundImage: string.isRequired,
+    description: string.isRequired,
+    director: string.isRequired,
+    genre: string.isRequired,
+    id: number.isRequired,
+    isFavorite: bool.isRequired,
+    name: string.isRequired,
+    poster: string.isRequired,
+    posterImage: string.isRequired,
+    preview: string.isRequired,
+    rating: number.isRequired,
+    released: number.isRequired,
+    runTime: number.isRequired,
+    scoresCount: number.isRequired,
+    starring: arrayOf(string.isRequired),
+    videoLink: string.isRequired
+  }).isRequired,
+  visibleFilms: arrayOf(
+      shape({
+        backgroundColor: string.isRequired,
+        backgroundImage: string.isRequired,
+        description: string.isRequired,
+        director: string.isRequired,
+        genre: string.isRequired,
+        id: number.isRequired,
+        isFavorite: bool.isRequired,
+        name: string.isRequired,
+        poster: string.isRequired,
+        posterImage: string.isRequired,
+        preview: string.isRequired,
+        rating: number.isRequired,
+        released: number.isRequired,
+        runTime: number.isRequired,
+        scoresCount: number.isRequired,
+        starring: arrayOf(string.isRequired),
+        videoLink: string.isRequired
+      })
+  ).isRequired
+};
 
 export default compose(
     withPlayer,

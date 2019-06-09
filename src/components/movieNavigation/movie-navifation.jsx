@@ -2,6 +2,7 @@
 import React, {PureComponent} from "react";
 import {withRouter} from "react-router";
 import {compose} from "redux";
+import {func, shape, string} from "prop-types";
 
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
@@ -76,6 +77,17 @@ class MovieNavigation extends PureComponent {
     );
   }
 }
+
+MovieNavigation.propTypes = {
+  activeItem: string,
+  changeActiveItem: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired,
+  match: shape({
+    url: string.isRequired
+  }).isRequired
+};
 
 export default compose(
     withActiveItem,

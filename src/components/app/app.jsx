@@ -1,6 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
-import {arrayOf, shape, string, func, number, bool} from "prop-types";
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import {connect} from "react-redux";
 import {Switch, Route} from "react-router-dom";
 import {withRouter} from "react-router";
@@ -113,28 +113,71 @@ class App extends PureComponent {
 App.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
+  addFilmToFavorite: func.isRequired,
+  changeGenre: func.isRequired,
+  onShowMoreClick: func.isRequired,
+  setActiveFilm: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired,
+  activeFilm: shape({
+    description: string,
+    director: string,
+    genre: string,
+    id: number,
+    isFavorite: bool,
+    name: string,
+    poster: string,
+    posterImage: string,
+    preview: string,
+    rating: number,
+    released: number,
+    runTime: number,
+    scoresCount: number,
+    starring: arrayOf(string),
+    videoLink: string
+  }).isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
-        genre: string.isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
       })
   ).isRequired,
   visibleFilms: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
-        genre: string.isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
       })
-  ).isRequired,
-  changeGenre: func.isRequired,
-  onShowMoreClick: func.isRequired,
-  setActiveFilm: func.isRequired
+  ).isRequired
 };
 
 const mapStateToProps = (state) => ({

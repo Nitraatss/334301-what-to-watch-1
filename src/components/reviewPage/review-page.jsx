@@ -1,3 +1,4 @@
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
@@ -41,7 +42,6 @@ class ReviewPage extends PureComponent {
       reviewPostedStatus: reviewWasAdded,
       history,
       match,
-      changeSubmitButtonState,
       changeTextareaState
     } = this.props;
 
@@ -75,7 +75,7 @@ class ReviewPage extends PureComponent {
   }
 
   _handelMessageInput(evt) {
-    const {changeSubmitButtonState, changeTextareaState} = this.props;
+    const {changeSubmitButtonState} = this.props;
 
     if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
       changeSubmitButtonState(false);
@@ -285,6 +285,46 @@ class ReviewPage extends PureComponent {
     );
   }
 }
+
+ReviewPage.propTypes = {
+  submitButtonDisabled: bool.isRequired,
+  textareaDisabled: bool.isRequired,
+  reviewPostedStatus: bool.isRequired,
+  activeItem: string,
+  prepareToPost: func.isRequired,
+  changeSubmitButtonState: func.isRequired,
+  changeTextareaState: func.isRequired,
+  changeActiveItem: func.isRequired,
+  postReview: func.isRequired,
+  homeRedirect: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired,
+  match: shape({
+    params: shape({
+      id: string
+    }).isRequired
+  }).isRequired,
+  activeFilm: shape({
+    backgroundColor: string.isRequired,
+    backgroundImage: string.isRequired,
+    description: string.isRequired,
+    director: string.isRequired,
+    genre: string.isRequired,
+    id: number.isRequired,
+    isFavorite: bool.isRequired,
+    name: string.isRequired,
+    poster: string.isRequired,
+    posterImage: string.isRequired,
+    preview: string.isRequired,
+    rating: number.isRequired,
+    released: number.isRequired,
+    runTime: number.isRequired,
+    scoresCount: number.isRequired,
+    starring: arrayOf(string.isRequired),
+    videoLink: string.isRequired
+  }).isRequired
+};
 
 const mapStateToProps = (state) => ({
   reviewPostedStatus: state.reviews.reviewPostedStatus

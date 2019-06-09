@@ -1,6 +1,6 @@
 // Core
 import React from "react";
-import {shape, arrayOf, string, number} from "prop-types";
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 
 // Components
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
@@ -28,13 +28,27 @@ const MoviesList = (props) => {
 };
 
 MoviesList.propTypes = {
+  changeGenre: func.isRequired,
+  setActiveFilm: func.isRequired,
   films: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
+        backgroundColor: string.isRequired,
+        backgroundImage: string.isRequired,
+        description: string.isRequired,
+        director: string.isRequired,
         genre: string.isRequired,
+        id: number.isRequired,
+        isFavorite: bool.isRequired,
+        name: string.isRequired,
         poster: string.isRequired,
-        preview: string.isRequired
+        posterImage: string.isRequired,
+        preview: string.isRequired,
+        rating: number.isRequired,
+        released: number.isRequired,
+        runTime: number.isRequired,
+        scoresCount: number.isRequired,
+        starring: arrayOf(string.isRequired),
+        videoLink: string.isRequired
       })
   ).isRequired
 };

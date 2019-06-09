@@ -79,6 +79,9 @@ SmallMovieCard.propTypes = {
   title: string.isRequired,
   poster: string.isRequired,
   preview: string.isRequired,
+  genre: string.isRequired,
+  changeGenre: func.isRequired,
+  setActiveFilm: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired

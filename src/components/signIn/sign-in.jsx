@@ -286,6 +286,7 @@ class SignIn extends PureComponent {
 }
 
 SignIn.propTypes = {
+  homeRedirect: func.isRequired,
   changeAuthorizationStatus: func.isRequired,
   validateMail: func.isRequired,
   validatePassword: func.isRequired,

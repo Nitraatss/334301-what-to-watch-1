@@ -1,4 +1,5 @@
 // Core
+import {bool, func, number, string, shape} from "prop-types";
 import React, {PureComponent} from "react";
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
@@ -45,6 +46,19 @@ class UserBlock extends PureComponent {
     history.push(`/favorites`);
   }
 }
+
+UserBlock.propTypes = {
+  authorized: bool.isRequired,
+  user: shape({
+    userId: number,
+    userEmail: string,
+    userName: string,
+    userAvatar: string
+  }).isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired
+};
 
 const mapStateToProps = (state) => ({
   user: state.user.currentUser,

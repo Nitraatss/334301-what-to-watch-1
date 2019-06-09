@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import withFilmDuration from "../hocs/withFilmDuration/with-film-duration.jsx";
 
 class Player extends PureComponent {
@@ -250,5 +250,34 @@ class Player extends PureComponent {
     );
   }
 }
+
+Player.propTypes = {
+  togglePlayer: func.isRequired,
+  updateFilmDuration: func.isRequired,
+  filmDuration: shape({
+    hours: number.isRequired,
+    minutes: number.isRequired,
+    seconds: number.isRequired
+  }),
+  activeFilm: shape({
+    backgroundColor: string.isRequired,
+    backgroundImage: string.isRequired,
+    description: string.isRequired,
+    director: string.isRequired,
+    genre: string.isRequired,
+    id: number.isRequired,
+    isFavorite: bool.isRequired,
+    name: string.isRequired,
+    poster: string.isRequired,
+    posterImage: string.isRequired,
+    preview: string.isRequired,
+    rating: number.isRequired,
+    released: number.isRequired,
+    runTime: number.isRequired,
+    scoresCount: number.isRequired,
+    starring: arrayOf(string.isRequired),
+    videoLink: string.isRequired
+  }).isRequired
+};
 
 export default withFilmDuration(Player);

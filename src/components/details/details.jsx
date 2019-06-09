@@ -1,5 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
+import {arrayOf, bool, number, shape, string} from "prop-types";
 
 class Details extends PureComponent {
   constructor(props) {
@@ -65,5 +66,25 @@ class Details extends PureComponent {
     );
   }
 }
+
+Details.propTypes = {
+  activeFilm: shape({
+    description: string,
+    director: string,
+    genre: string,
+    id: number,
+    isFavorite: bool,
+    name: string,
+    poster: string,
+    posterImage: string,
+    preview: string,
+    rating: number,
+    released: number,
+    runTime: number,
+    scoresCount: number,
+    starring: arrayOf(string),
+    videoLink: string
+  }).isRequired
+};
 
 export default Details;

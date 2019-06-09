@@ -1,4 +1,5 @@
 // Core
+import {arrayOf, func, number, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
@@ -94,6 +95,20 @@ class Reviews extends PureComponent {
     );
   }
 }
+
+Reviews.propTypes = {
+  activeFilmId: number.isRequired,
+  loadReviews: func.isRequired,
+  clearReviews: func.isRequired,
+  reviews: arrayOf(
+      shape({
+        comment: string,
+        date: string,
+        id: number,
+        rating: number
+      })
+  ).isRequired
+};
 
 const mapStateToProps = (state) => ({
   reviews: state.reviews.reviews

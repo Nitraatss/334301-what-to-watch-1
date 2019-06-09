@@ -1,6 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
-import {shape, arrayOf, string, func, number} from "prop-types";
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import {withRouter} from "react-router";
 import {compose} from "redux";
 
@@ -273,32 +273,74 @@ class Main extends PureComponent {
 }
 
 Main.propTypes = {
+  authorized: bool.isRequired,
   activeGenre: string.isRequired,
   changeGenre: func.isRequired,
   onShowMoreClick: func.isRequired,
   setActiveFilm: func.isRequired,
+  togglePlayer: func.isRequired,
+  addFilmToFavorite: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired,
+  activeFilm: shape({
+    description: string,
+    director: string,
+    genre: string,
+    id: number,
+    isFavorite: bool,
+    name: string,
+    poster: string,
+    posterImage: string,
+    preview: string,
+    rating: number,
+    released: number,
+    runTime: number,
+    scoresCount: number,
+    starring: arrayOf(string),
+    videoLink: string
+  }).isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
-        genre: string.isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
       })
   ).isRequired,
   visibleFilms: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
-        genre: string.isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
       })
-  ).isRequired,
-  history: shape({
-    push: func.isRequired
-  }).isRequired
+  ).isRequired
 };
 
 export default compose(

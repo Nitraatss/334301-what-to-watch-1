@@ -1,6 +1,6 @@
 // Core
 import React, {PureComponent} from "react";
-import {shape, arrayOf, string, number} from "prop-types";
+import {arrayOf, bool, number, shape, string} from "prop-types";
 
 const MaximumFilmsPerPack = 20;
 
@@ -71,11 +71,23 @@ const withVisibleFilms = (WrappedComponent) => {
   WithVisibleFilms.propTypes = {
     films: arrayOf(
         shape({
-          id: number.isRequired,
-          name: string.isRequired,
+          backgroundColor: string.isRequired,
+          backgroundImage: string.isRequired,
+          description: string.isRequired,
+          director: string.isRequired,
           genre: string.isRequired,
+          id: number.isRequired,
+          isFavorite: bool.isRequired,
+          name: string.isRequired,
           poster: string.isRequired,
-          preview: string.isRequired
+          posterImage: string.isRequired,
+          preview: string.isRequired,
+          rating: number.isRequired,
+          released: number.isRequired,
+          runTime: number.isRequired,
+          scoresCount: number.isRequired,
+          starring: arrayOf(string.isRequired),
+          videoLink: string.isRequired
         })
     ).isRequired
   };
