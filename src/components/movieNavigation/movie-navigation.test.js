@@ -4,14 +4,25 @@ import renderer from "react-test-renderer";
 import {BrowserRouter} from "react-router-dom";
 
 // Component
-import Favorites from "./favorites.jsx";
+import MovieNavigation from "./movie-navigation.jsx";
 
-describe(`Favorites:`, () => {
+const mocks = {
+  activeItem: `overview`,
+  changeActiveItem: jest.fn(),
+  history: {
+    push: jest.fn()
+  },
+  history: {
+    url: `url`
+  }
+};
+
+describe(`MovieNavigation:`, () => {
   it(`Correctly renders after relaunch`, () => {
     const tree = renderer
       .create(
           <BrowserRouter>
-            <Favorites authorized={true} />
+            <MovieNavigation {...mocks} />
           </BrowserRouter>
       )
       .toJSON();

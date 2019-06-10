@@ -11,7 +11,7 @@ import MoviesList from "../moviesList/movies-list.jsx";
 import Overview from "../overview/overview.jsx";
 import Details from "../details/details.jsx";
 import Reviews from "../reviews/reviews.jsx";
-import MovieNavigation from "../movieNavigation/movie-navifation.jsx";
+import MovieNavigation from "../movieNavigation/movie-navigation.jsx";
 
 // HOCs
 import withPlayer from "../hocs/withPlayer/with-player.jsx";

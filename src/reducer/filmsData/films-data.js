@@ -303,6 +303,7 @@ const reducer = (state = initialState, action) => {
 export {
   formFilms,
   formGenres,
+  updateVisibleFilms,
   actionChangeGenre,
   actionChangeFilms,
   actionShowAllFilms,

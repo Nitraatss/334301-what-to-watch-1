@@ -64,7 +64,6 @@ class Overview extends PureComponent {
 
 Overview.propTypes = {
   activeFilm: shape({
-    backgroundColor: string.isRequired,
     backgroundImage: string.isRequired,
     description: string.isRequired,
     director: string.isRequired,

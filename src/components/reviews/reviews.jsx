@@ -106,7 +106,10 @@ Reviews.propTypes = {
         comment: string,
         date: string,
         id: number,
-        rating: number
+        rating: number,
+        user: shape({
+          name: string
+        })
       })
   ).isRequired
 };
@@ -124,6 +127,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actionClearReviews());
   }
 });
+
+export {Reviews};
 
 export default compose(
     connect(

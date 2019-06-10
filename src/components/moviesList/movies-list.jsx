@@ -34,7 +34,6 @@ MoviesList.propTypes = {
   setActiveFilm: func.isRequired,
   films: arrayOf(
       shape({
-        backgroundColor: string.isRequired,
         backgroundImage: string.isRequired,
         description: string.isRequired,
         director: string.isRequired,

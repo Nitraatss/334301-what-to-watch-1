@@ -69,4 +69,11 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {actionPostReview, actionClearReviews, Operation, reducer};
+export {
+  actionLoadReviews,
+  actionPostReview,
+  actionClearReviews,
+  Operation,
+  ActionType,
+  reducer
+};
