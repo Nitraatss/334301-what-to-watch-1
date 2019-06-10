@@ -315,7 +315,6 @@ MoviePage.propTypes = {
     url: string.isRequired
   }),
   activeFilm: shape({
-    backgroundColor: string,
     backgroundImage: string.isRequired,
     description: string.isRequired,
     director: string.isRequired,
@@ -335,7 +334,6 @@ MoviePage.propTypes = {
   }).isRequired,
   visibleFilms: arrayOf(
       shape({
-        backgroundColor: string.isRequired,
         backgroundImage: string.isRequired,
         description: string.isRequired,
         director: string.isRequired,
@@ -355,6 +353,8 @@ MoviePage.propTypes = {
       })
   ).isRequired
 };
+
+export {MoviePage};
 
 export default compose(
     withPlayer,

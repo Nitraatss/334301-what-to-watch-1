@@ -345,6 +345,8 @@ Main.propTypes = {
   ).isRequired
 };
 
+export {Main};
+
 export default compose(
     withPlayer,
     withRouter

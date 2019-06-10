@@ -121,6 +121,7 @@ App.propTypes = {
     push: func.isRequired
   }).isRequired,
   activeFilm: shape({
+    backgroundImage: string,
     description: string,
     director: string,
     genre: string,

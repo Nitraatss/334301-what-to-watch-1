@@ -7,19 +7,21 @@ import reducer from "../../reducer/index";
 import {createStore} from "redux";
 
 // Component
-import {App} from "./app.jsx";
+import {Main} from "./main.jsx";
 
 const mocks = {
   authorized: false,
   activeGenre: `All genres`,
-  addFilmToFavorite: jest.fn(),
   changeGenre: jest.fn(),
   onShowMoreClick: jest.fn(),
   setActiveFilm: jest.fn(),
+  togglePlayer: jest.fn(),
+  addFilmToFavorite: jest.fn(),
   history: {
     push: jest.fn()
   },
   activeFilm: {
+    backgroundImage: `image`,
     description: `description`,
     director: `Director`,
     genre: `Action`,
@@ -95,7 +97,7 @@ const mocks = {
   ],
   visibleFilms: [
     {
-      backgroundImage: `image`,
+      backgroundImage: `color`,
       description: `description`,
       director: `Director`,
       genre: `Action`,
@@ -113,7 +115,7 @@ const mocks = {
       videoLink: `link`
     },
     {
-      backgroundImage: `image`,
+      backgroundImage: `color`,
       description: `description2`,
       director: `Director2`,
       genre: `Drama`,
@@ -131,7 +133,7 @@ const mocks = {
       videoLink: `link`
     },
     {
-      backgroundImage: `image`,
+      backgroundImage: `color`,
       description: `description3`,
       director: `Director3`,
       genre: `Comedy`,
@@ -151,7 +153,7 @@ const mocks = {
   ]
 };
 
-describe(`App:`, () => {
+describe(`Main:`, () => {
   const store = createStore(reducer);
 
   it(`Correctly renders after relaunch`, () => {
@@ -159,7 +161,7 @@ describe(`App:`, () => {
       .create(
           <Provider store={store}>
             <BrowserRouter>
-              <App {...mocks} />
+              <Main {...mocks} />
             </BrowserRouter>
           </Provider>
       )
