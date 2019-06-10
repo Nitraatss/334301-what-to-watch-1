@@ -1,27 +1,32 @@
 // Core
 import {func, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
-import {compose} from "redux";
 import {withRouter} from "react-router";
 
-// HOCs
-import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
+const TABS = {
+  OVERVIEW: `overview`,
+  DETAILS: `details`,
+  REVIEWS: `reviews`
+};
 
 class MovieNavigation extends PureComponent {
   constructor(props) {
     super(props);
 
     this._handelLinkClick = this._handelLinkClick.bind(this);
+    this._setActiveTab = this._setActiveTab.bind(this);
   }
 
   render() {
-    const {activeItem} = this.props;
+    const {history} = this.props;
+    const activeTab = this._setActiveTab(history.location.pathname.split(`/`));
+
     return (
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           <li
             className={`movie-nav__item ${
-              activeItem === `overview` ? `movie-nav__item--active` : ``
+              activeTab === TABS.OVERVIEW ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -37,7 +42,7 @@ class MovieNavigation extends PureComponent {
           </li>
           <li
             className={`movie-nav__item ${
-              activeItem === `details` ? `movie-nav__item--active` : ``
+              activeTab === TABS.DETAILS ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -53,7 +58,7 @@ class MovieNavigation extends PureComponent {
           </li>
           <li
             className={`movie-nav__item ${
-              activeItem === `reviews` ? `movie-nav__item--active` : ``
+              activeTab === TABS.REVIEWS ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -72,16 +77,29 @@ class MovieNavigation extends PureComponent {
     );
   }
 
+  _setActiveTab(path) {
+    if (path.indexOf(TABS.OVERVIEW) > -1) {
+      return TABS.OVERVIEW;
+    }
+
+    if (path.indexOf(TABS.DETAILS) > -1) {
+      return TABS.DETAILS;
+    }
+
+    if (path.indexOf(TABS.REVIEWS) > -1) {
+      return TABS.REVIEWS;
+    }
+
+    return TABS.OVERVIEW;
+  }
+
   _handelLinkClick(tab) {
-    const {match, history, changeActiveItem} = this.props;
-    changeActiveItem(tab);
+    const {match, history} = this.props;
     history.push(`${match.url}/${tab}`);
   }
 }
 
 MovieNavigation.propTypes = {
-  activeItem: string,
-  changeActiveItem: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired,
@@ -90,7 +108,4 @@ MovieNavigation.propTypes = {
   }).isRequired
 };
 
-export default compose(
-    withActiveItem,
-    withRouter
-)(MovieNavigation);
+export default withRouter(MovieNavigation);

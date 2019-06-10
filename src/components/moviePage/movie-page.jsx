@@ -208,7 +208,7 @@ class MoviePage extends PureComponent {
               </div>
 
               <div className="movie-card__desc">
-                <MovieNavigation activeItem={`overview`} />
+                <MovieNavigation />
 
                 <Route
                   path={match.url}
