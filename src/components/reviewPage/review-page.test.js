@@ -13,7 +13,7 @@ const mocks = {
   submitButtonDisabled: true,
   textareaDisabled: false,
   reviewPostedStatus: false,
-  activeItem: 1,
+  activeItem: `2`,
   prepareToPost: jest.fn(),
   changeSubmitButtonState: jest.fn(),
   changeTextareaState: jest.fn(),
