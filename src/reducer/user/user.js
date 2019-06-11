@@ -1,5 +1,3 @@
-import history from "../../history";
-
 const initialState = {
   authorizationFailed: false,
   authorized: false,
@@ -39,7 +37,6 @@ const Operation = {
       .then((response) => {
         dispatch(actionSetUserInfo(response.data));
         dispatch(actionChangeAuthorizationStatus(true));
-        history.push(`/`);
       })
       .catch((error) => {
         console.log(error);

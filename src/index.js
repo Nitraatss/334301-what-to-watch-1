@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import {compose} from "recompose";
-import {Router} from "react-router-dom";
+import {BrowserRouter, Router} from "react-router-dom";
 import history from "./history";
 
 // Components
@@ -33,6 +33,7 @@ const init = () => {
   /* eslint-enable */
 
   store.dispatch(Operation.loadFilms());
+  store.dispatch(Operation.loadPromo());
 
   ReactDOM.render(
       <Provider store={store}>

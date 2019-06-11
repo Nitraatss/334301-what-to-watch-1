@@ -1,21 +1,36 @@
 // Core
+import {arrayOf, bool, func, number, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
-import {shape, arrayOf, string, func, number, bool} from "prop-types";
-import {Link} from "react-router-dom";
+import {compose} from "redux";
+import {withRouter} from "react-router";
 
 // Components
+import UserBlock from "../userBlock/user-block.jsx";
 import MoviesList from "../moviesList/movies-list.jsx";
 import GenresList from "../genresList/genres-list.jsx";
+
+// HOCs
+import withPlayer from "../hocs/withPlayer/with-player.jsx";
 
 class Main extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._formUserBlock = this._formUserBlock.bind(this);
+    this._displayShowMore = this._displayShowMore.bind(this);
+    this._handelShowMoreClick = this._handelShowMoreClick.bind(this);
+    this._handlePlayClick = this._handlePlayClick.bind(this);
+    this._handelFavoriteClick = this._handelFavoriteClick.bind(this);
   }
 
   render() {
-    const {films, genres, activeGenre, onGenreClick} = this.props;
+    const {
+      visibleFilms,
+      genres,
+      activeGenre,
+      changeGenre,
+      setActiveFilm,
+      activeFilm
+    } = this.props;
 
     return (
       <>
@@ -130,31 +145,34 @@ class Main extends PureComponent {
               </a>
             </div>
 
-            {this._formUserBlock()}
+            <UserBlock />
           </header>
 
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
                 <img
-                  src="img/the-grand-budapest-hotel-poster.jpg"
-                  alt="The Grand Budapest Hotel poster"
+                  src={activeFilm.posterImage}
+                  alt={activeFilm.name}
                   width="218"
                   height="327"
                 />
               </div>
 
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+                <h2 className="movie-card__title">{activeFilm.name}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">Drama</span>
-                  <span className="movie-card__year">2014</span>
+                  <span className="movie-card__genre">{activeFilm.genre}</span>
+                  <span className="movie-card__year">
+                    {activeFilm.released}
+                  </span>
                 </p>
 
                 <div className="movie-card__buttons">
                   <button
                     className="btn btn--play movie-card__button"
                     type="button"
+                    onClick={this._handlePlayClick}
                   >
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s" />
@@ -164,6 +182,7 @@ class Main extends PureComponent {
                   <button
                     className="btn btn--list movie-card__button"
                     type="button"
+                    onClick={this._handelFavoriteClick}
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add" />
@@ -183,16 +202,16 @@ class Main extends PureComponent {
             <GenresList
               genres={genres}
               activeItem={activeGenre}
-              onGenreClick={onGenreClick}
+              onGenreClick={changeGenre}
             />
 
-            <MoviesList films={films} />
+            <MoviesList
+              films={visibleFilms}
+              changeGenre={changeGenre}
+              setActiveFilm={setActiveFilm}
+            />
 
-            <div className="catalog__more">
-              <button className="catalog__button" type="button">
-                Show more
-              </button>
-            </div>
+            {this._displayShowMore()}
           </section>
 
           <footer className="page-footer">
@@ -213,25 +232,44 @@ class Main extends PureComponent {
     );
   }
 
-  _formUserBlock() {
-    const {authorized, userAvatar, userName} = this.props;
-
-    if (!authorized) {
+  _displayShowMore() {
+    const {films, visibleFilms} = this.props;
+    if (films.length - 1 > visibleFilms.length) {
       return (
-        <div className="user-block">
-          <Link to="/login" className="user-block__link">
-            Sign in
-          </Link>
+        <div className="catalog__more">
+          <button
+            className="catalog__button"
+            type="button"
+            onClick={this._handelShowMoreClick}
+          >
+            Show more
+          </button>
         </div>
       );
     } else {
-      return (
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src={userAvatar} alt={userName} width="63" height="63" />
-          </div>
-        </div>
-      );
+      return null;
+    }
+  }
+
+  _handelShowMoreClick() {
+    const {onShowMoreClick} = this.props;
+
+    onShowMoreClick();
+  }
+
+  _handlePlayClick() {
+    const {togglePlayer} = this.props;
+
+    togglePlayer();
+  }
+
+  _handelFavoriteClick() {
+    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+
+    if (authorized) {
+      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
+    } else {
+      history.push(`/login`);
     }
   }
 }
@@ -239,19 +277,77 @@ class Main extends PureComponent {
 Main.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
-  onGenreClick: func.isRequired,
+  changeGenre: func.isRequired,
+  onShowMoreClick: func.isRequired,
+  setActiveFilm: func.isRequired,
+  togglePlayer: func.isRequired,
+  addFilmToFavorite: func.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired,
+  activeFilm: shape({
+    description: string,
+    director: string,
+    genre: string,
+    id: number,
+    isFavorite: bool,
+    name: string,
+    poster: string,
+    posterImage: string,
+    preview: string,
+    rating: number,
+    released: number,
+    runTime: number,
+    scoresCount: number,
+    starring: arrayOf(string),
+    videoLink: string
+  }).isRequired,
   genres: arrayOf(string.isRequired),
   films: arrayOf(
       shape({
-        id: number.isRequired,
-        name: string.isRequired,
-        genre: string.isRequired,
-        poster: string.isRequired,
-        preview: string.isRequired
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
       })
   ).isRequired,
-  userAvatar: string,
-  userName: string
+  visibleFilms: arrayOf(
+      shape({
+        backgroundImage: string,
+        description: string,
+        director: string,
+        genre: string,
+        id: number,
+        isFavorite: bool,
+        name: string,
+        poster: string,
+        posterImage: string,
+        preview: string,
+        rating: number,
+        released: number,
+        runTime: number,
+        scoresCount: number,
+        starring: arrayOf(string),
+        videoLink: string
+      })
+  ).isRequired
 };
 
-export default Main;
+export {Main};
+
+export default compose(
+    withPlayer,
+    withRouter
+)(Main);

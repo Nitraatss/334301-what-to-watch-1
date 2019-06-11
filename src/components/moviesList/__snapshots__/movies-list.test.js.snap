@@ -6,6 +6,7 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
 >
   <article
     className="small-movie-card catalog__movies-card"
+    onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
@@ -15,8 +16,8 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
       <video
         height="175"
         muted={true}
-        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
+        poster="string"
+        src="string"
         width="280"
       />
     </div>
@@ -25,14 +26,21 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="#"
+        onClick={[Function]}
+        params={
+          Object {
+            "id": 1,
+          }
+        }
       >
-        John Wick
+        Title
       </a>
     </h3>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
+    onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
@@ -42,8 +50,8 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
       <video
         height="175"
         muted={true}
-        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
+        poster="string"
+        src="string"
         width="280"
       />
     </div>
@@ -52,14 +60,21 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="#"
+        onClick={[Function]}
+        params={
+          Object {
+            "id": 2,
+          }
+        }
       >
-        Killers Bodyguard
+        Title2
       </a>
     </h3>
   </article>
   <article
     className="small-movie-card catalog__movies-card"
+    onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
@@ -69,8 +84,8 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
       <video
         height="175"
         muted={true}
-        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
+        poster="string"
+        src="string"
         width="280"
       />
     </div>
@@ -79,63 +94,15 @@ exports[`MoviesList: Correctly renders after relaunch 1`] = `
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="#"
+        onClick={[Function]}
+        params={
+          Object {
+            "id": 3,
+          }
+        }
       >
-        Star Wars
-      </a>
-    </h3>
-  </article>
-  <article
-    className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-  >
-    <div
-      className="small-movie-card__image"
-    >
-      <video
-        height="175"
-        muted={true}
-        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        src="https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm"
-        width="280"
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
-      >
-        The Grand Budapest Hotel
-      </a>
-    </h3>
-  </article>
-  <article
-    className="small-movie-card catalog__movies-card"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-  >
-    <div
-      className="small-movie-card__image"
-    >
-      <video
-        height="175"
-        muted={true}
-        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
-        width="280"
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
-      >
-        The Cabin in the Woods
+        Title3
       </a>
     </h3>
   </article>

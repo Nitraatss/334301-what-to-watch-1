@@ -1,12 +1,14 @@
 // Core
+import {shape, func, bool} from "prop-types";
 import React, {PureComponent} from "react";
-import {func, bool} from "prop-types";
+import {compose} from "redux";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
 
 // Reducer
 import {Operation} from "../../reducer/user/user";
 
+// HOCs
 import withErrors from "../hocs/withErrors/with-errors.jsx";
 
 class SignIn extends PureComponent {
@@ -16,13 +18,17 @@ class SignIn extends PureComponent {
     this._emailRef = React.createRef();
     this._passwordRef = React.createRef();
 
-    this.state = {
-      emailError: false,
-      passwordError: false
-    };
-
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
     this._setMessage = this._setMessage.bind(this);
+    this._handelHomeLinkClick = this._handelHomeLinkClick.bind(this);
+  }
+
+  componentDidUpdate() {
+    const {authorized, history} = this.props;
+
+    if (authorized) {
+      history.goBack();
+    }
   }
 
   render() {
@@ -133,11 +139,15 @@ class SignIn extends PureComponent {
         <div className="user-page">
           <header className="page-header user-page__head">
             <div className="logo">
-              <Link to="/" className="logo__link">
+              <a
+                href="#"
+                className="logo__link"
+                onClick={this._handelHomeLinkClick}
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </Link>
+              </a>
             </div>
 
             <h1 className="page-title user-page__title">Sign in</h1>
@@ -194,11 +204,15 @@ class SignIn extends PureComponent {
 
           <footer className="page-footer">
             <div className="logo">
-              <Link to="/" className="logo__link logo__link--light">
+              <a
+                href="#"
+                onClick={this._handelHomeLinkClick}
+                className="logo__link logo__link--light"
+              >
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </Link>
+              </a>
             </div>
 
             <div className="copyright">
@@ -208,6 +222,13 @@ class SignIn extends PureComponent {
         </div>
       </>
     );
+  }
+
+  _handelHomeLinkClick(evt) {
+    evt.preventDefault();
+    const {homeRedirect} = this.props;
+
+    homeRedirect();
   }
 
   _handelFormSubmit(evt) {
@@ -261,16 +282,22 @@ class SignIn extends PureComponent {
 }
 
 SignIn.propTypes = {
+  homeRedirect: func.isRequired,
   changeAuthorizationStatus: func.isRequired,
   validateMail: func.isRequired,
   validatePassword: func.isRequired,
   emailError: bool.isRequired,
   passwordError: bool.isRequired,
-  authorizationFailed: bool.isRequired
+  authorizationFailed: bool.isRequired,
+  authorized: bool.isRequired,
+  history: shape({
+    push: func.isRequired
+  }).isRequired
 };
 
 const mapStateToProps = (state) => ({
-  authorizationFailed: state.user.authorizationFailed
+  authorizationFailed: state.user.authorizationFailed,
+  authorized: state.user.authorized
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -281,7 +308,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 export {SignIn};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withErrors(SignIn));
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withErrors,
+    withRouter
+)(SignIn);

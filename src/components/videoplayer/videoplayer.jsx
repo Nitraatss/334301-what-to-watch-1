@@ -1,6 +1,6 @@
 // Core
-import React, {PureComponent} from "react";
 import {string} from "prop-types";
+import React, {PureComponent} from "react";
 
 class Videoplayer extends PureComponent {
   constructor(props) {

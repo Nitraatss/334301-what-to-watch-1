@@ -1,7 +1,7 @@
 import axios from "axios";
 import history from "./history";
 
-export const createAPI = () => {
+export const createAPI = (dispatch) => {
   const api = axios.create({
     baseURL: `https://es31-server.appspot.com/wtw`,
     timeout: 5000,
@@ -10,8 +10,10 @@ export const createAPI = () => {
 
   const onSuccess = (response) => response;
   const onFail = (err) => {
-    if (err.status === 403) {
+    if (err.response.status === 403) {
       history.push(`/login`);
+
+      return;
     }
 
     throw err;
