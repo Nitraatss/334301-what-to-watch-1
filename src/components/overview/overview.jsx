@@ -2,6 +2,14 @@
 import {arrayOf, bool, number, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
 
+const FilmRating = {
+  BAD: `bad`,
+  NORMAL: `normal`,
+  GOOD: `good`,
+  VERY_GOOD: `very good`,
+  AWESOME: `awesome`
+};
+
 class Overview extends PureComponent {
   constructor(props) {
     super(props);
@@ -43,22 +51,22 @@ class Overview extends PureComponent {
 
   _formTextRating(numberRating) {
     if (numberRating >= 0 && numberRating < 3) {
-      return `bad`;
+      return FilmRating.BAD;
     }
 
-    if (numberRating >= 3 && numberRating <= 5) {
-      return `normal`;
+    if (numberRating >= 3 && numberRating < 5) {
+      return FilmRating.NORMAL;
     }
 
     if (numberRating >= 5 && numberRating < 8) {
-      return `good`;
+      return FilmRating.GOOD;
     }
 
     if (numberRating >= 8 && numberRating < 10) {
-      return `very good`;
+      return FilmRating.VERY_GOOD;
     }
 
-    return `awesome`;
+    return FilmRating.AWESOME;
   }
 }
 

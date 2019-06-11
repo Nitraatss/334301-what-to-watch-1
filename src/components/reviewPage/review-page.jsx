@@ -17,6 +17,8 @@ import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 import withDisabledElements from "../hocs/withDisabledElements/with-disabled-elements.jsx";
 
 const RATING_MULTIPLER = 2;
+const MINIMUM_MESSAGE_LENGTH = 50;
+const MAXIMUM_MESSAGE_LENGTH = 200;
 
 class ReviewPage extends PureComponent {
   constructor(props) {
@@ -32,6 +34,7 @@ class ReviewPage extends PureComponent {
     this._handelMovieTitleClick = this._handelMovieTitleClick.bind(this);
     this._handelMessageInput = this._handelMessageInput.bind(this);
     this._handelFormSubmit = this._handelFormSubmit.bind(this);
+    this._checkMessageLength = this._checkMessageLength.bind(this);
   }
 
   componentDidMount() {
@@ -221,7 +224,7 @@ class ReviewPage extends PureComponent {
                   id="review-text"
                   placeholder="Review text"
                   ref={this.message}
-                  onInput={this._handelMessageInput}
+                  onChange={this._handelMessageInput}
                   disabled={textareaDisabled}
                 />
                 <div className="add-review__submit">
@@ -264,14 +267,21 @@ class ReviewPage extends PureComponent {
     postReview(activeFilm.id, {rating, comment});
   }
 
+  _checkMessageLength(message) {
+    if (
+      message.length >= MINIMUM_MESSAGE_LENGTH &&
+      message.length <= MAXIMUM_MESSAGE_LENGTH
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   _handelMessageInput(evt) {
     const {changeSubmitButtonState} = this.props;
 
-    if (evt.target.value.length >= 50 && evt.target.value.length <= 200) {
-      changeSubmitButtonState(false);
-    } else {
-      changeSubmitButtonState(true);
-    }
+    changeSubmitButtonState(this._checkMessageLength(evt.target.value));
   }
 
   _handelHomeLinkClick(evt) {

@@ -321,7 +321,7 @@ Array [
             disabled={false}
             id="review-text"
             name="review-text"
-            onInput={[Function]}
+            onChange={[Function]}
             placeholder="Review text"
           />
           <div
