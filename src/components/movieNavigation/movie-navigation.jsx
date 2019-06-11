@@ -3,7 +3,7 @@ import {func, shape, string} from "prop-types";
 import React, {PureComponent} from "react";
 import {withRouter} from "react-router";
 
-const TABS = {
+const Tab = {
   OVERVIEW: `overview`,
   DETAILS: `details`,
   REVIEWS: `reviews`
@@ -26,7 +26,7 @@ class MovieNavigation extends PureComponent {
         <ul className="movie-nav__list">
           <li
             className={`movie-nav__item ${
-              activeTab === TABS.OVERVIEW ? `movie-nav__item--active` : ``
+              activeTab === Tab.OVERVIEW ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -42,7 +42,7 @@ class MovieNavigation extends PureComponent {
           </li>
           <li
             className={`movie-nav__item ${
-              activeTab === TABS.DETAILS ? `movie-nav__item--active` : ``
+              activeTab === Tab.DETAILS ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -58,7 +58,7 @@ class MovieNavigation extends PureComponent {
           </li>
           <li
             className={`movie-nav__item ${
-              activeTab === TABS.REVIEWS ? `movie-nav__item--active` : ``
+              activeTab === Tab.REVIEWS ? `movie-nav__item--active` : ``
             }`}
           >
             <a
@@ -78,19 +78,19 @@ class MovieNavigation extends PureComponent {
   }
 
   _setActiveTab(path) {
-    if (path.indexOf(TABS.OVERVIEW) > -1) {
-      return TABS.OVERVIEW;
+    if (path.indexOf(Tab.OVERVIEW) > -1) {
+      return Tab.OVERVIEW;
     }
 
-    if (path.indexOf(TABS.DETAILS) > -1) {
-      return TABS.DETAILS;
+    if (path.indexOf(Tab.DETAILS) > -1) {
+      return Tab.DETAILS;
     }
 
-    if (path.indexOf(TABS.REVIEWS) > -1) {
-      return TABS.REVIEWS;
+    if (path.indexOf(Tab.REVIEWS) > -1) {
+      return Tab.REVIEWS;
     }
 
-    return TABS.OVERVIEW;
+    return Tab.OVERVIEW;
   }
 
   _handelLinkClick(tab) {

@@ -17,7 +17,7 @@ import MovieNavigation from "../movieNavigation/movie-navigation.jsx";
 import withPlayer from "../hocs/withPlayer/with-player.jsx";
 
 const MAXIMUM_RECOMMENDED_FILMS_NUMBER = 4;
-const TABS = {
+const Tab = {
   OVERVIEW: `overview`,
   DETAILS: `details`,
   REVIEWS: `reviews`
@@ -221,15 +221,15 @@ class MoviePage extends PureComponent {
                   render={() => <Overview activeFilm={activeFilm} />}
                 />
                 <Route
-                  path={match.url + `/${TABS.OVERVIEW}`}
+                  path={match.url + `/${Tab.OVERVIEW}`}
                   render={() => <Overview activeFilm={activeFilm} />}
                 />
                 <Route
-                  path={match.url + `/${TABS.DETAILS}`}
+                  path={match.url + `/${Tab.DETAILS}`}
                   render={() => <Details activeFilm={activeFilm} />}
                 />
                 <Route
-                  path={`${match.url}/${TABS.REVIEWS}`}
+                  path={`${match.url}/${Tab.REVIEWS}`}
                   exact
                   render={() => <Reviews activeFilmId={activeFilm.id} />}
                 />
