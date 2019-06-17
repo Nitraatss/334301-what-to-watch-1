@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
 // Reducer
-import {actionPostReview, Operation} from "../../reducer/reviews/reviews";
+import {ActionCreator, Operation} from "../../reducer/reviews/reviews";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
@@ -346,7 +346,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   prepareToPost: () => {
-    dispatch(actionPostReview(false));
+    dispatch(ActionCreator.postReview(false));
   }
 });
 

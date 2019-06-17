@@ -5,7 +5,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 
 // Reducer
-import {Operation, actionClearReviews} from "../../reducer/reviews/reviews";
+import {ActionCreator, Operation} from "../../reducer/reviews/reviews";
 
 class Reviews extends PureComponent {
   constructor(props) {
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   clearReviews: () => {
-    dispatch(actionClearReviews());
+    dispatch(ActionCreator.clearReviews());
   }
 });
 
