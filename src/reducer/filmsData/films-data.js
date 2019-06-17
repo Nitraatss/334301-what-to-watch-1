@@ -1,6 +1,16 @@
 const MAXIMUM_GENRES_NUMBER = 9;
 const MAXIMUN_FILMS_PER_PACK = 20;
 
+const initialState = {
+  activeGenre: `All genres`,
+  films: [],
+  loadedFilms: [],
+  visibleFilms: [],
+  genres: [],
+  activeFilm: {},
+  favoriteFilms: []
+};
+
 const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
   CHANGE_FILMS: `CHANGE_FILMS`,
@@ -15,85 +25,77 @@ const ActionType = {
   LOAD_FAVORITE_FILMS: `LOAD_FAVORITE_FILMS`
 };
 
-const initialState = {
-  activeGenre: `All genres`,
-  films: [],
-  loadedFilms: [],
-  visibleFilms: [],
-  genres: [],
-  activeFilm: {},
-  favoriteFilms: []
-};
+const ActionCreator = {
+  changeGenre: (newGenre = `All genres`) => ({
+    type: ActionType.CHANGE_GENRE,
+    payload: newGenre
+  }),
 
-const actionChangeGenre = (newGenre = `All genres`) => ({
-  type: ActionType.CHANGE_GENRE,
-  payload: newGenre
-});
+  changeFilms: () => {
+    return {
+      type: ActionType.CHANGE_FILMS
+    };
+  },
 
-const actionChangeFilms = () => {
-  return {
-    type: ActionType.CHANGE_FILMS
-  };
-};
+  showAllFilms: () => {
+    return {
+      type: ActionType.SHOW_ALL
+    };
+  },
 
-const actionShowAllFilms = () => {
-  return {
-    type: ActionType.SHOW_ALL
-  };
-};
+  loadFilms: (loadedFilms) => {
+    return {
+      type: ActionType.LOAD_FILMS,
+      payload: loadedFilms
+    };
+  },
 
-const actionLoadFilms = (loadedFilms) => {
-  return {
-    type: ActionType.LOAD_FILMS,
-    payload: loadedFilms
-  };
-};
+  loadPromoFilm: (promoFilm) => {
+    return {
+      type: ActionType.LOAD_PROMO_FILM,
+      payload: promoFilm
+    };
+  },
 
-const actionLoadPromoFilm = (promoFilm) => {
-  return {
-    type: ActionType.LOAD_PROMO_FILM,
-    payload: promoFilm
-  };
-};
+  loadFavoriteFilms: (loadedFilms) => {
+    return {
+      type: ActionType.LOAD_FAVORITE_FILMS,
+      payload: loadedFilms
+    };
+  },
 
-const actionLoadFavoriteFilms = (loadedFilms) => {
-  return {
-    type: ActionType.LOAD_FAVORITE_FILMS,
-    payload: loadedFilms
-  };
-};
+  formGenres: (loadedFilms) => {
+    return {
+      type: ActionType.FORM_GENRES,
+      payload: loadedFilms
+    };
+  },
 
-const actionFormGenres = (loadedFilms) => {
-  return {
-    type: ActionType.FORM_GENRES,
-    payload: loadedFilms
-  };
-};
+  formVisibleFilms: (filmId = null) => {
+    return {
+      type: ActionType.FORM_VISIBLE_FILMS,
+      payload: filmId
+    };
+  },
 
-const actionFormVisibleFilms = (filmId = null) => {
-  return {
-    type: ActionType.FORM_VISIBLE_FILMS,
-    payload: filmId
-  };
-};
+  clearVisibleFilms: () => {
+    return {
+      type: ActionType.CLEAR_VISIBLE_FILMS
+    };
+  },
 
-const actionClearVisibleFilms = () => {
-  return {
-    type: ActionType.CLEAR_VISIBLE_FILMS
-  };
-};
+  changeActiveFilm: (filmId) => {
+    return {
+      type: ActionType.CHANGE_ACTIVE_FILM,
+      payload: filmId
+    };
+  },
 
-const actionChangeActiveFilm = (filmId) => {
-  return {
-    type: ActionType.CHANGE_ACTIVE_FILM,
-    payload: filmId
-  };
-};
-
-const actionAddFilmToFavorite = () => {
-  return {
-    type: ActionType.ADD_FILM_TO_FAVORITE
-  };
+  addFilmToFavorite: () => {
+    return {
+      type: ActionType.ADD_FILM_TO_FAVORITE
+    };
+  }
 };
 
 const updateVisibleFilms = (films, currentVisibleFilms, filmId) => {
@@ -173,9 +175,9 @@ const Operation = {
     return api
       .get(`/films`)
       .then((response) => {
-        dispatch(actionLoadFilms(response.data));
-        dispatch(actionFormGenres(response.data));
-        dispatch(actionFormVisibleFilms());
+        dispatch(ActionCreator.loadFilms(response.data));
+        dispatch(ActionCreator.formGenres(response.data));
+        dispatch(ActionCreator.formVisibleFilms());
       })
       .catch((error) => {
         console.log(error);
@@ -186,7 +188,7 @@ const Operation = {
     return api
       .get(`/favorite`)
       .then((response) => {
-        dispatch(actionLoadFavoriteFilms(response.data));
+        dispatch(ActionCreator.loadFavoriteFilms(response.data));
       })
       .catch((error) => {
         console.log(error);
@@ -197,8 +199,8 @@ const Operation = {
     return api
       .get(`/films/promo`)
       .then((response) => {
-        dispatch(actionLoadPromoFilm([response.data]));
-        dispatch(actionChangeActiveFilm());
+        dispatch(ActionCreator.loadPromoFilm([response.data]));
+        dispatch(ActionCreator.changeActiveFilm());
       })
       .catch((error) => {
         console.log(error);
@@ -212,7 +214,7 @@ const Operation = {
         status
       })
       .then((response) => {
-        dispatch(actionAddFilmToFavorite());
+        dispatch(ActionCreator.addFilmToFavorite());
       })
       .catch((error) => {
         console.log(error);
@@ -304,15 +306,8 @@ export {
   formFilms,
   formGenres,
   updateVisibleFilms,
-  actionChangeGenre,
-  actionChangeFilms,
-  actionShowAllFilms,
-  actionLoadFilms,
-  actionFormGenres,
-  actionFormVisibleFilms,
-  actionClearVisibleFilms,
-  actionChangeActiveFilm,
   ActionType,
+  ActionCreator,
   Operation,
   reducer
 };
