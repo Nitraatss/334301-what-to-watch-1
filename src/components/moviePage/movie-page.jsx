@@ -264,16 +264,16 @@ class MoviePage extends PureComponent {
   }
 
   _handlePlayClick() {
-    const {togglePlayer} = this.props;
+    const {onPlayerToggle} = this.props;
 
-    togglePlayer();
+    onPlayerToggle();
   }
 
   _handelHomeLinkClick(evt) {
     evt.preventDefault();
-    const {homeRedirect} = this.props;
+    const {onHomeRedirect} = this.props;
 
-    homeRedirect();
+    onHomeRedirect();
   }
 
   _handelFavoriteClick() {
@@ -308,8 +308,8 @@ class MoviePage extends PureComponent {
 
 MoviePage.propTypes = {
   authorized: bool.isRequired,
-  togglePlayer: func.isRequired,
-  homeRedirect: func.isRequired,
+  onPlayerToggle: func.isRequired,
+  onHomeRedirect: func.isRequired,
   addFilmToFavorite: func.isRequired,
   setActiveFilm: func.isRequired,
   changeGenre: func.isRequired,

@@ -226,21 +226,21 @@ class SignIn extends PureComponent {
 
   _handelHomeLinkClick(evt) {
     evt.preventDefault();
-    const {homeRedirect} = this.props;
+    const {onHomeRedirect} = this.props;
 
-    homeRedirect();
+    onHomeRedirect();
   }
 
   _handelFormSubmit(evt) {
     evt.preventDefault();
     const {
       changeAuthorizationStatus,
-      validateMail,
-      validatePassword
+      onEmailValidate,
+      onPasswordValidate
     } = this.props;
 
-    const mailIsValid = validateMail(this._emailRef.current.value);
-    const passwordIsValid = validatePassword(this._passwordRef.current.value);
+    const mailIsValid = onEmailValidate(this._emailRef.current.value);
+    const passwordIsValid = onPasswordValidate(this._passwordRef.current.value);
 
     if (passwordIsValid && mailIsValid) {
       const userInfo = {
@@ -282,10 +282,10 @@ class SignIn extends PureComponent {
 }
 
 SignIn.propTypes = {
-  homeRedirect: func.isRequired,
+  onHomeRedirect: func.isRequired,
   changeAuthorizationStatus: func.isRequired,
-  validateMail: func.isRequired,
-  validatePassword: func.isRequired,
+  onEmailValidate: func.isRequired,
+  onPasswordValidate: func.isRequired,
   emailError: bool.isRequired,
   passwordError: bool.isRequired,
   authorizationFailed: bool.isRequired,

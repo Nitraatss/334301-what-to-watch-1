@@ -258,9 +258,9 @@ class Main extends PureComponent {
   }
 
   _handlePlayClick() {
-    const {togglePlayer} = this.props;
+    const {onPlayerToggle} = this.props;
 
-    togglePlayer();
+    onPlayerToggle();
   }
 
   _handelFavoriteClick() {
@@ -280,7 +280,7 @@ Main.propTypes = {
   changeGenre: func.isRequired,
   onShowMoreClick: func.isRequired,
   setActiveFilm: func.isRequired,
-  togglePlayer: func.isRequired,
+  onPlayerToggle: func.isRequired,
   addFilmToFavorite: func.isRequired,
   history: shape({
     push: func.isRequired

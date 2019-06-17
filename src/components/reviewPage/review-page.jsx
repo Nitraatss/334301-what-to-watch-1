@@ -37,9 +37,9 @@ class ReviewPage extends PureComponent {
   }
 
   componentDidMount() {
-    const {prepareToPost, changeTextareaState} = this.props;
+    const {prepareToPost, onTextareaStateChange} = this.props;
 
-    changeTextareaState(false);
+    onTextareaStateChange(false);
     prepareToPost();
   }
 
@@ -48,20 +48,20 @@ class ReviewPage extends PureComponent {
       reviewPostedStatus: reviewWasAdded,
       history,
       match,
-      changeTextareaState
+      onTextareaStateChange
     } = this.props;
 
     if (reviewWasAdded) {
       history.push(`/film/${match.params.id}`);
     } else {
-      changeTextareaState(false);
+      onTextareaStateChange(false);
     }
   }
 
   render() {
     const {
       activeFilm,
-      changeActiveItem,
+      onActiveItemChange,
       submitButtonDisabled,
       textareaDisabled,
       activeItem: starsNumber
@@ -214,7 +214,7 @@ class ReviewPage extends PureComponent {
 
           <div className="add-review">
             <form action="#" className="add-review__form">
-              <Rating activeStar={starsNumber} onStarClick={changeActiveItem} />
+              <Rating activeStar={starsNumber} onStarClick={onActiveItemChange} />
 
               <div className="add-review__text">
                 <textarea
@@ -251,15 +251,15 @@ class ReviewPage extends PureComponent {
       postReview,
       activeFilm,
       activeItem: starsNumber,
-      changeSubmitButtonState,
-      changeTextareaState
+      onSubmitButtonStateChange,
+      onTextareaStateChange
     } = this.props;
 
     const rating = starsNumber ? starsNumber : 1;
     const comment = this.message.current.value;
 
-    changeSubmitButtonState(true);
-    changeTextareaState(true);
+    onSubmitButtonStateChange(true);
+    onTextareaStateChange(true);
 
     postReview(activeFilm.id, {rating, comment});
   }
@@ -276,17 +276,17 @@ class ReviewPage extends PureComponent {
   }
 
   _handelMessageInput(evt) {
-    const {changeSubmitButtonState} = this.props;
+    const {onSubmitButtonStateChange} = this.props;
 
-    changeSubmitButtonState(this._checkMessageLength(evt.target.value));
+    onSubmitButtonStateChange(this._checkMessageLength(evt.target.value));
   }
 
   _handelHomeLinkClick(evt) {
     evt.preventDefault();
 
-    const {homeRedirect} = this.props;
+    const {onHomeRedirect} = this.props;
 
-    homeRedirect();
+    onHomeRedirect();
   }
 
   _handelMovieTitleClick(evt) {
@@ -303,11 +303,11 @@ ReviewPage.propTypes = {
   reviewPostedStatus: bool.isRequired,
   activeItem: string,
   prepareToPost: func.isRequired,
-  changeSubmitButtonState: func.isRequired,
-  changeTextareaState: func.isRequired,
-  changeActiveItem: func.isRequired,
+  onSubmitButtonStateChange: func.isRequired,
+  onTextareaStateChange: func.isRequired,
+  onActiveItemChange: func.isRequired,
   postReview: func.isRequired,
-  homeRedirect: func.isRequired,
+  onHomeRedirect: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired,

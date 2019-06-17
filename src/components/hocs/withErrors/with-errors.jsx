@@ -11,11 +11,11 @@ const withErrors = (WrappedComponent) => {
         passwordError: false
       };
 
-      this.validateMail = this.validateMail.bind(this);
-      this.validatePassword = this.validatePassword.bind(this);
+      this.onEmailValidate = this.onEmailValidate.bind(this);
+      this.onPasswordValidate = this.onPasswordValidate.bind(this);
     }
 
-    validateMail(enteredEmail) {
+    onEmailValidate(enteredEmail) {
       const regularEmailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (!regularEmailExpression.test(enteredEmail)) {
@@ -33,7 +33,7 @@ const withErrors = (WrappedComponent) => {
       }
     }
 
-    validatePassword(enteredPassword) {
+    onPasswordValidate(enteredPassword) {
       if (!enteredPassword) {
         this.setState({
           passwordError: true
@@ -55,8 +55,8 @@ const withErrors = (WrappedComponent) => {
       return (
         <WrappedComponent
           {...this.props}
-          validateMail={this.validateMail}
-          validatePassword={this.validatePassword}
+          onEmailValidate={this.onEmailValidate}
+          onPasswordValidate={this.onPasswordValidate}
           emailError={emailError}
           passwordError={passwordError}
         />

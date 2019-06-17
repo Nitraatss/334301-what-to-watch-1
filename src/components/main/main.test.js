@@ -15,7 +15,7 @@ const mocks = {
   changeGenre: jest.fn(),
   onShowMoreClick: jest.fn(),
   setActiveFilm: jest.fn(),
-  togglePlayer: jest.fn(),
+  onPlayerToggle: jest.fn(),
   addFilmToFavorite: jest.fn(),
   history: {
     push: jest.fn()

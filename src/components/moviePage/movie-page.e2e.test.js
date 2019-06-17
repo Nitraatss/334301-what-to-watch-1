@@ -14,8 +14,8 @@ Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
   authorized: true,
-  togglePlayer: jest.fn(),
-  homeRedirect: jest.fn(),
+  onPlayerToggle: jest.fn(),
+  onHomeRedirect: jest.fn(),
   addFilmToFavorite: jest.fn(),
   setActiveFilm: jest.fn(),
   changeGenre: jest.fn(),
@@ -118,7 +118,7 @@ describe(`MoviePage:`, () => {
     expect(mocks.addFilmToFavorite).toHaveBeenCalledTimes(1);
   });
 
-  it(`Should run callback togglePlayer on add to play button click`, () => {
+  it(`Should run callback onPlayerToggle on add to play button click`, () => {
     const moviePage = mount(
         <Provider store={store}>
           <BrowserRouter>
@@ -129,7 +129,7 @@ describe(`MoviePage:`, () => {
 
     const playButton = moviePage.find(`.btn--play`);
     playButton.simulate(`click`, {preventDefault() {}});
-    expect(mocks.togglePlayer).toHaveBeenCalledTimes(1);
+    expect(mocks.onPlayerToggle).toHaveBeenCalledTimes(1);
   });
 
   it(`Recommended block should have all visible films from props`, () => {

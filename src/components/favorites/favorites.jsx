@@ -176,15 +176,15 @@ class Favorites extends PureComponent {
   _handelHomeLinkClick(evt) {
     evt.preventDefault();
 
-    const {homeRedirect} = this.props;
+    const {onHomeRedirect} = this.props;
 
-    homeRedirect();
+    onHomeRedirect();
   }
 }
 
 Favorites.propTypes = {
   changeGenre: func.isRequired,
-  homeRedirect: func.isRequired,
+  onHomeRedirect: func.isRequired,
   getFavoriteFilms: func.isRequired,
   setActiveFilm: func.isRequired,
   favoriteFilms: arrayOf(

@@ -12,10 +12,10 @@ const withPlayer = (WrappedComponent) => {
         playerActive: false
       };
 
-      this.togglePlayer = this.togglePlayer.bind(this);
+      this.onPlayerToggle = this.onPlayerToggle.bind(this);
     }
 
-    togglePlayer() {
+    onPlayerToggle() {
       const {playerActive} = this.state;
 
       this.setState({playerActive: !playerActive});
@@ -26,10 +26,13 @@ const withPlayer = (WrappedComponent) => {
 
       if (!playerActive) {
         return (
-          <WrappedComponent {...this.props} togglePlayer={this.togglePlayer} />
+          <WrappedComponent
+            {...this.props}
+            onPlayerToggle={this.onPlayerToggle}
+          />
         );
       } else {
-        return <Player {...this.props} togglePlayer={this.togglePlayer} />;
+        return <Player {...this.props} onPlayerToggle={this.onPlayerToggle} />;
       }
     }
   }
