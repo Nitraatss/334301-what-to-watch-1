@@ -16,7 +16,6 @@ import withPrivatePath from "../hocs/withPrivatePath/with-private-path.jsx";
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 import withDisabledElements from "../hocs/withDisabledElements/with-disabled-elements.jsx";
 
-const RATING_MULTIPLER = 2;
 const MINIMUM_MESSAGE_LENGTH = 50;
 const MAXIMUM_MESSAGE_LENGTH = 200;
 
