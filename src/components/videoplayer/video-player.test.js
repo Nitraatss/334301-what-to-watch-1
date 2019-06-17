@@ -3,7 +3,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 // Component
-import Videoplayer from "./videoplayer.jsx";
+import Videoplayer from "./video-player.jsx";
 
 const mocks = {poster: `poster`, preview: `preview`};
 describe(`Videoplayer:`, () => {

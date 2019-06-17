@@ -5,7 +5,7 @@ import {compose} from "redux";
 import {withRouter} from "react-router";
 
 // Components
-import Videoplayer from "../videoplayer/videoplayer.jsx";
+import Videoplayer from "../videoplayer/video-player.jsx";
 
 class SmallMovieCard extends PureComponent {
   constructor(props) {
