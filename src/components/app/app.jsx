@@ -101,7 +101,7 @@ class App extends PureComponent {
           render={() => <Favorites {...favoritesProps} />}
         />
         <Route
-          path="/film/:id/review"
+          path="/films/:id/review"
           render={() => <ReviewPage {...reviewProps} />}
         />
         <Route path="/film/:id" render={() => <MoviePage {...filmProps} />} />

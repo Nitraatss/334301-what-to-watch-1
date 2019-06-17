@@ -256,9 +256,7 @@ class ReviewPage extends PureComponent {
       changeTextareaState
     } = this.props;
 
-    const rating = starsNumber
-      ? starsNumber * RATING_MULTIPLER
-      : RATING_MULTIPLER;
+    const rating = starsNumber ? starsNumber : 1;
     const comment = this.message.current.value;
 
     changeSubmitButtonState(true);
