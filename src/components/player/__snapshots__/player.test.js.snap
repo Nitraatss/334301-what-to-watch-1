@@ -124,6 +124,7 @@ Array [
     className="player"
   >
     <video
+      autoPlay={true}
       className="player__video"
       poster="string"
       src="link"
