@@ -23,6 +23,9 @@ class Player extends PureComponent {
       this.video.current.addEventListener(`canplay`, () => {
         this._calculateFilmDuration(this.video.current);
       });
+      this.video.current.addEventListener(`canplay`, () => {
+        this.video.current.play();
+      });
       this.video.current.addEventListener(`timeupdate`, () => {
         this._changeFilmProgress(
             this.video.current,
@@ -147,7 +150,6 @@ class Player extends PureComponent {
             src={activeFilm.videoLink}
             className="player__video"
             poster={activeFilm.poster}
-            autoPlay
           />
 
           <button
