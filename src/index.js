@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import {compose} from "recompose";
 import {BrowserRouter, Router} from "react-router-dom";
 import history from "./history";
+import {composeWithDevTools} from "redux-devtools-extension/developmentOnly";
 
 // Components
 import App from "./components/app/app.jsx";
@@ -21,16 +22,10 @@ import {Operation} from "./reducer/filmsData/films-data";
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
 
-  /* eslint-disable no-underscore-dangle */
   const store = createStore(
       reducer,
-      compose(
-          applyMiddleware(thunk.withExtraArgument(api)),
-          window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-      )
+      composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
   );
-  /* eslint-enable */
 
   store.dispatch(Operation.loadFilms());
   store.dispatch(Operation.loadPromo());
