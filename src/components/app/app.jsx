@@ -7,7 +7,15 @@ import {withRouter} from "react-router";
 import {Switch, Route} from "react-router-dom";
 
 // Reducer
-import {ActionCreator, Operation} from "../../reducer/filmsData/films-data";
+import {
+  actionChangeGenre,
+  actionChangeFilms,
+  actionShowAllFilms,
+  actionFormVisibleFilms,
+  actionClearVisibleFilms,
+  actionChangeActiveFilm,
+  operationAddFilmToFavorite
+} from "../../reducer/filmsData/films-data";
 
 // Components
 import Main from "../main/main.jsx";
@@ -184,31 +192,31 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeGenre: (newGenre = `All genres`) => {
-    dispatch(ActionCreator.changeGenre(newGenre));
+    dispatch(actionChangeGenre(newGenre));
 
     if (newGenre === `All genres`) {
-      dispatch(ActionCreator.showAllFilms());
+      dispatch(actionShowAllFilms());
     } else {
-      dispatch(ActionCreator.changeFilms());
+      dispatch(actionChangeFilms());
     }
 
-    dispatch(ActionCreator.clearVisibleFilms());
-    dispatch(ActionCreator.formVisibleFilms());
+    dispatch(actionClearVisibleFilms());
+    dispatch(actionFormVisibleFilms());
   },
 
   onShowMoreClick: () => {
-    dispatch(ActionCreator.formVisibleFilms());
+    dispatch(actionFormVisibleFilms());
   },
 
   setActiveFilm: (filmId = null) => {
-    dispatch(ActionCreator.changeActiveFilm(filmId));
+    dispatch(actionChangeActiveFilm(filmId));
 
-    dispatch(ActionCreator.clearVisibleFilms());
-    dispatch(ActionCreator.formVisibleFilms(filmId));
+    dispatch(actionClearVisibleFilms());
+    dispatch(actionFormVisibleFilms(filmId));
   },
 
   addFilmToFavorite: (filmId, filmStatus) => {
-    dispatch(Operation.addFilmToFavourite(filmId, filmStatus));
+    dispatch(operationAddFilmToFavorite(filmId, filmStatus));
   }
 });
 

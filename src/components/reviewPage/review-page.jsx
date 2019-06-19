@@ -5,7 +5,10 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
 // Reducer
-import {ActionCreator, Operation} from "../../reducer/reviews/reviews";
+import {
+  actionPostReview,
+  operationPostReview
+} from "../../reducer/reviews/reviews";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
@@ -214,7 +217,10 @@ class ReviewPage extends PureComponent {
 
           <div className="add-review">
             <form action="#" className="add-review__form">
-              <Rating activeStar={starsNumber} onStarClick={onActiveItemChange} />
+              <Rating
+                activeStar={starsNumber}
+                onStarClick={onActiveItemChange}
+              />
 
               <div className="add-review__text">
                 <textarea
@@ -248,7 +254,7 @@ class ReviewPage extends PureComponent {
     evt.preventDefault();
 
     const {
-      actionPostReview,
+      onPostReview,
       activeFilm,
       activeItem: starsNumber,
       onSubmitButtonStateChange,
@@ -261,7 +267,7 @@ class ReviewPage extends PureComponent {
     onSubmitButtonStateChange(true);
     onTextareaStateChange(true);
 
-    actionPostReview(activeFilm.id, {rating, comment});
+    onPostReview(activeFilm.id, {rating, comment});
   }
 
   _checkMessageLength(message) {
@@ -306,7 +312,7 @@ ReviewPage.propTypes = {
   onSubmitButtonStateChange: func.isRequired,
   onTextareaStateChange: func.isRequired,
   onActiveItemChange: func.isRequired,
-  actionPostReview: func.isRequired,
+  onPostReview: func.isRequired,
   onHomeRedirect: func.isRequired,
   history: shape({
     push: func.isRequired
@@ -341,12 +347,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actionPostReview: (filmId, reviewInfo) => {
-    dispatch(Operation.actionPostReview(filmId, reviewInfo));
+  onPostReview: (filmId, reviewInfo) => {
+    dispatch(operationPostReview(filmId, reviewInfo));
   },
 
   prepareToPost: () => {
-    dispatch(ActionCreator.actionPostReview(false));
+    dispatch(actionPostReview(false));
   }
 });
 

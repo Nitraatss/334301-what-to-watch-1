@@ -17,7 +17,10 @@ import {createAPI} from "./api";
 
 // Reducer
 import reducer from "./reducer/index";
-import {Operation} from "./reducer/filmsData/films-data";
+import {
+  operationLoadFilms,
+  operationLoadPromo
+} from "./reducer/filmsData/films-data";
 
 const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
@@ -27,8 +30,8 @@ const init = () => {
       composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
   );
 
-  store.dispatch(Operation.loadFilms());
-  store.dispatch(Operation.loadPromo());
+  store.dispatch(operationLoadFilms());
+  store.dispatch(operationLoadPromo());
 
   ReactDOM.render(
       <Provider store={store}>

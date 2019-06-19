@@ -3,9 +3,21 @@ import {createAPI} from "../../api";
 import {
   formFilms,
   formGenres,
-  ActionCreator,
   ActionType,
-  Operation,
+  actionChangeGenre,
+  actionChangeFilms,
+  actionShowAllFilms,
+  actionLoadFilms,
+  actionLoadPromoFilm,
+  actionLoadFavoriteFilms,
+  actionFormGenres,
+  actionFormVisibleFilms,
+  actionClearVisibleFilms,
+  actionChangeActiveFilm,
+  actionAddFilmToFavorite,
+  operationLoadFilms,
+  operationLoadFavoriteFilms,
+  operationLoadPromo,
   reducer
 } from "./films-data";
 
@@ -149,88 +161,88 @@ describe(`Business logic is correct`, () => {
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for changing genre returns correct action`, () => {
-    expect(ActionCreator.changeGenre()).toEqual({
+    expect(actionChangeGenre()).toEqual({
       type: `CHANGE_GENRE`,
       payload: `All genres`
     });
   });
 
   it(`Action creator for changing genre returns payload with new genre`, () => {
-    expect(ActionCreator.changeGenre(`Some genre`)).toEqual({
+    expect(actionChangeGenre(`Some genre`)).toEqual({
       type: `CHANGE_GENRE`,
       payload: `Some genre`
     });
   });
 
   it(`Action creator for changing films returns correct action`, () => {
-    expect(ActionCreator.changeFilms()).toEqual({
+    expect(actionChangeFilms()).toEqual({
       type: `CHANGE_FILMS`
     });
   });
 
   it(`Action creator for showing all films returns correct action`, () => {
-    expect(ActionCreator.showAllFilms()).toEqual({
+    expect(actionShowAllFilms()).toEqual({
       type: `SHOW_ALL`
     });
   });
 
   it(`Action creator for loading films returns correct action`, () => {
-    expect(ActionCreator.loadFilms([])).toEqual({
+    expect(actionLoadFilms([])).toEqual({
       type: ActionType.LOAD_FILMS,
       payload: []
     });
   });
 
   it(`Action creator for loading films returns payload with new films`, () => {
-    expect(ActionCreator.loadFilms(mocks.loadedFilms)).toEqual({
+    expect(actionLoadFilms(mocks.loadedFilms)).toEqual({
       type: ActionType.LOAD_FILMS,
       payload: mocks.loadedFilms
     });
   });
 
   it(`Action creator for forming genres array returns correct action`, () => {
-    expect(ActionCreator.formGenres([])).toEqual({
+    expect(actionFormGenres([])).toEqual({
       type: ActionType.FORM_GENRES,
       payload: []
     });
   });
 
   it(`Action creator for forming genres array returns  payload with films`, () => {
-    expect(ActionCreator.formGenres(mocks.loadedFilms)).toEqual({
+    expect(actionFormGenres(mocks.loadedFilms)).toEqual({
       type: ActionType.FORM_GENRES,
       payload: mocks.loadedFilms
     });
   });
 
   it(`Action creator for forming visible films retuns correct action`, () => {
-    expect(ActionCreator.formVisibleFilms(2)).toEqual({
+    expect(actionFormVisibleFilms(2)).toEqual({
       type: ActionType.FORM_VISIBLE_FILMS,
       payload: 2
     });
   });
 
   it(`Action creator for forming visible films retuns payload with given value`, () => {
-    expect(ActionCreator.formVisibleFilms(2)).toEqual({
+    expect(actionFormVisibleFilms(2)).toEqual({
       type: ActionType.FORM_VISIBLE_FILMS,
       payload: 2
     });
   });
 
   it(`Action creator for clearing visible films retuns correct action`, () => {
-    expect(ActionCreator.clearVisibleFilms()).toEqual({
+    expect(actionClearVisibleFilms()).toEqual({
       type: ActionType.CLEAR_VISIBLE_FILMS
     });
   });
 
   it(`Action creator for changing active films retuns correct action`, () => {
-    expect(ActionCreator.changeActiveFilm(1)).toEqual({
+    expect(actionChangeActiveFilm(1)).toEqual({
       type: ActionType.CHANGE_ACTIVE_FILM,
       payload: 1
     });
   });
 
   it(`Action creator for changing active films retuns payload with given value`, () => {
-    expect(ActionCreator.changeActiveFilm(3)).toEqual({
+    expect(actionChangeActiveFilm(3)).toEqual({
       type: ActionType.CHANGE_ACTIVE_FILM,
       payload: 3
     });
@@ -516,7 +528,7 @@ describe(`Reducer works correctly`, () => {
     const dispatch = jest.fn();
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
-    const filmsLoader = Operation.loadFilms();
+    const filmsLoader = operationLoadFilms();
 
     apiMock.onGet(`/films`).reply(200, [{fake: true}]);
 
@@ -529,7 +541,7 @@ describe(`Reducer works correctly`, () => {
     const dispatch = jest.fn();
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
-    const filmsLoader = Operation.loadFavoriteFilms();
+    const filmsLoader = operationLoadFavoriteFilms();
 
     apiMock.onGet(`/favorite`).reply(200, [{fake: true}]);
 
@@ -542,7 +554,7 @@ describe(`Reducer works correctly`, () => {
     const dispatch = jest.fn();
     const api = createAPI(dispatch);
     const apiMock = new MockAdapter(api);
-    const filmsLoader = Operation.loadPromo();
+    const filmsLoader = operationLoadPromo();
 
     apiMock.onGet(`/films/promo`).reply(200, [{fake: true}]);
 

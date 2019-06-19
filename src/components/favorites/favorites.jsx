@@ -5,7 +5,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 
 // Reducer
-import {Operation} from "../../reducer/filmsData/films-data";
+import {operationLoadFavoriteFilms} from "../../reducer/filmsData/films-data";
 
 // Components
 import UserBlock from "../userBlock/user-block.jsx";
@@ -216,7 +216,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getFavoriteFilms: () => {
-    dispatch(Operation.loadFavoriteFilms());
+    dispatch(operationLoadFavoriteFilms());
   }
 });
 
