@@ -248,7 +248,7 @@ class ReviewPage extends PureComponent {
     evt.preventDefault();
 
     const {
-      postReview,
+      actionPostReview,
       activeFilm,
       activeItem: starsNumber,
       onSubmitButtonStateChange,
@@ -261,7 +261,7 @@ class ReviewPage extends PureComponent {
     onSubmitButtonStateChange(true);
     onTextareaStateChange(true);
 
-    postReview(activeFilm.id, {rating, comment});
+    actionPostReview(activeFilm.id, {rating, comment});
   }
 
   _checkMessageLength(message) {
@@ -306,7 +306,7 @@ ReviewPage.propTypes = {
   onSubmitButtonStateChange: func.isRequired,
   onTextareaStateChange: func.isRequired,
   onActiveItemChange: func.isRequired,
-  postReview: func.isRequired,
+  actionPostReview: func.isRequired,
   onHomeRedirect: func.isRequired,
   history: shape({
     push: func.isRequired
@@ -341,12 +341,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postReview: (filmId, reviewInfo) => {
-    dispatch(Operation.postReview(filmId, reviewInfo));
+  actionPostReview: (filmId, reviewInfo) => {
+    dispatch(Operation.actionPostReview(filmId, reviewInfo));
   },
 
   prepareToPost: () => {
-    dispatch(ActionCreator.postReview(false));
+    dispatch(ActionCreator.actionPostReview(false));
   }
 });
 

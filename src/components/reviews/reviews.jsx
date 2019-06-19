@@ -5,7 +5,10 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 
 // Reducer
-import {ActionCreator, Operation} from "../../reducer/reviews/reviews";
+import {
+  actionClearReviews,
+  operationLoadReviews
+} from "../../reducer/reviews/reviews";
 
 class Reviews extends PureComponent {
   constructor(props) {
@@ -15,15 +18,15 @@ class Reviews extends PureComponent {
   }
 
   componentDidMount() {
-    const {loadReviews, activeFilmId} = this.props;
+    const {onLoadReviews, activeFilmId} = this.props;
 
-    loadReviews(activeFilmId);
+    onLoadReviews(activeFilmId);
   }
 
   componentWillUnmount() {
-    const {clearReviews} = this.props;
+    const {onClearReviews} = this.props;
 
-    clearReviews();
+    onClearReviews();
   }
 
   render() {
@@ -99,8 +102,8 @@ class Reviews extends PureComponent {
 
 Reviews.propTypes = {
   activeFilmId: number.isRequired,
-  loadReviews: func.isRequired,
-  clearReviews: func.isRequired,
+  onLoadReviews: func.isRequired,
+  onClearReviews: func.isRequired,
   reviews: arrayOf(
       shape({
         comment: string,
@@ -119,12 +122,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadReviews: (filmId) => {
-    dispatch(Operation.loadReviews(filmId));
+  onLoadReviews: (filmId) => {
+    dispatch(operationLoadReviews(filmId));
   },
 
-  clearReviews: () => {
-    dispatch(ActionCreator.clearReviews());
+  onClearReviews: () => {
+    dispatch(actionClearReviews());
   }
 });
 

@@ -10,8 +10,8 @@ Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {
   activeFilmId: 3,
-  loadReviews: jest.fn(),
-  clearReviews: jest.fn(),
+  onLoadReviews: jest.fn(),
+  onClearReviews: jest.fn(),
   reviews: [
     {
       comment: `comment`,

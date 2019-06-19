@@ -234,7 +234,7 @@ class SignIn extends PureComponent {
   _handelFormSubmit(evt) {
     evt.preventDefault();
     const {
-      actionChangeAuthorizationStatus,
+      onChangeAuthorizationStatus,
       onEmailValidate,
       onPasswordValidate
     } = this.props;
@@ -248,7 +248,7 @@ class SignIn extends PureComponent {
         password: this._passwordRef.current.value
       };
 
-      actionChangeAuthorizationStatus(userInfo);
+      onChangeAuthorizationStatus(userInfo);
     }
   }
 
@@ -283,7 +283,7 @@ class SignIn extends PureComponent {
 
 SignIn.propTypes = {
   onHomeRedirect: func.isRequired,
-  actionChangeAuthorizationStatus: func.isRequired,
+  onChangeAuthorizationStatus: func.isRequired,
   onEmailValidate: func.isRequired,
   onPasswordValidate: func.isRequired,
   emailError: bool.isRequired,
@@ -301,7 +301,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actionChangeAuthorizationStatus: (user) => {
+  onChangeAuthorizationStatus: (user) => {
     dispatch(operationAuthorizeUser(user));
   }
 });

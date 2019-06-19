@@ -18,7 +18,7 @@ const mocks = {
   onSubmitButtonStateChange: jest.fn(),
   onTextareaStateChange: jest.fn(),
   onActiveItemChange: jest.fn(),
-  postReview: jest.fn(),
+  actionPostReview: jest.fn(),
   onHomeRedirect: jest.fn(),
   history: {
     push: jest.fn()
