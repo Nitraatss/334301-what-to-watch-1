@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
 // Reducer
-import {Operation} from "../../reducer/user/user";
+import {operationAuthorizeUser} from "../../reducer/user/user";
 
 // HOCs
 import withErrors from "../hocs/withErrors/with-errors.jsx";
@@ -234,7 +234,7 @@ class SignIn extends PureComponent {
   _handelFormSubmit(evt) {
     evt.preventDefault();
     const {
-      changeAuthorizationStatus,
+      actionChangeAuthorizationStatus,
       onEmailValidate,
       onPasswordValidate
     } = this.props;
@@ -248,7 +248,7 @@ class SignIn extends PureComponent {
         password: this._passwordRef.current.value
       };
 
-      changeAuthorizationStatus(userInfo);
+      actionChangeAuthorizationStatus(userInfo);
     }
   }
 
@@ -283,7 +283,7 @@ class SignIn extends PureComponent {
 
 SignIn.propTypes = {
   onHomeRedirect: func.isRequired,
-  changeAuthorizationStatus: func.isRequired,
+  actionChangeAuthorizationStatus: func.isRequired,
   onEmailValidate: func.isRequired,
   onPasswordValidate: func.isRequired,
   emailError: bool.isRequired,
@@ -301,8 +301,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeAuthorizationStatus: (user) => {
-    dispatch(Operation.authorizeUser(user));
+  actionChangeAuthorizationStatus: (user) => {
+    dispatch(operationAuthorizeUser(user));
   }
 });
 
