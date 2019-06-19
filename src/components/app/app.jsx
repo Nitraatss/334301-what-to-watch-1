@@ -32,10 +32,10 @@ class App extends PureComponent {
   }
 
   onHomeRedirect() {
-    const {setActiveFilm, changeGenre, history} = this.props;
+    const {onActiveFilmSet, onGenreChange, history} = this.props;
 
-    setActiveFilm();
-    changeGenre();
+    onActiveFilmSet();
+    onGenreChange();
     history.push(`/`);
   }
 
@@ -46,11 +46,11 @@ class App extends PureComponent {
       visibleFilms,
       genres,
       activeGenre,
-      changeGenre,
+      onGenreChange,
       onShowMoreClick,
       activeFilm,
-      setActiveFilm,
-      addFilmToFavorite
+      onActiveFilmSet,
+      onAddFilmToFavorite
     } = this.props;
 
     const mainProps = {
@@ -59,28 +59,28 @@ class App extends PureComponent {
       visibleFilms,
       genres,
       activeGenre,
-      changeGenre,
+      onGenreChange,
       onShowMoreClick,
       activeFilm,
-      setActiveFilm,
-      addFilmToFavorite
+      onActiveFilmSet,
+      onAddFilmToFavorite
     };
 
     const favoritesProps = {
       authorized,
       onHomeRedirect: this.onHomeRedirect,
-      changeGenre,
-      setActiveFilm
+      onGenreChange,
+      onActiveFilmSet
     };
 
     const filmProps = {
       authorized,
       visibleFilms,
       activeFilm,
-      setActiveFilm,
-      changeGenre,
+      onActiveFilmSet,
+      onGenreChange,
       onHomeRedirect: this.onHomeRedirect,
-      addFilmToFavorite
+      onAddFilmToFavorite
     };
 
     const reviewProps = {
@@ -113,10 +113,10 @@ class App extends PureComponent {
 App.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
-  addFilmToFavorite: func.isRequired,
-  changeGenre: func.isRequired,
+  onAddFilmToFavorite: func.isRequired,
+  onGenreChange: func.isRequired,
   onShowMoreClick: func.isRequired,
-  setActiveFilm: func.isRequired,
+  onActiveFilmSet: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired,
@@ -191,7 +191,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeGenre: (newGenre = `All genres`) => {
+  onGenreChange: (newGenre = `All genres`) => {
     dispatch(actionChangeGenre(newGenre));
 
     if (newGenre === `All genres`) {
@@ -208,14 +208,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actionFormVisibleFilms());
   },
 
-  setActiveFilm: (filmId = null) => {
+  onActiveFilmSet: (filmId = null) => {
     dispatch(actionChangeActiveFilm(filmId));
 
     dispatch(actionClearVisibleFilms());
     dispatch(actionFormVisibleFilms(filmId));
   },
 
-  addFilmToFavorite: (filmId, filmStatus) => {
+  onAddFilmToFavorite: (filmId, filmStatus) => {
     dispatch(operationAddFilmToFavorite(filmId, filmStatus));
   }
 });

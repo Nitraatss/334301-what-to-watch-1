@@ -7,8 +7,8 @@ import {BrowserRouter} from "react-router-dom";
 import MoviesList from "./movies-list.jsx";
 
 const mocks = {
-  changeGenre: jest.fn(),
-  setActiveFilm: jest.fn(),
+  onGenreChange: jest.fn(),
+  onActiveFilmSet: jest.fn(),
   films: [
     {
       backgroundImage: `image`,

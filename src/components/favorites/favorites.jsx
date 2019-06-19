@@ -22,13 +22,13 @@ class Favorites extends PureComponent {
   }
 
   componentDidMount() {
-    const {getFavoriteFilms} = this.props;
+    const {onFavoriteFilmsLoad} = this.props;
 
-    getFavoriteFilms();
+    onFavoriteFilmsLoad();
   }
 
   render() {
-    const {favoriteFilms, changeGenre, setActiveFilm} = this.props;
+    const {favoriteFilms, onGenreChange, onActiveFilmSet} = this.props;
 
     return (
       <>
@@ -147,8 +147,8 @@ class Favorites extends PureComponent {
 
             <MoviesList
               films={favoriteFilms}
-              changeGenre={changeGenre}
-              setActiveFilm={setActiveFilm}
+              onGenreChange={onGenreChange}
+              onActiveFilmSet={onActiveFilmSet}
             />
           </section>
 
@@ -183,10 +183,10 @@ class Favorites extends PureComponent {
 }
 
 Favorites.propTypes = {
-  changeGenre: func.isRequired,
+  onGenreChange: func.isRequired,
   onHomeRedirect: func.isRequired,
-  getFavoriteFilms: func.isRequired,
-  setActiveFilm: func.isRequired,
+  onFavoriteFilmsLoad: func.isRequired,
+  onActiveFilmSet: func.isRequired,
   favoriteFilms: arrayOf(
       shape({
         backgroundColor: string,
@@ -215,7 +215,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getFavoriteFilms: () => {
+  onFavoriteFilmsLoad: () => {
     dispatch(operationLoadFavoriteFilms());
   }
 });

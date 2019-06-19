@@ -14,19 +14,19 @@ const mocks = {
   poster: `poster`,
   preview: `prev`,
   genre: `Action`,
-  changeGenre: jest.fn(),
-  setActiveFilm: jest.fn(),
+  onGenreChange: jest.fn(),
+  onActiveFilmSet: jest.fn(),
   history: {
     push: jest.fn()
   }
 };
 
 describe(`SmallMovieCard:`, () => {
-  it(`Should run callback changeGenre and setActiveFilm on component click`, () => {
+  it(`Should run callback onGenreChange and onActiveFilmSet on component click`, () => {
     const smallMovieCard = mount(<SmallMovieCard {...mocks} />);
 
     smallMovieCard.simulate(`click`, {preventDefault() {}});
-    expect(mocks.changeGenre).toHaveBeenCalledTimes(1);
-    expect(mocks.setActiveFilm).toHaveBeenCalledTimes(1);
+    expect(mocks.onGenreChange).toHaveBeenCalledTimes(1);
+    expect(mocks.onActiveFilmSet).toHaveBeenCalledTimes(1);
   });
 });

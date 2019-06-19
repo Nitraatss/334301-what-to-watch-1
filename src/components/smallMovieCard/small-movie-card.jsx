@@ -51,9 +51,9 @@ class SmallMovieCard extends PureComponent {
   }
 
   _handelLinkClick() {
-    const {changeGenre, setActiveFilm, history, genre, id} = this.props;
-    changeGenre(genre);
-    setActiveFilm(id);
+    const {onGenreChange, onActiveFilmSet, history, genre, id} = this.props;
+    onGenreChange(genre);
+    onActiveFilmSet(id);
     history.push(`/film/${id}`);
   }
 
@@ -80,8 +80,8 @@ SmallMovieCard.propTypes = {
   poster: string.isRequired,
   preview: string.isRequired,
   genre: string.isRequired,
-  changeGenre: func.isRequired,
-  setActiveFilm: func.isRequired,
+  onGenreChange: func.isRequired,
+  onActiveFilmSet: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired

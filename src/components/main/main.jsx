@@ -27,8 +27,8 @@ class Main extends PureComponent {
       visibleFilms,
       genres,
       activeGenre,
-      changeGenre,
-      setActiveFilm,
+      onGenreChange,
+      onActiveFilmSet,
       activeFilm
     } = this.props;
 
@@ -202,13 +202,13 @@ class Main extends PureComponent {
             <GenresList
               genres={genres}
               activeItem={activeGenre}
-              onGenreClick={changeGenre}
+              onGenreClick={onGenreChange}
             />
 
             <MoviesList
               films={visibleFilms}
-              changeGenre={changeGenre}
-              setActiveFilm={setActiveFilm}
+              onGenreChange={onGenreChange}
+              onActiveFilmSet={onActiveFilmSet}
             />
 
             {this._displayShowMore()}
@@ -264,10 +264,10 @@ class Main extends PureComponent {
   }
 
   _handelFavoriteClick() {
-    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+    const {onAddFilmToFavorite, activeFilm, authorized, history} = this.props;
 
     if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
+      onAddFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
     } else {
       history.push(`/login`);
     }
@@ -277,11 +277,11 @@ class Main extends PureComponent {
 Main.propTypes = {
   authorized: bool.isRequired,
   activeGenre: string.isRequired,
-  changeGenre: func.isRequired,
+  onGenreChange: func.isRequired,
   onShowMoreClick: func.isRequired,
-  setActiveFilm: func.isRequired,
+  onActiveFilmSet: func.isRequired,
   onPlayerToggle: func.isRequired,
-  addFilmToFavorite: func.isRequired,
+  onAddFilmToFavorite: func.isRequired,
   history: shape({
     push: func.isRequired
   }).isRequired,

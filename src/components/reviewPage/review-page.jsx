@@ -40,10 +40,10 @@ class ReviewPage extends PureComponent {
   }
 
   componentDidMount() {
-    const {prepareToPost, onTextareaStateChange} = this.props;
+    const {onPrepareToPost, onTextareaStateChange} = this.props;
 
     onTextareaStateChange(false);
-    prepareToPost();
+    onPrepareToPost();
   }
 
   componentDidUpdate() {
@@ -308,7 +308,7 @@ ReviewPage.propTypes = {
   textareaDisabled: bool.isRequired,
   reviewPostedStatus: bool.isRequired,
   activeItem: string,
-  prepareToPost: func.isRequired,
+  onPrepareToPost: func.isRequired,
   onSubmitButtonStateChange: func.isRequired,
   onTextareaStateChange: func.isRequired,
   onActiveItemChange: func.isRequired,
@@ -351,7 +351,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(operationPostReview(filmId, reviewInfo));
   },
 
-  prepareToPost: () => {
+  onPrepareToPost: () => {
     dispatch(actionPostReview(false));
   }
 });

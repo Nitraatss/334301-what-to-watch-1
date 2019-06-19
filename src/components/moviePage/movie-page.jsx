@@ -277,17 +277,17 @@ class MoviePage extends PureComponent {
   }
 
   _handelFavoriteClick() {
-    const {addFilmToFavorite, activeFilm, authorized, history} = this.props;
+    const {onAddFilmToFavorite, activeFilm, authorized, history} = this.props;
 
     if (authorized) {
-      addFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
+      onAddFilmToFavorite(activeFilm.id, activeFilm.isFavorite);
     } else {
       history.push(`/login`);
     }
   }
 
   _formRecommendedBlock(recommendedFilms) {
-    const {setActiveFilm, changeGenre} = this.props;
+    const {onActiveFilmSet, onGenreChange} = this.props;
     if (recommendedFilms.length) {
       return (
         <section className="catalog catalog--like-this">
@@ -295,8 +295,8 @@ class MoviePage extends PureComponent {
 
           <MoviesList
             films={recommendedFilms}
-            changeGenre={changeGenre}
-            setActiveFilm={setActiveFilm}
+            onGenreChange={onGenreChange}
+            onActiveFilmSet={onActiveFilmSet}
           />
         </section>
       );
@@ -310,9 +310,9 @@ MoviePage.propTypes = {
   authorized: bool.isRequired,
   onPlayerToggle: func.isRequired,
   onHomeRedirect: func.isRequired,
-  addFilmToFavorite: func.isRequired,
-  setActiveFilm: func.isRequired,
-  changeGenre: func.isRequired,
+  onAddFilmToFavorite: func.isRequired,
+  onActiveFilmSet: func.isRequired,
+  onGenreChange: func.isRequired,
   history: shape({
     push: func.isRequired
   }),

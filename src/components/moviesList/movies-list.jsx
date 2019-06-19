@@ -9,7 +9,7 @@ import SmallMovieCard from "../smallMovieCard/small-movie-card.jsx";
 import withActiveItem from "../hocs/withActiveItem/with-active-item.jsx";
 
 const MoviesList = (props) => {
-  const {films, changeGenre, setActiveFilm} = props;
+  const {films, onGenreChange, onActiveFilmSet} = props;
 
   return (
     <div className="catalog__movies-list">
@@ -21,8 +21,8 @@ const MoviesList = (props) => {
           poster={film.poster}
           genre={film.genre}
           preview={film.preview}
-          changeGenre={changeGenre}
-          setActiveFilm={setActiveFilm}
+          onGenreChange={onGenreChange}
+          onActiveFilmSet={onActiveFilmSet}
         />
       ))}
     </div>
@@ -30,8 +30,8 @@ const MoviesList = (props) => {
 };
 
 MoviesList.propTypes = {
-  changeGenre: func.isRequired,
-  setActiveFilm: func.isRequired,
+  onGenreChange: func.isRequired,
+  onActiveFilmSet: func.isRequired,
   films: arrayOf(
       shape({
         backgroundImage: string.isRequired,
