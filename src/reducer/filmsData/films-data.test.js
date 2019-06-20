@@ -22,6 +22,7 @@ import {
 } from "./films-data";
 
 const mocks = {
+  /* eslint-disable no-underscore-dangle */
   loadedFilms: [
     {
       background_color: `#92918B`,
@@ -81,7 +82,7 @@ const mocks = {
       video_link: `http://media.xiph.org/mango/tears_of_steel_1080p.webm`
     }
   ],
-  /* eslint-disable no-underscore-dangle */
+  /* eslint-enable */
   films: [
     {
       backgroundColor: `#92918B`,
@@ -141,7 +142,6 @@ const mocks = {
       videoLink: `http://media.xiph.org/mango/tears_of_steel_1080p.webm`
     }
   ]
-  /* eslint-enable */
 };
 
 describe(`Business logic is correct`, () => {
@@ -207,6 +207,13 @@ describe(`Action creators work correctly`, () => {
     });
   });
 
+  it(`Action creator for loading favorite films returns payload with favorite films`, () => {
+    expect(actionLoadFavoriteFilms(mocks.loadedFilms)).toEqual({
+      type: ActionType.LOAD_FAVORITE_FILMS,
+      payload: mocks.loadedFilms
+    });
+  });
+
   it(`Action creator for forming genres array returns  payload with films`, () => {
     expect(actionFormGenres(mocks.loadedFilms)).toEqual({
       type: ActionType.FORM_GENRES,
@@ -245,6 +252,26 @@ describe(`Action creators work correctly`, () => {
     expect(actionChangeActiveFilm(3)).toEqual({
       type: ActionType.CHANGE_ACTIVE_FILM,
       payload: 3
+    });
+  });
+
+  it(`Action creator for loading promo film returns correct action`, () => {
+    expect(actionLoadPromoFilm({id: 1})).toEqual({
+      type: ActionType.LOAD_PROMO_FILM,
+      payload: {id: 1}
+    });
+  });
+
+  it(`Action creator for loading promo film returns payload with given value`, () => {
+    expect(actionLoadPromoFilm({id: 1})).toEqual({
+      type: ActionType.LOAD_PROMO_FILM,
+      payload: {id: 1}
+    });
+  });
+
+  it(`Action creator for adding favorite film returns correct action`, () => {
+    expect(actionAddFilmToFavorite()).toEqual({
+      type: ActionType.ADD_FILM_TO_FAVORITE
     });
   });
 });

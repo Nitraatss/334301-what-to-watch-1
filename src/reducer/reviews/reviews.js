@@ -42,10 +42,10 @@ const operationPostReview = (filmId, reviewInfo) => (
 ) => {
   return api
     .post(`/comments/${filmId}`, reviewInfo)
-    .then((response) => {
+    .then(() => {
       dispatch(actionPostReview(true));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(actionPostReview(false));
     });
 };

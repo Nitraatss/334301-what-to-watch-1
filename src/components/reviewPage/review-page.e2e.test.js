@@ -1,11 +1,7 @@
 // Core
 import React from "react";
-import Enzyme, {mount, shallow} from "enzyme";
+import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
-import reducer from "../../reducer/index";
-import {createStore} from "redux";
 
 // Component
 import {ReviewPage} from "./review-page.jsx";
@@ -107,12 +103,7 @@ const mocks = {
   ]
 };
 
-const MINIMUM_MESSAGE_LENGTH = 50;
-const MAXIMUM_MESSAGE_LENGTH = 200;
-
 describe(`ReviewPage:`, () => {
-  const store = createStore(reducer);
-
   it(`On input should run callback`, () => {
     const reviewPage = shallow(<ReviewPage {...mocks} />);
 

@@ -37,7 +37,7 @@ const operationAuthorizeUser = (loginInfo) => (dispatch, _getState, api) => {
       dispatch(actionSetUserInfo(response.data));
       dispatch(actionChangeAuthorizationStatus(true));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(actionChangeAuthorizationProcessStatus(true));
     });
 };

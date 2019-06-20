@@ -6,14 +6,6 @@ import Adapter from "enzyme-adapter-react-16";
 // Component
 import Rating from "./rating.jsx";
 
-const FilmRating = {
-  BAD: `bad`,
-  NORMAL: `normal`,
-  GOOD: `good`,
-  VERY_GOOD: `very good`,
-  AWESOME: `awesome`
-};
-
 Enzyme.configure({adapter: new Adapter()});
 
 const mocks = {

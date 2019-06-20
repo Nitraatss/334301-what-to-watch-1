@@ -10,7 +10,7 @@ const mocks = {
   history: {
     push: jest.fn()
   },
-  history: {
+  match: {
     url: `url`
   }
 };

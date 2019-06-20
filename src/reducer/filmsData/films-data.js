@@ -153,7 +153,7 @@ const formFilms = (films) => {
 const formGenres = (loadedFilms) => {
   const newGenres = [];
 
-  loadedFilms.forEach((film, counter) => {
+  loadedFilms.forEach((film) => {
     if (
       !newGenres.some((genre) => genre === film.genre) &&
       newGenres.length <= MAXIMUM_GENRES_NUMBER
@@ -176,9 +176,7 @@ const operationLoadFilms = () => (dispatch, _getState, api) => {
       dispatch(actionFormGenres(response.data));
       dispatch(actionFormVisibleFilms());
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(() => {});
 };
 
 const operationLoadFavoriteFilms = () => (dispatch, _getState, api) => {
@@ -187,9 +185,7 @@ const operationLoadFavoriteFilms = () => (dispatch, _getState, api) => {
     .then((response) => {
       dispatch(actionLoadFavoriteFilms(response.data));
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(() => {});
 };
 
 const operationLoadPromo = () => (dispatch, _getState, api) => {
@@ -199,9 +195,7 @@ const operationLoadPromo = () => (dispatch, _getState, api) => {
       dispatch(actionLoadPromoFilm([response.data]));
       dispatch(actionChangeActiveFilm());
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(() => {});
 };
 
 const operationAddFilmToFavorite = (filmId, status) => (
@@ -211,15 +205,15 @@ const operationAddFilmToFavorite = (filmId, status) => (
 ) => {
   return api
     .post(`/favorite/${filmId}/${status ? 0 : 1}`, {
+      /* eslint-disable no-underscore-dangle */
       film_id: filmId,
+      /* eslint-enable */
       status
     })
-    .then((response) => {
+    .then(() => {
       dispatch(actionAddFilmToFavorite());
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch(() => {});
 };
 
 const reducer = (state = initialState, action) => {
@@ -285,7 +279,7 @@ const reducer = (state = initialState, action) => {
           ? state.promoFilm
           : state.loadedFilms[
               state.loadedFilms.findIndex((film) => {
-                return film.id === parseInt(action.payload);
+                return film.id === parseInt(action.payload, 10);
               })
           ]
       });

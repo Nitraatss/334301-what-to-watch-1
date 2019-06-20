@@ -6,7 +6,6 @@ import {
   actionClearReviews,
   actionPostReview,
   operationLoadReviews,
-  operationPostReview,
   reducer
 } from "./reviews.js";
 

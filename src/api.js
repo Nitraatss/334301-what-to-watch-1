@@ -1,7 +1,7 @@
 import axios from "axios";
 import history from "./history";
 
-export const createAPI = (dispatch) => {
+export const createAPI = () => {
   const api = axios.create({
     baseURL: `https://es31-server.appspot.com/wtw`,
     timeout: 5000,
