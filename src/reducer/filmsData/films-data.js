@@ -205,7 +205,7 @@ const operationAddFilmToFavorite = (filmId, status) => (
 ) => {
   return api
     .post(`/favorite/${filmId}/${status ? 0 : 1}`, {
-      /* eslint-disable no-underscore-dangle */
+      /* eslint-disable camelcase */
       film_id: filmId,
       /* eslint-enable */
       status

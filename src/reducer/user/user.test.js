@@ -14,7 +14,7 @@ const mocks = {
     id: 1,
     email: `some@mail.ru`,
     name: `name`,
-    /* eslint-disable no-underscore-dangle */
+    /* eslint-disable camelcase */
     avatar_url: `url`
     /* eslint-enable */
   }

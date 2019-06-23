@@ -22,7 +22,7 @@ import {
 } from "./films-data";
 
 const mocks = {
-  /* eslint-disable no-underscore-dangle */
+  /* eslint-disable camelcase */
   loadedFilms: [
     {
       background_color: `#92918B`,
